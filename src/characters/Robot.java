@@ -10,7 +10,7 @@ public class Robot extends Character implements Item {
 
     @Override
     public void HitByExplosion() {
-        //super.HitByExplosion();
+        super.HitByExplosion();
     }
 
     private void controlRobot() {

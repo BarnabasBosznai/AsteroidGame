@@ -5,7 +5,6 @@ import interfaces.Steppable;
 
 import java.util.List;
 
-//boboteto
 public class Game {
     private static Game instance;
 
