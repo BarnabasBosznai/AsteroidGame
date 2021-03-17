@@ -10,6 +10,10 @@ public class Game {
     private List<Settler> settlers;
     private List<Steppable> steppables;
 
+    public Game(){
+
+    }
+
     public void start() {
 
     }
