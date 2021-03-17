@@ -8,9 +8,10 @@ import places.TeleportGate;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CraftingTable {
-    private HashMap<String, Recipe> recipes;
+    private Map<String, Recipe> recipes;
 
     public CraftingTable(){
         this.recipes = new HashMap<>();

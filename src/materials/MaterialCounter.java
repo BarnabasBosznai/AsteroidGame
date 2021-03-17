@@ -1,9 +1,14 @@
 package materials;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MaterialCounter {
-    private HashMap<String, Integer> amountOfMaterials;
+    private Map<String, Integer> amountOfMaterials;
+
+    public MaterialCounter(){
+        this.amountOfMaterials = new HashMap<>();
+    }
 
     public void count(String materialType){
         if(amountOfMaterials.containsKey(materialType)){
@@ -16,7 +21,7 @@ public class MaterialCounter {
         }
     }
 
-    public HashMap<String, Integer> getCountedMaterials(){
+    public Map<String, Integer> getCountedMaterials(){
         return this.amountOfMaterials;
     }
 }

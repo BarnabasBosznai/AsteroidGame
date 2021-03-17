@@ -1,8 +1,8 @@
 package materials;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class MaterialStorage {
     protected List<Material> materials;
@@ -16,7 +16,7 @@ public abstract class MaterialStorage {
         return true;
     }
 
-    public HashMap<String, Integer> getAmountOfMaterials(){
+    public Map<String, Integer> getAmountOfMaterials(){
         MaterialCounter materialCounter = new MaterialCounter();
 
         for(Material material : materials){
