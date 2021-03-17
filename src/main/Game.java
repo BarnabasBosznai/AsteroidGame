@@ -28,6 +28,8 @@ public class Game {
 
     public boolean checkGameOver() {
 
+        //MÉG valami
+        return true;
     }
 
    public void addSteppable(Steppable steppable) {
@@ -40,5 +42,8 @@ public class Game {
 
     public void addSettler(Settler settler) {
 
+    }
+
+    public void removeSettler(Settler settler) {
     }
 }

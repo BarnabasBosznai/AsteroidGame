@@ -17,4 +17,6 @@ public abstract class Character implements Steppable {
     public boolean move() {
         return false;
     }
+
+    public abstract void setAsteroid(Asteroid asteroid);
 }

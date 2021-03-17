@@ -49,6 +49,24 @@ public class Asteroid extends Place {
         }
     }
 
+    public Boolean placeMaterial(Material material) {
+        /**
+         * Settler-nek kell, ezért létrehoztam. (5.3.2)
+         * Törölje majd ezt a függvényt megvalósító!
+         *  Bobó
+         */
+        return true;
+    }
+
+    public Boolean Drilled(){
+        /**
+         * Settler-nek kell, ezért létrehoztam. (5.3.3)
+         * Törölje majd ezt a függvényt megvalósító!
+         *  Bobó
+         */
+        return true;
+    }
+
     public void solarFlare() {
         for(Character character : characters)
             character.HitByStorm();
