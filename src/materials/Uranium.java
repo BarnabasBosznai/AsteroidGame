@@ -8,6 +8,9 @@ public class Uranium extends RadioactiveMaterial {
 
     @Override
     public boolean compatibleWith(Material material) {
-        return false;
+        if(this.getClass()==material.getClass()){
+            return true;
+        }
+        else {return false;}
     }
 }
