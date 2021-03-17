@@ -2,7 +2,6 @@ package places;
 
 import characters.Character;
 import materials.Material;
-
 import java.util.List;
 
 public class Asteroid extends Place {
