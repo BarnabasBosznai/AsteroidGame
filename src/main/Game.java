@@ -18,7 +18,7 @@ public class Game {
 
     }
 
-    public void valami3() {
+    public void valami4() {
 
     }
 

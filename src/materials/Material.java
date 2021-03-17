@@ -10,10 +10,6 @@ public abstract class Material {
     public abstract void count(MaterialCounter counter);
 
     public boolean compatibleWith(Material material) {
-        if (this.getClass() == material.getClass()) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.getClass() == material.getClass();
     }
 }

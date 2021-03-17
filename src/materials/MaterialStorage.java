@@ -16,7 +16,7 @@ public abstract class MaterialStorage {
         return true;
     }
 
-    public Map<String, Integer> getAmountOfMaterials(){
+    public Map<Class<? extends Material>, Integer> getAmountOfMaterials(){
         MaterialCounter materialCounter = new MaterialCounter();
 
         for(Material material : materials){
