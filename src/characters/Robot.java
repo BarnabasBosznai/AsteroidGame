@@ -1,6 +1,8 @@
 package characters;
 
-public class Robot extends Character {
+import interfaces.Item;
+
+public class Robot extends Character implements Item {
     @Override
     public void step() {
 
@@ -13,5 +15,10 @@ public class Robot extends Character {
 
     private void controlRobot() {
 
+    }
+
+    @Override
+    public boolean compatibleWith(Item item) {
+        return this.getClass() == item.getClass();
     }
 }

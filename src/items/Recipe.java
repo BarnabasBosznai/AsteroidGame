@@ -1,21 +1,22 @@
 package items;
 
+import interfaces.Item;
 import materials.Material;
 import materials.MaterialStorage;
 
 import java.util.List;
 
 public class Recipe extends MaterialStorage {
-    private final String itemName;
+    private final Class<? extends Item> itemType;
 
-    public Recipe(String itemName, List<Material> materialList){
+    public Recipe(Class<? extends Item> itemType, List<Material> materialList){
         super();
 
-        this.itemName = itemName;
+        this.itemType = itemType;
         materials = materialList;
     }
 
-    public String getItemName(){
-        return this.itemName;
+    public Class<? extends Item> getItemType(){
+        return this.itemType;
     }
 }

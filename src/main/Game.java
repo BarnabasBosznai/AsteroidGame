@@ -27,10 +27,6 @@ public class Game {
 
     }
 
-    public void valami4() {
-
-    }
-
     public boolean checkGameOver() {
 
     }
