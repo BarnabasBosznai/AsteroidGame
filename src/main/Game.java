@@ -5,9 +5,14 @@ import interfaces.Steppable;
 
 import java.util.List;
 
+//boboteto
 public class Game {
     private List<Settler> settlers;
     private List<Steppable> steppables;
+
+    public Game(){
+
+    }
 
     public void start() {
 
