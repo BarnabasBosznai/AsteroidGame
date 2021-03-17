@@ -11,6 +11,8 @@ public class Settler extends Character {
 
     /// HAlihó
 
+    /// Tesz1
+
     @Override
     public void HitByExplosion() {
         super.HitByExplosion();
