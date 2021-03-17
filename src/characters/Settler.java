@@ -9,6 +9,8 @@ import places.TeleportGate;
 public class Settler extends Character {
     private Inventory inventory;
 
+    /// HAlihó
+
     @Override
     public void HitByExplosion() {
         super.HitByExplosion();
