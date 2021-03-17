@@ -13,6 +13,10 @@ public class Game {
 
     }
 
+    public void valami() {
+
+    }
+
     public boolean checkGameOver() {
 
     }
