@@ -33,7 +33,9 @@ public class Asteroid extends Place {
 
     }
 
+    public void removeNeighbor(Asteroid asteroid) {
 
+    }
 
     public void explosion() {
 
