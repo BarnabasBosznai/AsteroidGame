@@ -31,6 +31,7 @@ public class Asteroid extends Place {
 
     public void addNeighbors(Asteroid asteroid) {
 
+
     }
 
     public void removeNeighbor(Asteroid asteroid) {
