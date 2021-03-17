@@ -13,7 +13,7 @@ public class Game {
 
     }
 
-    public void valami2() {
+    public void valami3() {
 
     }
 
