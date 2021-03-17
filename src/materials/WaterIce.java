@@ -9,6 +9,6 @@ public class WaterIce extends Material {
     }
     @Override
     public void count(MaterialCounter counter) {
-        counter.count("waterice");
+        counter.count(WaterIce.class);
     }
 }

@@ -3,6 +3,6 @@ package materials;
 public class Iron extends Material {
     @Override
     public void count(MaterialCounter counter) {
-        counter.count("iron");
+        counter.count(Iron.class);
     }
 }
