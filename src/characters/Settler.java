@@ -2,6 +2,7 @@ package characters;
 
 import items.Inventory;
 import materials.Material;
+import places.Asteroid;
 import places.TeleportGate;
 
 public class Settler extends Character {
@@ -40,6 +41,14 @@ public class Settler extends Character {
 
     public TeleportGate getTeleportGate() {
 
+    }
+
+    public Inventory getInventory(){
+        return this.inventory;
+    }
+
+    public Asteroid getAsteroid(){
+        return asteroid;
     }
 
     public boolean placeMaterial(Material material) {
