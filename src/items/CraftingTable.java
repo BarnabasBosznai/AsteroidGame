@@ -2,6 +2,8 @@ package items;
 
 import characters.Robot;
 import characters.Settler;
+import interfaces.Item;
+import main.Game;
 import materials.Material;
 import places.Asteroid;
 import places.TeleportGate;
@@ -11,32 +13,41 @@ import java.util.List;
 import java.util.Map;
 
 public class CraftingTable {
-    private Map<String, Recipe> recipes;
+    private static CraftingTable instance;
 
-    public CraftingTable(){
+    private final Map<Class<? extends Item>, Recipe> recipes;
+
+    public static CraftingTable getInstance() {
+        if(instance == null)
+            instance = new CraftingTable();
+
+        return instance;
+    }
+
+    private CraftingTable(){
         this.recipes = new HashMap<>();
     }
 
-    public boolean craft(String itemName, Settler settler) {
+    public boolean craft(Class<? extends Item> itemType, Settler settler) {
         Inventory inventory = settler.getInventory();
-        Recipe recipe = this.recipes.get(itemName);
+        Recipe recipe = this.recipes.get(itemType);
 
         boolean hasEnoughMaterial = this.hasEnoughMaterial(inventory, recipe);
 
         if(!hasEnoughMaterial)
             return false;
         else{
-            if(itemName.equals("robot")){
+            if(itemType.equals(Robot.class)){
                 Robot robot = new Robot();
 
-                game.addSteppable(robot);
+                Game.getInstance().addSteppable(robot);
 
                 Asteroid asteroid = settler.getAsteroid();
                 asteroid.move(robot);
 
                 return true;
             }
-            else if(itemName.equals("teleportgates")){
+            else if(itemType.equals(TeleportGate.class)){
                 TeleportGate teleportGate1 = new TeleportGate();
                 TeleportGate teleportGate2 = new TeleportGate();
 
@@ -58,10 +69,10 @@ public class CraftingTable {
         var inventoryAmounts = inventory.getAmountOfMaterials();
         var recipeAmounts = recipe.getAmountOfMaterials();
 
-        for(var materialName : recipeAmounts.keySet()){
-            if(!inventoryAmounts.containsKey(materialName))
+        for(var materialType : recipeAmounts.keySet()){
+            if(!inventoryAmounts.containsKey(materialType))
                 return false;
-            if(inventoryAmounts.get(materialName) < recipeAmounts.get(materialName))
+            if(inventoryAmounts.get(materialType) < recipeAmounts.get(materialType))
                 return false;
         }
         //has enough materials in the inventory if didnt't return
@@ -76,6 +87,6 @@ public class CraftingTable {
     }
 
     public void addRecipe(Recipe recipe) {
-        this.recipes.put(recipe.getItemName(), recipe);
+        this.recipes.put(recipe.getItemType(), recipe);
     }
 }

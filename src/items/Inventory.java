@@ -35,6 +35,7 @@ public class Inventory extends MaterialStorage {
         for(Material m : materials){
             if(material.compatibleWith(m)){
                 materials.remove(m);
+                --capacity;
                 return m;
             }
         }

@@ -1,5 +1,6 @@
 package characters;
 
+import items.CraftingTable;
 import items.Inventory;
 import materials.Material;
 import places.Asteroid;
@@ -29,10 +30,12 @@ public class Settler extends Character {
 
     public boolean craftRobot() {
 
+        return CraftingTable.getInstance().craft(Robot.class, this)
     }
 
     public boolean craftTeleportGates() {
 
+        return CraftingTable.getInstance().craft(TeleportGate.class, this);
     }
 
     public boolean placeTeleportGate() {

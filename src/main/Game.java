@@ -5,20 +5,24 @@ import interfaces.Steppable;
 
 import java.util.List;
 
-//boboteto
 public class Game {
+    private static Game instance;
+
     private List<Settler> settlers;
     private List<Steppable> steppables;
 
-    public Game(){
+    public static Game getInstance() {
+        if(instance == null)
+            instance = new Game();
+
+        return instance;
+    }
+
+    private Game(){
 
     }
 
     public void start() {
-
-    }
-
-    public void valami4() {
 
     }
 

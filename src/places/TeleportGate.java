@@ -25,7 +25,7 @@ public class TeleportGate extends Place implements Item {
 
     @Override
     public boolean compatibleWith(Item item) {
-        return false;
+        return this.getClass() == item.getClass();
     }
 
     @Override
