@@ -11,9 +11,18 @@ import java.util.List;
 import java.util.Map;
 
 public class CraftingTable {
+    private static CraftingTable instance;
+
     private Map<String, Recipe> recipes;
 
-    public CraftingTable(){
+    public static CraftingTable getInstance() {
+        if(instance == null)
+            instance = new CraftingTable();
+
+        return instance;
+    }
+
+    private CraftingTable(){
         this.recipes = new HashMap<>();
     }
 
