@@ -110,4 +110,12 @@ public class Game {
     public void AddSettler(Settler settler) {
         this.settlers.add(settler);
     }
+
+    public void RemoveSettler(Settler settler) {
+        /**
+         * Ez kell a Settlernek, így csak definiáltam itt.
+         * Aki megírja az törölje ki ezt a kommentet.
+         *      Bobó
+         */
+    }
 }
