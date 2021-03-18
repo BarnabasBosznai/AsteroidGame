@@ -105,4 +105,15 @@ public class Asteroid extends Place {
         return true;
     }
 
+    public boolean PlaceMaterial(Material material) {
+        /**
+         * Ez kell a Settlernek, így csak definiáltam itt.
+         * Aki megírja az törölje ki ezt a kommentet.
+         *      Bobó
+         */
+
+        // Ez is törölhető.
+        return true;
+    }
+
 }
