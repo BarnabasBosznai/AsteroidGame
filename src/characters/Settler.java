@@ -3,6 +3,7 @@ package characters;
 import items.CraftingTable;
 import items.Inventory;
 import main.Game;
+import materials.Coal;
 import materials.Material;
 import places.Asteroid;
 import places.Place;
@@ -115,9 +116,9 @@ public class Settler extends Character {
          *
          *      Bobó
          */
+        return (TeleportGate) this.inventory.GetItem(TeleportGate.class);
 
         // Ez csak a kód lefutásához kell, jelenleg rossz.
-        return new TeleportGate();
     }
 
     public Inventory GetInventory(){
