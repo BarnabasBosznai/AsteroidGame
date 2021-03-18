@@ -4,7 +4,7 @@ import interfaces.Item;
 
 public class Robot extends Character implements Item {
     @Override
-    public void step() {
+    public void Step() {
 
     }
 
@@ -13,12 +13,12 @@ public class Robot extends Character implements Item {
         super.HitByExplosion();
     }
 
-    private void controlRobot() {
+    private void ControlRobot() {
 
     }
 
     @Override
-    public boolean compatibleWith(Item item) {
+    public boolean CompatibleWith(Item item) {
         return this.getClass() == item.getClass();
     }
 }

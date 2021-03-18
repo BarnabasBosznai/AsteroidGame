@@ -14,9 +14,12 @@ public abstract class Character implements Steppable {
 
     }
 
-    public boolean move() {
+    public boolean Move() {
         return false;
     }
 
-    public abstract void setAsteroid(Asteroid asteroid);
+    public void SetAsteroid(Asteroid asteroid){
+        this.asteroid = asteroid;
+    }
+
 }

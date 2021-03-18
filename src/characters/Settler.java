@@ -13,9 +13,6 @@ import java.util.List;
 public class Settler extends Character {
     private Inventory inventory;
 
-    /// HAlihó
-    /// Tesz1
-
     @Override
     public void HitByExplosion() {
         Game.getInstance().removeSteppable(this);
@@ -28,7 +25,7 @@ public class Settler extends Character {
     }
 
     @Override
-    public boolean move() {
+    public boolean Move() {
         List<Place> places = asteroid.getNeighbors();
 
         /**
@@ -65,10 +62,9 @@ public class Settler extends Character {
 
     @Override
     public void setAsteroid(Asteroid asteroid) {
-
     }
 
-    public boolean mine() {
+    public boolean Mine() {
 
         Material material = asteroid.removeMaterial();
 
@@ -86,55 +82,46 @@ public class Settler extends Character {
         return false;
     }
 
-    public boolean craftRobot() {
-        /**
-         * Ez csak ennyi?
-         */
-        return CraftingTable.getInstance().craft(Robot.class, this);
+
+    public boolean CraftRobot() {
+        return CraftingTable.getInstance().Craft(Robot.class, this);
     }
 
-    public boolean craftTeleportGates() {
-        /**
-         * Ellenőriznem kéne a legfeljebb 2 teleportkaput.
-         * Mivel visszakapok max egy teleport kaput, az kb. semmit sem mond.
-         *      Bobó >8(
-         */
-        getTeleportGate();
-
-        return CraftingTable.getInstance().craft(TeleportGate.class, this);
+    public boolean CraftTeleportGates() {
+        return CraftingTable.getInstance().Craft(TeleportGate.class, this);
     }
 
-    public boolean placeTeleportGate() {
-        // Baj!
-        return false;
+    public boolean PlaceTeleportGate() {
+
+         return false;
     }
 
-    public TeleportGate getTeleportGate() {
+    public TeleportGate GetTeleportGate() {
 
         return null;
     }
 
-    public Inventory getInventory(){
+    public Inventory GetInventory(){
         return this.inventory;
     }
 
-    public Asteroid getAsteroid(){
+    public Asteroid GetAsteroid(){
         return asteroid;
     }
 
-    public boolean placeMaterial(Material material) {
+    public boolean PlaceMaterial(Material material) {
         Material material_got = inventory.removeMaterial(material);
 
         // Még hátra
         return false;
     }
 
-    public boolean drill() {
+    public boolean Drill() {
         return asteroid.Drilled();
     }
 
     @Override
-    public void step() {
+    public void Step() {
 
     }
 }
