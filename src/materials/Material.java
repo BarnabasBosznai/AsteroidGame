@@ -3,13 +3,13 @@ package materials;
 import places.Asteroid;
 
 public abstract class Material {
-    public void onNearSun(Asteroid asteroid) {
+    public void OnNearSun(Asteroid asteroid) {
 
     }
 
-    public abstract void count(MaterialCounter counter);
+    public abstract void Count(MaterialCounter counter);
 
-    public boolean compatibleWith(Material material) {
+    public boolean CompatibleWith(Material material) {
         return this.getClass() == material.getClass();
     }
 }

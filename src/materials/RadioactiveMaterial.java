@@ -4,7 +4,7 @@ import places.Asteroid;
 
 public abstract class RadioactiveMaterial extends Material {
     @Override
-    public void onNearSun(Asteroid asteroid) {
-        asteroid.explosion();
+    public void OnNearSun(Asteroid asteroid) {
+        asteroid.Explosion();
     }
 }

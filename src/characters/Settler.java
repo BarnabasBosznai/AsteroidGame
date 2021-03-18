@@ -24,50 +24,50 @@ public class Settler extends Character {
     }
 
     @Override
-    public boolean move() {
-        return super.move();
+    public boolean Move() {
+        return super.Move();
     }
 
-    public boolean mine() {
-
-    }
-
-    public boolean craftRobot() {
-
-        return CraftingTable.getInstance().craft(Robot.class, this)
-    }
-
-    public boolean craftTeleportGates() {
-
-        return CraftingTable.getInstance().craft(TeleportGate.class, this);
-    }
-
-    public boolean placeTeleportGate() {
+    public boolean Mine() {
 
     }
 
-    public TeleportGate getTeleportGate() {
+    public boolean CraftRobot() {
+
+        return CraftingTable.getInstance().Craft(Robot.class, this);
+    }
+
+    public boolean CraftTeleportGates() {
+
+        return CraftingTable.getInstance().Craft(TeleportGate.class, this);
+    }
+
+    public boolean PlaceTeleportGate() {
 
     }
 
-    public Inventory getInventory(){
+    public TeleportGate GetTeleportGate() {
+
+    }
+
+    public Inventory GetInventory(){
         return this.inventory;
     }
 
-    public Asteroid getAsteroid(){
+    public Asteroid GetAsteroid(){
         return asteroid;
     }
 
-    public boolean placeMaterial(Material material) {
+    public boolean PlaceMaterial(Material material) {
 
     }
 
-    public boolean drill() {
+    public boolean Drill() {
 
     }
 
     @Override
-    public void step() {
+    public void Step() {
 
     }
 }
