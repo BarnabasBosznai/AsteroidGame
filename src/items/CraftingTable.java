@@ -27,11 +27,11 @@ public class CraftingTable {
         this.recipes = new HashMap<>();
     }
 
-    public boolean craft(Class<? extends Item> itemType, Settler settler) {
-        Inventory inventory = settler.getInventory();
+    public boolean Craft(Class<? extends Item> itemType, Settler settler) {
+        Inventory inventory = settler.GetInventory();
         Recipe recipe = this.recipes.get(itemType);
 
-        boolean hasEnoughMaterial = this.hasEnoughMaterial(inventory, recipe);
+        boolean hasEnoughMaterial = this.HasEnoughMaterial(inventory, recipe);
 
         if(!hasEnoughMaterial)
             return false;
@@ -39,10 +39,10 @@ public class CraftingTable {
             if(itemType.equals(Robot.class)){
                 Robot robot = new Robot();
 
-                Game.getInstance().addSteppable(robot);
+                Game.getInstance().AddSteppable(robot);
 
-                Asteroid asteroid = settler.getAsteroid();
-                asteroid.move(robot);
+                Asteroid asteroid = settler.GetAsteroid();
+                asteroid.Move(robot);
 
                 return true;
             }
@@ -50,11 +50,11 @@ public class CraftingTable {
                 TeleportGate teleportGate1 = new TeleportGate();
                 TeleportGate teleportGate2 = new TeleportGate();
 
-                inventory.addItem(teleportGate1);
-                inventory.addItem(teleportGate2);
+                inventory.AddItem(teleportGate1);
+                inventory.AddItem(teleportGate2);
 
-                teleportGate1.setPair(teleportGate2);
-                teleportGate2.setPair(teleportGate1);
+                teleportGate1.SetPair(teleportGate2);
+                teleportGate2.SetPair(teleportGate1);
 
                 return true;
             }
@@ -64,9 +64,9 @@ public class CraftingTable {
         }
     }
 
-    public boolean hasEnoughMaterial(Inventory inventory, Recipe recipe) {
-        var inventoryAmounts = inventory.getAmountOfMaterials();
-        var recipeAmounts = recipe.getAmountOfMaterials();
+    public boolean HasEnoughMaterial(Inventory inventory, Recipe recipe) {
+        var inventoryAmounts = inventory.GetAmountOfMaterials();
+        var recipeAmounts = recipe.GetAmountOfMaterials();
 
         for(var materialType : recipeAmounts.keySet()){
             if(!inventoryAmounts.containsKey(materialType))
@@ -76,16 +76,16 @@ public class CraftingTable {
         }
         //has enough materials in the inventory if didnt't return
 
-        var recipeMaterials = recipe.getMaterials();
+        var recipeMaterials = recipe.GetMaterials();
 
         for(Material material : recipeMaterials){
-            inventory.removeMaterial(material);
+            inventory.RemoveMaterial(material);
         }
 
         return true;
     }
 
-    public void addRecipe(Recipe recipe) {
-        this.recipes.put(recipe.getItemType(), recipe);
+    public void AddRecipe(Recipe recipe) {
+        this.recipes.put(recipe.GetItemType(), recipe);
     }
 }

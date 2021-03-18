@@ -30,7 +30,7 @@ public class Asteroid extends Place {
         thickness = random.ints(2,6).findFirst().getAsInt();
     }
 
-    public boolean drilled() {
+    public boolean Drilled() {
         if((thickness - 1) == 0) {
             thickness--;
             return true;
@@ -39,7 +39,7 @@ public class Asteroid extends Place {
         }
     }
 
-    public Material removeMaterial() {
+    public Material RemoveMaterial() {
         if(thickness == 0 && material != null) {
             Material ret = material;
             material = null;
@@ -49,63 +49,45 @@ public class Asteroid extends Place {
         }
     }
 
-    public Boolean placeMaterial(Material material) {
-        /**
-         * Settler-nek kell, ezért létrehoztam. (5.3.2)
-         * Törölje majd ezt a függvényt megvalósító!
-         *  Bobó
-         */
-        return true;
-    }
-
-    public Boolean Drilled(){
-        /**
-         * Settler-nek kell, ezért létrehoztam. (5.3.3)
-         * Törölje majd ezt a függvényt megvalósító!
-         *  Bobó
-         */
-        return true;
-    }
-
-    public void solarFlare() {
+    public void SolarFlare() {
         for(Character character : characters)
             character.HitByStorm();
     }
 
-    public void takeOff(Character character) {
+    public void TakeOff(Character character) {
         this.characters.remove(character);
     }
 
-    public void placeTeleport(TeleportGate teleportGate) {
+    public void PlaceTeleport(TeleportGate teleportGate) {
         this.teleportGates.add(teleportGate);
-        teleportGate.setAsteroid(this);
+        teleportGate.SetAsteroid(this);
     }
 
-    public void addNeighbors(Asteroid asteroid) {
+    public void AddNeighbors(Asteroid asteroid) {
         this.neighbors.add(asteroid);
     }
 
-    public void removeNeighbor(Asteroid asteroid) {
+    public void RemoveNeighbor(Asteroid asteroid) {
         this.neighbors.remove(asteroid);
     }
 
-    public void explosion() {
+    public void Explosion() {
         for(Character character : characters)
             character.HitByExplosion();
 
-        AsteroidBelt.getInstance().asteroidExploded(this);
+        AsteroidBelt.getInstance().AsteroidExploded(this);
 
         for(TeleportGate teleportGate : teleportGates)
-            teleportGate.removeFromAsteroid();
+            teleportGate.RemoveFromAsteroid();
     }
 
-    public void nearSun() {
+    public void NearSun() {
         if(thickness == 0 && material != null)
-            material.onNearSun(this);
+            material.OnNearSun(this);
 
     }
 
-    public void removeTeleportGate(TeleportGate teleportGate) {
+    public void RemoveTeleportGate(TeleportGate teleportGate) {
         this.teleportGates.remove(teleportGate);
     }
 
@@ -117,9 +99,9 @@ public class Asteroid extends Place {
     }
 
     @Override
-    public boolean move(Character character) {
+    public boolean Move(Character character) {
         this.characters.add(character);
-        character.setAsteroid(this);
+        character.SetAsteroid(this);
         return true;
     }
 

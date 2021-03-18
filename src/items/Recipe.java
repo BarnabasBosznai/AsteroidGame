@@ -16,7 +16,7 @@ public class Recipe extends MaterialStorage {
         materials = materialList;
     }
 
-    public Class<? extends Item> getItemType(){
+    public Class<? extends Item> GetItemType(){
         return this.itemType;
     }
 }

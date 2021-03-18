@@ -2,14 +2,20 @@ package main;
 
 import characters.Settler;
 import interfaces.Steppable;
+import materials.Material;
+import places.Asteroid;
+import places.AsteroidBelt;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Game {
     private static Game instance;
 
-    private List<Settler> settlers;
-    private List<Steppable> steppables;
+    private final List<Settler> settlers;
+    private final List<Steppable> steppables;
 
     public static Game getInstance() {
         if(instance == null)
@@ -19,31 +25,41 @@ public class Game {
     }
 
     private Game(){
+        this.settlers = new ArrayList<>();
+        this.steppables = new ArrayList<>();
+    }
+
+    public void Start() {
 
     }
 
-    public void start() {
+    public boolean CheckGameOver() {
+        Map<Asteroid, Map<Class<? extends Material>, Integer>> asteroidMaterialAmounts = new HashMap<>();
 
+        for(Settler settler : settlers){
+            var asteroid = settler.GetAsteroid();
+            var materials = settler.GetInventory().GetAmountOfMaterials();
+
+            if(!asteroidMaterialAmounts.containsKey(asteroid)){
+                asteroidMaterialAmounts.put(asteroid, materials);
+            }
+            else{
+                var alreadyCountedMaterials = asteroidMaterialAmounts.get(asteroid);
+
+                //TODO
+            }
+        }
     }
 
-    public boolean checkGameOver() {
-
-        //MÉG valami
-        return true;
-    }
-
-   public void addSteppable(Steppable steppable) {
-
+   public void AddSteppable(Steppable steppable) {
+        this.steppables.add(steppable);
    }
 
-    public void removeSteppable(Steppable steppable) {
-
+    public void RemoveSteppable(Steppable steppable) {
+        this.steppables.remove(steppable);
     }
 
-    public void addSettler(Settler settler) {
-
-    }
-
-    public void removeSettler(Settler settler) {
+    public void AddSettler(Settler settler) {
+        this.settlers.add(settler);
     }
 }

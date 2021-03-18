@@ -11,22 +11,22 @@ public abstract class MaterialStorage {
         this.materials = new ArrayList<>();
     }
 
-    public boolean addMaterial(Material material) {
+    public boolean AddMaterial(Material material) {
         materials.add(material);
         return true;
     }
 
-    public Map<Class<? extends Material>, Integer> getAmountOfMaterials(){
+    public Map<Class<? extends Material>, Integer> GetAmountOfMaterials(){
         MaterialCounter materialCounter = new MaterialCounter();
 
         for(Material material : materials){
-            material.count(materialCounter);
+            material.Count(materialCounter);
         }
 
-        return materialCounter.getCountedMaterials();
+        return materialCounter.GetCountedMaterials();
     }
 
-    public List<Material> getMaterials(){
+    public List<Material> GetMaterials(){
         return this.materials;
     }
 }

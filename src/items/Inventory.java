@@ -21,7 +21,7 @@ public class Inventory extends MaterialStorage {
     }
 
     @Override
-    public boolean addMaterial(Material material) {
+    public boolean AddMaterial(Material material) {
         if(capacity < maxCapacity) {
             materials.add(material);
             ++capacity;
@@ -31,9 +31,9 @@ public class Inventory extends MaterialStorage {
             return false;
     }
 
-    public Material removeMaterial(Material material) {
+    public Material RemoveMaterial(Material material) {
         for(Material m : materials){
-            if(material.compatibleWith(m)){
+            if(material.CompatibleWith(m)){
                 materials.remove(m);
                 --capacity;
                 return m;
@@ -42,11 +42,11 @@ public class Inventory extends MaterialStorage {
         return null;
     }
 
-    public void addItem(Item item) {
+    public void AddItem(Item item) {
         items.add(item);
     }
 
-    public void removeItem(Item item) {
+    public void RemoveItem(Item item) {
         items.remove(item);
     }
 }
