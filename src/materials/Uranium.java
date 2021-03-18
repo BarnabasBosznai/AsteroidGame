@@ -2,7 +2,7 @@ package materials;
 
 public class Uranium extends RadioactiveMaterial {
     @Override
-    public void count(MaterialCounter counter) {
-        counter.count(Uranium.class);
+    public void Count(MaterialCounter counter) {
+        counter.Count(Uranium.class);
     }
 }

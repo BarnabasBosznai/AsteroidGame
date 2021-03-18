@@ -4,11 +4,11 @@ import places.Asteroid;
 
 public class WaterIce extends Material {
     @Override
-    public void onNearSun(Asteroid asteroid) {
-        asteroid.removeMaterial();
+    public void OnNearSun(Asteroid asteroid) {
+        asteroid.RemoveMaterial();
     }
     @Override
-    public void count(MaterialCounter counter) {
-        counter.count(WaterIce.class);
+    public void Count(MaterialCounter counter) {
+        counter.Count(WaterIce.class);
     }
 }

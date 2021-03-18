@@ -22,17 +22,17 @@ public class AsteroidBelt implements Steppable {
     }
 
     @Override
-    public void step() {
+    public void Step() {
 
     }
 
-    public void asteroidExploded(Asteroid asteroid) {
+    public void AsteroidExploded(Asteroid asteroid) {
         this.asteroids.remove(asteroid);
     }
 
-    private List<Integer> randomAsteroids(){
+    private List<Integer> RandomAsteroids(){
         List<Integer> indexes = new ArrayList<Integer>();
-        for (int i=1; i < asteroids.size(); ++i) {
+        for (int i = 0; i < asteroids.size(); ++i) {
             indexes.add(i);
         }
 
@@ -44,19 +44,19 @@ public class AsteroidBelt implements Steppable {
         return indexes;
     }
 
-    private void nearSun() {
-        var indexes = this.randomAsteroids();
+    private void NearSun() {
+        var indexes = this.RandomAsteroids();
 
         for(Integer idx : indexes){
-            asteroids.get(idx).nearSun();
+            asteroids.get(idx).NearSun();
         }
     }
 
-    private void solarFlare() {
-        var indexes = this.randomAsteroids();
+    private void SolarFlare() {
+        var indexes = this.RandomAsteroids();
 
         for(Integer idx : indexes){
-            asteroids.get(idx).solarFlare();
+            asteroids.get(idx).SolarFlare();
         }
     }
 }

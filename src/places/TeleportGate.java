@@ -7,34 +7,34 @@ public class TeleportGate extends Place implements Item {
     private Asteroid asteroid;
     private TeleportGate pair;
 
-    public void setAsteroid(Asteroid asteroid) {
+    public void SetAsteroid(Asteroid asteroid) {
         this.asteroid = asteroid;
     }
 
-    public void setPair(TeleportGate teleportGate) {
+    public void SetPair(TeleportGate teleportGate) {
         this.pair = teleportGate;
     }
 
-    public Asteroid getAsteroid() {
+    public Asteroid GetAsteroid() {
         return asteroid;
     }
 
-    public void removeFromAsteroid() {
-        pair.getAsteroid().removeTeleportGate(pair);
-        pair.setAsteroid(null);
-        asteroid.removeTeleportGate(this);
+    public void RemoveFromAsteroid() {
+        pair.GetAsteroid().RemoveTeleportGate(pair);
+        pair.SetAsteroid(null);
+        asteroid.RemoveTeleportGate(this);
         asteroid = null;
     }
 
     @Override
-    public boolean compatibleWith(Item item) {
+    public boolean CompatibleWith(Item item) {
         return this.getClass() == item.getClass();
     }
 
     @Override
-    public boolean move(Character character) {
-        Asteroid asteroid = pair.getAsteroid();
-        return asteroid != null && asteroid.move(character);
+    public boolean Move(Character character) {
+        Asteroid asteroid = pair.GetAsteroid();
+        return asteroid != null && asteroid.Move(character);
         
     }
 }

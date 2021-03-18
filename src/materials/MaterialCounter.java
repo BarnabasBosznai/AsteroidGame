@@ -10,7 +10,7 @@ public class MaterialCounter {
         this.amountOfMaterials = new HashMap<>();
     }
 
-    public void count(Class<? extends Material> materialType){
+    public void Count(Class<? extends Material> materialType){
         if(amountOfMaterials.containsKey(materialType)){
 
             Integer amount = amountOfMaterials.get(materialType);
@@ -21,7 +21,7 @@ public class MaterialCounter {
         }
     }
 
-    public Map<Class<? extends Material>, Integer> getCountedMaterials(){
+    public Map<Class<? extends Material>, Integer> GetCountedMaterials(){
         return this.amountOfMaterials;
     }
 }

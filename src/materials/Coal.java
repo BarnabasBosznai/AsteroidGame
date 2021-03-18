@@ -2,7 +2,7 @@ package materials;
 
 public class Coal extends Material {
     @Override
-    public void count(MaterialCounter counter) {
-        counter.count(Coal.class);
+    public void Count(MaterialCounter counter) {
+        counter.Count(Coal.class);
     }
 }
