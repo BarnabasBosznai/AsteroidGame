@@ -7,7 +7,7 @@ public class Uranium extends RadioactiveMaterial {
     public void Count(MaterialCounter counter) {
 
         Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this,"Count()");
+        Skeleton.getInstance().Print(this,"Count(MaterialCounter counter)");
         Skeleton.getInstance().tabDecrement();
         counter.Count(Uranium.class);
     }
