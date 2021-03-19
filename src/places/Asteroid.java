@@ -106,7 +106,7 @@ public class Asteroid extends Place {
     }
 
     public boolean PlaceMaterial(Material material) {
-        if(this.material != null){
+        if(thickness == 0 && this.material == null){
             this.material = material;
             return true;
         }
