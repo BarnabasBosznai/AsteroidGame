@@ -112,10 +112,6 @@ public class Game {
     }
 
     public void RemoveSettler(Settler settler) {
-        /**
-         * Ez kell a Settlernek, így csak definiáltam itt.
-         * Aki megírja az törölje ki ezt a kommentet.
-         *      Bobó
-         */
+        this.settlers.remove(settler);
     }
 }

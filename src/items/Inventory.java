@@ -3,6 +3,7 @@ package items;
 import interfaces.Item;
 import materials.Material;
 import materials.MaterialStorage;
+import places.TeleportGate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,5 +49,21 @@ public class Inventory extends MaterialStorage {
 
     public void RemoveItem(Item item) {
         items.remove(item);
+    }
+
+    public Item GetItem(Class<? extends Item> itemType){
+        Item searchHelperItem;
+        if(itemType == TeleportGate.class)
+            searchHelperItem = new TeleportGate();
+        else
+            return null;
+
+        for(Item item : items){
+            if(item.CompatibleWith(searchHelperItem)) {
+                return item;
+            }
+        }
+
+        return null;
     }
 }
