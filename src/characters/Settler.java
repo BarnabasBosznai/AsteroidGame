@@ -57,6 +57,7 @@ public class Settler extends Character {
         Material material = asteroid.RemoveMaterial();
 
         if (material!=null){
+
             if (inventory.AddMaterial(material)) {
 
                 asteroid.PlaceMaterial(material);
@@ -177,8 +178,8 @@ public class Settler extends Character {
                     break;
                 case (6): // Place Material
                     // Vagyis tudja a halál, de ez is a menüből kéne kiválasztani.
-                    Material choosenMaterial = new Coal();
-                    failed = PlaceMaterial(choosenMaterial);
+                    //Material choosenMaterial = new Coal();
+                    //failed = PlaceMaterial(choosenMaterial);
                     break;
                 case (7): // Install Teleport
                     failed = PlaceTeleportGate();
