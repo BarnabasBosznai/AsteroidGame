@@ -19,7 +19,7 @@ public class Skeleton {
 
     private int hol_van;
 
-    private static int tabValue;
+    private int tabValue;
 
     public static Skeleton getInstance() {
         if(instance == null)
@@ -28,7 +28,7 @@ public class Skeleton {
         return instance;
     }
 
-    public static void Print(Object o, String s) {
+    public void Print(Object o, String s) {
         for (int i = 0; i < tabValue; ++i)
         {
             System.out.print(" | ");
@@ -62,13 +62,13 @@ public class Skeleton {
     }
 
     //Tabulálás növelése
-    public static void tabIncrement()
+    public  void tabIncrement()
     {
         tabValue++;
     }
 
     //Tabulálás csökkentése
-    public static void tabDecrement()
+    public  void tabDecrement()
     {
         if(tabValue==0)
         {
