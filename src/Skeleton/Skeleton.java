@@ -7,6 +7,7 @@ import items.Inventory;
 import main.Game;
 import materials.Material;
 import places.Asteroid;
+import places.AsteroidBelt;
 import places.Place;
 import places.TeleportGate;
 import java.util.Scanner;
@@ -59,6 +60,14 @@ public class Skeleton {
         telepes.SetAsteroid(asteroid);
 
         telepes.Mine();
+    }
+
+    private void nearSun() {
+        AsteroidBelt.getInstance().NearSun();
+    }
+
+    private void solarFlare() {
+        AsteroidBelt.getInstance().SolarFlare();
     }
 
     //Tabulálás növelése

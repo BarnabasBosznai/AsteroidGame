@@ -1,5 +1,6 @@
 package characters;
 
+import Skeleton.Skeleton;
 import items.CraftingTable;
 import items.Inventory;
 import main.Game;
@@ -24,37 +25,55 @@ public class Settler extends Character {
     }
 
     public void HitByExplosion() {
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this, "HitByExplosion()");
+
         die();
+
+        Skeleton.getInstance().tabDecrement();
     }
 
     @Override
     public void HitByStorm() {
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this, "HitByStorm()");
+
         die();
+
+        Skeleton.getInstance().tabDecrement();
     }
     /// Eddig
 
 
     @Override
     public boolean Move() {
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this, "Mine()");
+
         List<Place> destinations = this.asteroid.getNeighbors();
 
-        /**
-         * Ezt a menüben ábrázolni kell.
-         * Hogy tudni lehessen, hova lehet menni.
-         */
-        Place choosenDestination = destinations.get(0);
+        Skeleton.getInstance().Print(this,"Hanyadik uticélt választod? (0-"+(destinations.size()-1)+")");
+        String input = Skeleton.getInstance().GetInput("Adj meg egy sorszámot: ");
+        int index = Integer.parseInt("input");
+
+        Place choosenDestination = destinations.get(index);
         Asteroid currentAsteroid = this.asteroid;
 
         if(choosenDestination.Move(this)){
             currentAsteroid.TakeOff(this);
 
+            Skeleton.getInstance().tabDecrement();
             return true;
         }
 
+        Skeleton.getInstance().tabDecrement();
         return false;
     }
 
     public boolean Mine() {
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this, "Mine()");
+
         Material material = asteroid.RemoveMaterial();
 
         if (material!=null){
@@ -65,25 +84,46 @@ public class Settler extends Character {
             }
 
             else {
+
+                Skeleton.getInstance().tabDecrement();
                 return true;
             }
         }
+
+        Skeleton.getInstance().tabDecrement();
         return false;
     }
 
     public boolean CraftRobot() {
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this, "CraftRobot()");
 
-        return CraftingTable.getInstance().Craft(Robot.class, this);
+        boolean ret = CraftingTable.getInstance().Craft(Robot.class, this);
+        Skeleton.getInstance().tabDecrement();
+        return ret;
     }
 
     public boolean CraftTeleportGates() {
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this, "CraftTeleportGates()");
+
         TeleportGate teleportGate = GetTeleportGate();
-        if (teleportGate==null)
-            return CraftingTable.getInstance().Craft(TeleportGate.class, this);
+        if (teleportGate==null) {
+            boolean ret = CraftingTable.getInstance().Craft(TeleportGate.class, this);
+
+            Skeleton.getInstance().tabDecrement();
+            return ret;
+        }
+
+        Skeleton.getInstance().tabDecrement();
         return false;
     }
 
     public boolean PlaceTeleportGate() {
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this, "PlaceTeleportGate()");
+
+        // Itt már van vagy nincs kérdés?
         TeleportGate teleportGate = GetTeleportGate();
 
         if (teleportGate!=null){
@@ -91,23 +131,22 @@ public class Settler extends Character {
 
             inventory.RemoveItem(teleportGate);
 
+            Skeleton.getInstance().tabDecrement();
             return true;
         }
 
+        Skeleton.getInstance().tabDecrement();
         return false;
     }
 
     public TeleportGate GetTeleportGate() {
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this,"GetTeleportGate()");
         /**
-         * Ez még jó kérdés.
-         * Jelenleg ilyen kérést nem tudok intézni az Inventory felé.
-         *
          * Invetory-nak a RemoveItem-je csak void-os, és azzal nem lehet dolgozni.
          * Ha meg boolean-es lenne az meg nem jó.
          * Mert kiveszed az inventory-ból, majd újra meghívod később a RemoveItem-et.
          *
-         * A RemoveItem arra épít, hogy tudom már, hogy van teleportGate-m.
-         * Ezért kell valami más, amivel megkérdem az Inventory-t, hogy van-e.
          * Esetleg ha egy darabszámot adna vissza, akkor tudnánk a feladatleírásban lévő,
          * "max. 4 teleportkapu lehet egy telepesnél egyszerre" kitételt megvalósítani.
          * GetTeleportGateCount függvény teljesen megfelelne, csak nem OO.
@@ -115,47 +154,72 @@ public class Settler extends Character {
          * A GetItem ad egy másolatot, amivel lehet dolgozni.
          * A RemoveItem meg eltávolítja az Itemet.
          *
-         *      Bobó
+         *      Bobó v2
          */
-        return (TeleportGate) this.inventory.GetItem(TeleportGate.class);
 
-        // Ez csak a kód lefutásához kell, jelenleg rossz.
+        // Ilyet szabad, mármint a kasztolás
+        TeleportGate retTeleportGate = (TeleportGate) this.inventory.GetItem(TeleportGate.class);
+
+        Skeleton.getInstance().tabDecrement();
+
+        return retTeleportGate;
     }
 
     public Inventory GetInventory(){
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this,"GetInventory()");
+
+        Skeleton.getInstance().tabDecrement();
         return inventory;
     }
 
     public Asteroid GetAsteroid(){
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this,"GetAsteroid()");
+
+        Skeleton.getInstance().tabDecrement();
         return asteroid;
     }
 
     public boolean PlaceMaterial(Material material) {
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this,"PlaceMaterial("+material.getClass().getSimpleName()+")");
+
         Material pickedMaterial = inventory.RemoveMaterial(material);
         if (pickedMaterial!=null){
             if (!asteroid.PlaceMaterial(pickedMaterial)){
                 inventory.AddMaterial(pickedMaterial);
+
+                Skeleton.getInstance().tabDecrement();
                 return false;
             }
+
+            Skeleton.getInstance().tabDecrement();
             return true;
         }
 
+        Skeleton.getInstance().tabDecrement();
         return false;
     }
 
     public boolean Drill() {
-        return asteroid.Drilled();
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this,"Drill()");
+
+        boolean ret = asteroid.Drilled();
+
+        Skeleton.getInstance().tabDecrement();
+        return ret;
     }
 
     @Override
     public void Step() {
         /**
-         * Menü kerül ide.
+         * Menü kerül ide. De nem a Skeleton-ban, mert itt nincs Step, csak a UseCase-ek.
          * Ez lenne a Use-Case vezérelte rész.
-         * Ezt megvalósítom szívesen magam is, csak ne legyen ez probléma később.
          */
 
-        int input = (int)(Math.random()*7);  // Ez a lényege majd a menünek.
+        int input = (int)(Math.random()*7);  // Ez a lényege majd a menünek. Jelenleg nem használjuk ezt a függvényt egyáltalán.
 
 
         boolean failed = true;

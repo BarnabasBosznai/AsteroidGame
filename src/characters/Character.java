@@ -1,5 +1,6 @@
 package characters;
 
+import Skeleton.Skeleton;
 import main.Game;
 import places.Asteroid;
 import interfaces.Steppable;
@@ -15,37 +16,49 @@ public abstract class Character implements Steppable {
     abstract public void HitByExplosion();  // Nem általános egyikük függvénye sem.
 
     public void HitByStorm() { // Robot-nak ez a függvénye.
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this,"HitByStorm()");
+
         Game.getInstance().RemoveSteppable(this);
         asteroid.TakeOff(this);
+
+        Skeleton.getInstance().tabDecrement();
     }
 
     public boolean Move() { // Véletlenszerű mozgás
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this,"Move()");
+
         List<Place> destinations = this.asteroid.getNeighbors();
 
         double random = Math.random()*(destinations.size()-1);
         Place choosenDestination = destinations.get((int)random);
-        // Akinek van jobb (jó) ötlete random számot generálni, arra nyitott vagyok.
 
         Asteroid currentAsteroid = this.asteroid;
 
         if(choosenDestination.Move(this)){
             currentAsteroid.TakeOff(this);
 
+            Skeleton.getInstance().tabDecrement();
             return true;
         }
 
+        Skeleton.getInstance().tabDecrement();
         return false;
 
         /**
-         * Nem hívja meg senki ezt a függvényt kívülről.
          * Csak a Robotnál érdekes.
-         * De így hagyom amíg felül nem bíráljuk.
-         *      Bobó
+         *      Bobó v2
          */
 
     }
 
     public void SetAsteroid(Asteroid asteroid){
+        Skeleton.getInstance().tabIncrement();
+        Skeleton.getInstance().Print(this," SetAsteroid(Asteroid)");
+
         this.asteroid = asteroid;
+
+        Skeleton.getInstance().tabDecrement();
     }
 }

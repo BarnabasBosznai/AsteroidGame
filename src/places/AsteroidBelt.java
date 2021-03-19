@@ -44,7 +44,7 @@ public class AsteroidBelt implements Steppable {
         return indexes;
     }
 
-    private void NearSun() {
+    public void NearSun() {
         var indexes = this.RandomAsteroids();
 
         for(Integer idx : indexes){
@@ -52,7 +52,7 @@ public class AsteroidBelt implements Steppable {
         }
     }
 
-    private void SolarFlare() {
+    public void SolarFlare() {
         var indexes = this.RandomAsteroids();
 
         for(Integer idx : indexes){
