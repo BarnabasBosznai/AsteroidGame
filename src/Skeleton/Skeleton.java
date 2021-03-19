@@ -19,7 +19,7 @@ public class Skeleton {
 
     private int hol_van;
 
-    private int tabValue;
+    private static int tabValue;
 
     public static Skeleton getInstance() {
         if(instance == null)
@@ -62,13 +62,13 @@ public class Skeleton {
     }
 
     //Tabulálás növelése
-    public  void tabIncrement()
+    public void tabIncrement()
     {
         tabValue++;
     }
 
     //Tabulálás csökkentése
-    public  void tabDecrement()
+    public void tabDecrement()
     {
         if(tabValue==0)
         {
