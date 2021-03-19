@@ -6,16 +6,22 @@ import places.Asteroid;
 public class WaterIce extends Material {
     @Override
     public void OnNearSun(Asteroid asteroid) {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this,"OnNearSun(Asteroid asteroid)");
-        Skeleton.getInstance().tabDecrement();
+        Skeleton skeleton = Skeleton.getInstance();
+        skeleton.tabIncrement();
+        skeleton.Print(this,"OnNearSun(Asteroid asteroid)");
+
         asteroid.RemoveMaterial();
+
+        skeleton.tabDecrement();
     }
     @Override
     public void Count(MaterialCounter counter) {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this,"Count(MaterialCounter counter)");
-        Skeleton.getInstance().tabDecrement();
+        Skeleton skeleton = Skeleton.getInstance();
+        skeleton.tabIncrement();
+        skeleton.Print(this,"Count(MaterialCounter counter)");
+
         counter.Count(WaterIce.class);
+
+        skeleton.tabDecrement();
     }
 }

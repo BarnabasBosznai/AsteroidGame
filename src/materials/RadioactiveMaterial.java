@@ -8,7 +8,9 @@ public abstract class RadioactiveMaterial extends Material {
     public void OnNearSun(Asteroid asteroid) {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this,"OnNearSun(Asteroid asteroid)");
-        Skeleton.getInstance().tabDecrement();
+
         asteroid.Explosion();
+
+        Skeleton.getInstance().tabDecrement();
     }
 }
