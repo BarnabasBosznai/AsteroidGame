@@ -1,5 +1,6 @@
 package places;
 
+import Skeleton.Skeleton;
 import characters.Character;
 import materials.*;
 
@@ -31,47 +32,90 @@ public class Asteroid extends Place {
     }
 
     public boolean Drilled() {
-        if((thickness - 1) == 0) {
-            thickness--;
-            return true;
-        } else {
-            return false;
-        }
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "Drilled()");
+        boolean res = instance.GetInput("Az aszteroida le van fúrva? [I/N]: ").equalsIgnoreCase("i");
+        instance.tabDecrement();
+        return !res;
     }
 
     public Material RemoveMaterial() {
-        if(thickness == 0 && material != null) {
-            Material ret = material;
-            material = null;
-            return ret;
-        } else {
-            return null;
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "RemoveMaterial()");
+        if(instance.GetInput("Az aszteroida le van fúrva? [I/N]: ").equalsIgnoreCase("i")) {
+            if (instance.GetInput("Az aszteroidában van nyersanyag? [I/N]: ").equalsIgnoreCase("i")) {
+                Material ret = material;
+                material = null;
+                instance.tabDecrement();
+                return ret;
+            }
         }
+        instance.tabDecrement();
+        return null;
     }
 
     public void SolarFlare() {
-        for(Character character : characters)
-            character.HitByStorm();
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "SolarFlare()");
+
+        boolean res1 = instance.GetInput("Az aszteroida teljesen le van fúrva? [I/N]: ").equalsIgnoreCase("i");
+        boolean res2 = instance.GetInput("Az aszteroida üreges? [I/N]: ").equalsIgnoreCase("i");
+        if(!res1 || !res2)
+            for (Character character : characters)
+                character.HitByStorm();
+
+        instance.tabDecrement();
     }
 
     public void TakeOff(Character character) {
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "TakeOff("+ character.getClass().getSimpleName() +")");
+
         this.characters.remove(character);
+
+        instance.tabDecrement();
     }
 
     public void PlaceTeleport(TeleportGate teleportGate) {
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "PlaceTeleport(TeleportGate)");
+
         this.teleportGates.add(teleportGate);
         teleportGate.SetAsteroid(this);
+
+        instance.tabDecrement();
     }
 
     public void AddNeighbors(Asteroid asteroid) {
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "AddNeighbors(Asteroid)");
+
         this.neighbors.add(asteroid);
+
+        instance.tabDecrement();
     }
 
     public void RemoveNeighbor(Asteroid asteroid) {
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "RemoveNeighbor(Asteroid)");
+
         this.neighbors.remove(asteroid);
+
+        instance.tabDecrement();
     }
 
     public void Explosion() {
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "Explosion()");
+
         for(Character character : characters)
             character.HitByExplosion();
 
@@ -79,39 +123,78 @@ public class Asteroid extends Place {
 
         for(TeleportGate teleportGate : teleportGates)
             teleportGate.RemoveFromAsteroid();
+
+        instance.tabDecrement();
     }
 
     public void NearSun() {
-        if(thickness == 0 && material != null)
-            material.OnNearSun(this);
-
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "NearSun()");
+        if(!instance.GetInput("Az aszteroida üreges? [I/N]").equalsIgnoreCase("i")) {
+            if (instance.GetInput("Az aszteroida teljesen le van fúrva? [I/N]").equalsIgnoreCase("i")) {
+                String res = instance.GetInput("Mi az aszteroida nyersanyaga? [V/J/U/S]: ");
+                if(res.equalsIgnoreCase("u"))
+                    new Uranium().OnNearSun(this);
+                else if(res.equalsIgnoreCase("v"))
+                    new WaterIce().OnNearSun(this);
+                else
+                    new Coal().OnNearSun(this);
+            }
+        }
+        instance.tabDecrement();
     }
 
     public void RemoveTeleportGate(TeleportGate teleportGate) {
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "RemoveTeleportGate(TeleportGate)");
+
         this.teleportGates.remove(teleportGate);
+
+        instance.tabDecrement();
     }
 
     public List<Place> getNeighbors() {
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "getNeighbors()");
+
         List<Place> ret = new ArrayList<>(neighbors);
         ret.addAll(teleportGates);
+
+        instance.tabDecrement();
 
         return ret;
     }
 
     @Override
     public boolean Move(Character character) {
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "Move(" + character.getClass().getSimpleName() + ")");
+
         this.characters.add(character);
         character.SetAsteroid(this);
+
+        instance.tabDecrement();
+
         return true;
     }
 
     public boolean PlaceMaterial(Material material) {
-        if(thickness == 0 && this.material == null){
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        instance.Print(this, "PlaceMaterial(" + material.getClass().getSimpleName() + ")");
+
+        if(instance.GetInput("Le lehet helyezni nyersanyagot az aszteroidára? [I/N]: ").equalsIgnoreCase("i")) {
             this.material = material;
+            instance.tabDecrement();
             return true;
-        }
-        else
+        } else {
+            instance.tabDecrement();
             return false;
+        }
     }
 
 }
