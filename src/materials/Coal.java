@@ -8,7 +8,7 @@ public class Coal extends Material {
     public void Count(MaterialCounter counter) {
         Skeleton skeleton = Skeleton.getInstance();
         skeleton.tabIncrement();
-        skeleton.Print(this,"Count(MaterialCounter counter)");
+        skeleton.Print(this,"Count(" +counter.getClass().getSimpleName()+ ")");
 
         counter.Count(Coal.class);
 

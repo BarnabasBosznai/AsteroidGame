@@ -7,7 +7,7 @@ public abstract class Material {
     public void OnNearSun(Asteroid asteroid) {
         Skeleton skeleton = Skeleton.getInstance();
         skeleton.tabIncrement();
-        skeleton.Print(this,"OnNearSun(Asteroid asteroid)");
+        skeleton.Print(this,"OnNearSun("+asteroid.getClass().getSimpleName()+")");
 
         skeleton.tabDecrement();
     }
