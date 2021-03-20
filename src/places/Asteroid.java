@@ -35,7 +35,7 @@ public class Asteroid extends Place {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
         instance.Print(this, "Drilled()");
-        boolean res = instance.GetInput("Az aszteroida le van fúrva? [I/N]: ").equalsIgnoreCase("i");
+        boolean res = instance.GetInput("Az aszteroida le van fúrva? [I/N]: ").equalsIgnoreCase("n");
         instance.tabDecrement();
         return !res;
     }

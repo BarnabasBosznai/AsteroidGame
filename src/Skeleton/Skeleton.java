@@ -1,6 +1,8 @@
 package Skeleton;
 
+import characters.Robot;
 import characters.Settler;
+import materials.Material;
 import places.Asteroid;
 import places.AsteroidBelt;
 import java.util.Scanner;
@@ -74,6 +76,27 @@ public class Skeleton {
                 case (3):
                     drillMenu();
                     break;
+                case (4):
+                    buildRobotMenu();
+                    break;
+                case (5):
+                    buildTeleportMenu();
+                    break;
+                case (6):
+                    placeMaterialMenu();
+                    break;
+                case (7):
+                    installTeleportMenu();
+                    break;
+                case (8):
+                    nearSunMenu();
+                    break;
+                case (9):
+                    solarFlareMenu();
+                    break;
+                case (10):
+                    controlRobotMenu();
+                    break;
             }
 
 
@@ -81,6 +104,9 @@ public class Skeleton {
 
 
     }
+
+
+
 
     private static void moveMenu() {
         Settler telepes = new Settler();
@@ -113,6 +139,59 @@ public class Skeleton {
         telepes.SetAsteroid(asteroid1);
 
         telepes.Drill();
+    }
+
+    private static void buildRobotMenu() {
+        Settler telepes = new Settler();
+        Asteroid asteroid1 = new Asteroid();
+        telepes.SetAsteroid(asteroid1);
+
+        telepes.CraftRobot();
+    }
+
+    private static void buildTeleportMenu() {
+        Settler telepes = new Settler();
+        Asteroid asteroid1 = new Asteroid();
+        telepes.SetAsteroid(asteroid1);
+
+        telepes.CraftTeleportGates();
+    }
+
+    private static void placeMaterialMenu() {
+        Settler telepes = new Settler();
+        Asteroid asteroid1 = new Asteroid();
+        telepes.SetAsteroid(asteroid1);
+
+        // Itt kell már valami nyersanyagot rendesen kiválasztani
+        //telepes.PlaceMaterial();
+    }
+
+    private static void installTeleportMenu() {
+        Settler telepes = new Settler();
+        Asteroid asteroid1 = new Asteroid();
+        telepes.SetAsteroid(asteroid1);
+
+        //telepes.AddItem(new TeleportGate()); itt még bármi lehet..., ugyanis egy pár kell
+    }
+
+    private static void nearSunMenu() {
+        AsteroidBelt.getInstance().NearSun();
+    }
+
+    private static void solarFlareMenu() {
+        AsteroidBelt.getInstance().SolarFlare();
+    }
+
+    private static void controlRobotMenu() {
+        Robot robot = new Robot();
+        Asteroid asteroid1 = new Asteroid();
+        Asteroid asteroid2 = new Asteroid();
+        asteroid1.AddNeighbors(asteroid2);
+        asteroid2.AddNeighbors(asteroid1);
+
+        robot.SetAsteroid(asteroid1);
+
+        robot.Step();
     }
 
 

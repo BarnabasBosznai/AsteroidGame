@@ -1,6 +1,7 @@
 package characters;
 
 import Skeleton.Skeleton;
+import interfaces.Item;
 import items.CraftingTable;
 import items.Inventory;
 import main.Game;
@@ -212,9 +213,13 @@ public class Settler extends Character {
         Skeleton.getInstance().Print(this,"Drill()");
 
         boolean ret = asteroid.Drilled();
-
+        System.out.println(ret);
         Skeleton.getInstance().tabDecrement();
         return ret;
+    }
+
+    public void AddItem(Item item) {
+        inventory.AddItem(item);
     }
 
     @Override
