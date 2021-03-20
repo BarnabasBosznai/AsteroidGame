@@ -1,6 +1,8 @@
 package places;
 
+import Skeleton.Skeleton;
 import interfaces.Steppable;
+import materials.MaterialStorage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +20,14 @@ public class AsteroidBelt implements Steppable {
     }
 
     private AsteroidBelt() {
+
+        Skeleton skeleton = Skeleton.getInstance();
+        skeleton.tabIncrement();
+        skeleton.Print(this, "create(" + AsteroidBelt.class.getSimpleName() + ")");
+
         this.asteroids = new ArrayList<>();
+
+        skeleton.tabDecrement();
     }
 
     @Override
@@ -27,10 +36,19 @@ public class AsteroidBelt implements Steppable {
     }
 
     public void AsteroidExploded(Asteroid asteroid) {
+        Skeleton skeleton = Skeleton.getInstance();
+        skeleton.tabIncrement();
+        skeleton.Print(this, "AsteroidExploded("+ asteroid.getClass().getSimpleName() +" )");
+
         this.asteroids.remove(asteroid);
+
+        skeleton.tabDecrement();
     }
 
     private List<Integer> RandomAsteroids(){
+        Skeleton skeleton = Skeleton.getInstance();
+        skeleton.tabIncrement();
+        skeleton.Print(this, "RandomAsteroids()");
         List<Integer> indexes = new ArrayList<Integer>();
         for (int i = 0; i < asteroids.size(); ++i) {
             indexes.add(i);
@@ -45,18 +63,30 @@ public class AsteroidBelt implements Steppable {
     }
 
     public void NearSun() {
+        Skeleton skeleton = Skeleton.getInstance();
+        skeleton.tabIncrement();
+        skeleton.Print(this, "NearSun()");
+
         var indexes = this.RandomAsteroids();
 
         for(Integer idx : indexes){
             asteroids.get(idx).NearSun();
         }
+
+        skeleton.tabDecrement();
     }
 
     public void SolarFlare() {
+        Skeleton skeleton = Skeleton.getInstance();
+        skeleton.tabIncrement();
+        skeleton.Print(this, "SolarFlareSun()");
+
         var indexes = this.RandomAsteroids();
 
         for(Integer idx : indexes){
             asteroids.get(idx).SolarFlare();
         }
+
+        skeleton.tabDecrement();
     }
 }

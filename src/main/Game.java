@@ -1,5 +1,6 @@
 package main;
 
+import Skeleton.Skeleton;
 import characters.Settler;
 import interfaces.Steppable;
 import materials.Coal;
@@ -29,8 +30,14 @@ public class Game {
     }
 
     private Game(){
+
+        Skeleton skeleton = Skeleton.getInstance();
+        skeleton.tabIncrement();
+        skeleton.Print(this, "create(" + AsteroidBelt.class.getSimpleName() + ")");
         this.settlers = new ArrayList<>();
         this.steppables = new ArrayList<>();
+
+        skeleton.tabDecrement();
     }
 
     public void Start() {
