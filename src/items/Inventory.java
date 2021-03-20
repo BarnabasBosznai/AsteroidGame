@@ -35,11 +35,11 @@ public class Inventory extends MaterialStorage {
             materials.add(material);
 
             skeleton.tabDecrement();
-            return true;
+            return false;   // mert a diagramon a failed-nek kell megfelelnie
         }
         else{
             skeleton.tabDecrement();
-            return false;
+            return true;
         }
     }
 

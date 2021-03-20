@@ -55,7 +55,7 @@ public abstract class Character implements Steppable {
 
     public void SetAsteroid(Asteroid asteroid){
         Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this," SetAsteroid(Asteroid)");
+        Skeleton.getInstance().Print(this,"SetAsteroid(Asteroid)");
 
         this.asteroid = asteroid;
 

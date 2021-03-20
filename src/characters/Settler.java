@@ -16,6 +16,9 @@ import java.util.List;
 public class Settler extends Character {
     private Inventory inventory;
 
+    public Settler() {
+        inventory = new Inventory();
+    }
 
     // Privát függvényhívások a szekvenciadiagromokon kívül mennek.
     private void die() {
@@ -54,7 +57,9 @@ public class Settler extends Character {
 
         Skeleton.getInstance().Print(this,"Hanyadik uticélt választod? (0-"+(destinations.size()-1)+")");
         String input = Skeleton.getInstance().GetInput("Adj meg egy sorszámot: ");
-        int index = Integer.parseInt("input");
+
+        Scanner scan = new Scanner(input);
+        int index = scan.nextInt();
 
         Place choosenDestination = destinations.get(index);
         Asteroid currentAsteroid = this.asteroid;
