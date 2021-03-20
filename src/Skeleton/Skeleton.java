@@ -1,18 +1,9 @@
 package Skeleton;
 
-
 import characters.Settler;
-import items.CraftingTable;
-import items.Inventory;
-import main.Game;
-import materials.Material;
 import places.Asteroid;
 import places.AsteroidBelt;
-import places.Place;
-import places.TeleportGate;
 import java.util.Scanner;
-
-import java.util.HashMap;
 
 public class Skeleton {
 
@@ -71,21 +62,15 @@ public class Skeleton {
     }
 
     //Tabulálás növelése
-    public void tabIncrement()
-    {
+    public void tabIncrement() {
         tabValue++;
     }
 
     //Tabulálás csökkentése
-    public void tabDecrement()
-    {
-        if(tabValue==0)
-        {
+    public void tabDecrement() {
+        if(tabValue == 0)
             return;
-        }
         tabValue--;
     }
-
-
 }
 
