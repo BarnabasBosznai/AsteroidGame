@@ -33,7 +33,7 @@ public class Game {
 
         Skeleton skeleton = Skeleton.getInstance();
         skeleton.tabIncrement();
-        skeleton.Print(this, "create(" + AsteroidBelt.class.getSimpleName() + ")");
+        skeleton.Print(this, "create(" + Game.class.getSimpleName() + ")");
         this.settlers = new ArrayList<>();
         this.steppables = new ArrayList<>();
 

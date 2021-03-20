@@ -54,11 +54,13 @@ public class AsteroidBelt implements Steppable {
             indexes.add(i);
         }
 
-        Collections.shuffle(list);
+        Collections.shuffle(indexes);
         int num = (int) (asteroids.size() * 0.1);
         for(int i = 0; i < asteroids.size() - num; ++i){
             indexes.remove(i);
         }
+
+        skeleton.tabDecrement();
         return indexes;
     }
 
