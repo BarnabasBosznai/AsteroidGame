@@ -163,13 +163,15 @@ public class Asteroid extends Place {
         for(int i = 0; i < n; i++)
             characters.get(0).HitByExplosion();
 
-        AsteroidBelt.getInstance().AsteroidExploded(this);
+
 
         for(TeleportGate teleportGate : teleportGates)
             teleportGate.RemoveFromAsteroid();
 
         for(Asteroid asteroid: neighbors)
             asteroid.RemoveNeighbor(this);
+
+        AsteroidBelt.getInstance().AsteroidExploded(this);
 
         instance.tabDecrement();
     }
