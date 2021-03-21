@@ -13,13 +13,25 @@ import java.util.Scanner;
 
 import java.util.List;
 
+/**
+ * A telepeseket reprezentáló osztály. A játékos velük interaktál közvetlenül
+ */
 public class Settler extends Character {
+    /**
+     * A játékos inventoryja, amiben a nála található dolgokat tárolja.
+     */
     private Inventory inventory;
 
+    /**
+     * Settler konstruktora
+     */
     public Settler() {
         inventory = new Inventory();
     }
 
+    /**
+     * Settler "destruktora"
+     */
     // Privát függvényhívások a szekvenciadiagromokon kívül mennek.
     private void die() {
         Game.getInstance().RemoveSteppable(this);
@@ -27,6 +39,10 @@ public class Settler extends Character {
         asteroid.TakeOff(this);
     }
 
+    /**
+     * Lereagálja, hogy az aszteroida, amin a telepes éppen
+     * tartózkodik felrobbant. Törli magát mindenhonnan, ahol nyilván volt tartva.
+     */
     public void HitByExplosion() {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this, "HitByExplosion()");
@@ -36,6 +52,10 @@ public class Settler extends Character {
         Skeleton.getInstance().tabDecrement();
     }
 
+    /**
+     * Lereagálja, hogy az aszteroida, amin a telepes éppen tartózkodik
+     * napviharba került. Törli magát mindenhonnan, ahol nyilván volt tartva.
+     */
     @Override
     public void HitByStorm() {
         Skeleton.getInstance().tabIncrement();
@@ -47,7 +67,11 @@ public class Settler extends Character {
     }
     /// Eddig
 
-
+    /**
+     * A játékos mozgás metódusa, ami egyik aszteroidáról egy másikra
+     * viszi át.Ha sikerült akkor true,ha nem akkor false.
+     * @return
+     */
     @Override
     public boolean Move() {
         Skeleton.getInstance().tabIncrement();
@@ -75,6 +99,12 @@ public class Settler extends Character {
         return false;
     }
 
+    /**
+     * A telepes megpróbálja kinyeri az aszteroidában található
+     * nyersanyagot. Ha az aszteroida magja üres, akkor False a visszatérési érték, ha sikerült
+     * a bányászás, akkor True
+     * @return
+     */
     public boolean Mine() {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this, "Mine()");
@@ -99,6 +129,11 @@ public class Settler extends Character {
         return false;
     }
 
+    /**
+     * A telepes ezzel készít robotot. Ha sikerült a craftolás, a
+     * visszatérési érték True, egyébként False.
+     * @return
+     */
     public boolean CraftRobot() {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this, "CraftRobot()");
@@ -108,6 +143,11 @@ public class Settler extends Character {
         return ret;
     }
 
+    /**
+     * A telepes ezzel készít teleportkapupárt. Ha sikerült a
+     * craftolás, a visszatérési érték True, egyébként False.
+     * @return
+     */
     public boolean CraftTeleportGates() {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this, "CraftTeleportGates()");
@@ -124,6 +164,12 @@ public class Settler extends Character {
         return false;
     }
 
+    /**
+     *  A telepes megpróbálja elhelyezni a nála található
+     * teleportkapupár egyik tagját az aszteroidáján. Ha sikerrel járt, a visszatérési érték
+     * True, egyébként False.
+     * @return
+     */
     public boolean PlaceTeleportGate() {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this, "PlaceTeleportGate()");
@@ -144,6 +190,10 @@ public class Settler extends Character {
         return false;
     }
 
+    /**
+     * Visszatér egy a telepesnél található teleportkapuval.
+     * @return
+     */
     public TeleportGate GetTeleportGate() {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this,"GetTeleportGate()");
@@ -170,6 +220,10 @@ public class Settler extends Character {
         return retTeleportGate;
     }
 
+    /**
+     * Inventory gettere
+     * @return
+     */
     public Inventory GetInventory(){
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this,"GetInventory()");
@@ -178,6 +232,10 @@ public class Settler extends Character {
         return inventory;
     }
 
+    /**
+     * Aktuális tartozkodási hely gettere
+     * @return
+     */
     public Asteroid GetAsteroid(){
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this,"GetAsteroid()");
@@ -186,6 +244,13 @@ public class Settler extends Character {
         return asteroid;
     }
 
+    /**
+     * Elhelyezi az aszteroida magjába a
+     * nyersanyagot tárolás céljából. Ha nem üres az aszteroida magja akkor false a
+     * visszatérési érték, ha sikeresen lehelyeztük akkor true.
+     * @param material
+     * @return
+     */
     public boolean PlaceMaterial(Material material) {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this,"PlaceMaterial("+material.getClass().getSimpleName()+")");
@@ -207,6 +272,12 @@ public class Settler extends Character {
         return false;
     }
 
+    /**
+     * Eggyel csökkenti az aszteroida köpenyének rétegét.True a
+     * visszatérési érték ha sikeresen végrehajtódott a művelet,false ha nem lehet tovább
+     * fúrni az aszteroidán mivel nincs már rajta köpeny réteg.
+     * @return
+     */
     public boolean Drill() {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this,"Drill()");
@@ -217,10 +288,18 @@ public class Settler extends Character {
         return ret;
     }
 
+    /**
+     * Az inventoryhoz hozzá ad egy itemet.
+     * @param item
+     */
     public void AddItem(Item item) {
         inventory.AddItem(item);
     }
 
+    /**
+     * A telepes lépésének végrehajtása. Itt választhat a játékos a végezhető
+     * tevékenységek közül (pl: move, drill, placeteleport, stb.)
+     */
     @Override
     public void Step() {
         /**
