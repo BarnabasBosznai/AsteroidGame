@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Az Asteroid osztály egy aszteroidát reprezentál, ami karakterek gyűjtőhelye. Az aszteroidán lévő karakterek
+ * különböző műveletek végzésére képesek.
+ */
 public class Asteroid extends Place {
     private int thickness;
     private Material material;
@@ -31,6 +35,11 @@ public class Asteroid extends Place {
         thickness = random.ints(2,6).findFirst().getAsInt();
     }
 
+    /**
+     * Csökkenti az aszteroida vastagságát.
+     * @return True-val tér vissza, ha a fúrás sikerrel járt(nem volt még teljesen lefúrva az aszteroida),
+     * False-al, ha nem(az aszteroida köpenye már teljesen át volt fúrva).
+     */
     public boolean Drilled() {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -40,6 +49,10 @@ public class Asteroid extends Place {
         return !res;
     }
 
+    /**
+     * Kiveszi az aszteroidában található nyersanyagot.
+     * @return Ha az aszteroida magjában van nyersanyag, visszatér a nyersanyaggal, ha nem volt, null-al.
+     */
     public Material RemoveMaterial() {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -56,6 +69,9 @@ public class Asteroid extends Place {
         return null;
     }
 
+    /**
+     * Napvihart kelt az aszteroidán. Meghívja az aszteroidán található karaktereken a saját HitByStorm metódusukat.
+     */
     public void SolarFlare() {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -80,6 +96,10 @@ public class Asteroid extends Place {
         instance.tabDecrement();
     }
 
+    /**
+     * Elhelyez egy teleportkaput az aszteroidán. Beállítja a teleportgate asteroid attribútumának saját magát.
+     * @param teleportGate
+     */
     public void PlaceTeleport(TeleportGate teleportGate) {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -91,7 +111,11 @@ public class Asteroid extends Place {
         instance.tabDecrement();
     }
 
-    public void AddNeighbors(Asteroid asteroid) {
+    /**
+     * Hozzáad egy aszteroidát az aszteroida szomszédsági listájához.
+     * @param asteroid
+     */
+    public void AddNeighbor(Asteroid asteroid) {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
         instance.Print(this, "AddNeighbors(Asteroid)");
@@ -101,6 +125,10 @@ public class Asteroid extends Place {
         instance.tabDecrement();
     }
 
+    /**
+     * Törli a szomszédsági listából a paraméterként kapott aszteroidát.
+     * @param asteroid
+     */
     public void RemoveNeighbor(Asteroid asteroid) {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -111,6 +139,10 @@ public class Asteroid extends Place {
         instance.tabDecrement();
     }
 
+    /**
+     *  Felrobbantja az aszteroidát. Meghívja a rajta található karaktereken a HitByExplosion metódusukat, jelez az
+     *  asteriodbeltnek, illetve megszünteti a teleportkapu összeköttetést, ha volt rajta éles teleportkapu.
+     */
     public void Explosion() {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -127,6 +159,10 @@ public class Asteroid extends Place {
         instance.tabDecrement();
     }
 
+    /**
+     * Ha az aszteroida teljesen le van fúrva, valamint a magja rendelkezik nyersanyaggal, meghívja a magjában
+     * található nyersanyagon az OnNearSun metódust.
+     */
     public void NearSun() {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -145,6 +181,10 @@ public class Asteroid extends Place {
         instance.tabDecrement();
     }
 
+    /**
+     * Eltávolítja az aszteroidáról a paraméterként kapott teleportkaput.
+     * @param teleportGate
+     */
     public void RemoveTeleportGate(TeleportGate teleportGate) {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -155,7 +195,11 @@ public class Asteroid extends Place {
         instance.tabDecrement();
     }
 
-    public List<Place> getNeighbors() {
+    /**
+     * Visszatér az aszteroidáról elérhető helyekkel.
+     * @return
+     */
+    public List<Place> GetNeighbors() {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
         instance.Print(this, "getNeighbors()");
@@ -182,6 +226,11 @@ public class Asteroid extends Place {
         return true;
     }
 
+    /**
+     * Visszahelyezi a paraméterül kapott nyersanyagot az aszteroida magjába.
+     * @param material
+     * @return True-val tér vissza, ha sikerült visszahelyezni, egyébként False.
+     */
     public boolean PlaceMaterial(Material material) {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();

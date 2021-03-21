@@ -2,7 +2,6 @@ package Skeleton;
 
 import characters.Robot;
 import characters.Settler;
-import materials.Material;
 import places.Asteroid;
 import places.AsteroidBelt;
 import java.util.Scanner;
@@ -113,10 +112,10 @@ public class Skeleton {
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
         Asteroid asteroid3 = new Asteroid();
-        asteroid1.AddNeighbors(asteroid2);
-        asteroid2.AddNeighbors(asteroid1);
-        asteroid1.AddNeighbors(asteroid3);
-        asteroid3.AddNeighbors(asteroid1);
+        asteroid1.AddNeighbor(asteroid2);
+        asteroid2.AddNeighbor(asteroid1);
+        asteroid1.AddNeighbor(asteroid3);
+        asteroid3.AddNeighbor(asteroid1);
 
 
         telepes.SetAsteroid(asteroid1);
@@ -186,8 +185,8 @@ public class Skeleton {
         Robot robot = new Robot();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
-        asteroid1.AddNeighbors(asteroid2);
-        asteroid2.AddNeighbors(asteroid1);
+        asteroid1.AddNeighbor(asteroid2);
+        asteroid2.AddNeighbor(asteroid1);
 
         robot.SetAsteroid(asteroid1);
 

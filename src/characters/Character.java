@@ -7,7 +7,6 @@ import interfaces.Steppable;
 import places.Place;
 
 import java.util.List;
-import java.util.Random;
 import java.lang.Math;
 
 public abstract class Character implements Steppable {
@@ -29,7 +28,7 @@ public abstract class Character implements Steppable {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this,"Move()");
 
-        List<Place> destinations = this.asteroid.getNeighbors();
+        List<Place> destinations = this.asteroid.GetNeighbors();
 
         double random = Math.random()*(destinations.size()-1);
         Place choosenDestination = destinations.get((int)random);

@@ -4,10 +4,19 @@ import Skeleton.Skeleton;
 import characters.Character;
 import interfaces.Item;
 
+/**
+ * Egy teleportkaput reprezentáló osztály. A teleportkapuk segítségével el tudnak jutni a karakterek olyan
+ * aszteroidákra is, amik alapból nem lennének szomszédosak. Ehhez szükséges a két aszteroidán elhelyezni a
+ * teleportkapupár egy-egy elemét, a teleportkapupár ezután lesz működőképes állapotban.
+ */
 public class TeleportGate extends Place implements Item {
     private Asteroid asteroid;
     private TeleportGate pair;
 
+    /**
+     * Beállítja a paraméterként kapott aszteroidát a sajét aszteroidájaként.
+     * @param asteroid
+     */
     public void SetAsteroid(Asteroid asteroid) {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -18,6 +27,10 @@ public class TeleportGate extends Place implements Item {
         instance.tabDecrement();
     }
 
+    /**
+     * Beállítja a paraméterként kapott teleportkaput a párjaként.
+     * @param teleportGate
+     */
     public void SetPair(TeleportGate teleportGate) {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -28,6 +41,10 @@ public class TeleportGate extends Place implements Item {
         instance.tabDecrement();
     }
 
+    /**
+     * Visszatért a teleportkapu aszteroidájával.
+     * @return
+     */
     public Asteroid GetAsteroid() {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -37,6 +54,9 @@ public class TeleportGate extends Place implements Item {
         return asteroid;
     }
 
+    /**
+     * Eltávolítja a teleportkaput a jelenlegi aszteroidájáról, illetve a párját is az övéről.
+     */
     public void RemoveFromAsteroid() {
         Skeleton instance = Skeleton.getInstance();
         instance.tabIncrement();
@@ -50,6 +70,11 @@ public class TeleportGate extends Place implements Item {
         instance.tabDecrement();
     }
 
+    /**
+     * Igazzal tér vissza, ha a paraméterként kapott Item ugyanolyan típusú, mint ő, egyébként hamis.
+     * @param item
+     * @return
+     */
     @Override
     public boolean CompatibleWith(Item item) {
         Skeleton instance = Skeleton.getInstance();
@@ -60,6 +85,11 @@ public class TeleportGate extends Place implements Item {
         return this.getClass() == item.getClass();
     }
 
+    /**
+     * Megpróbálja átteleportálni a charactert a teleportkapu párjának az aszteroidájára.
+     * @param character
+     * @return Ha a párját már lehelyezték valahova, létrejön a teleportálás és visszatér True-val, ha nem, False-al.
+     */
     @Override
     public boolean Move(Character character) {
         Skeleton instance = Skeleton.getInstance();

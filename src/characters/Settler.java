@@ -5,7 +5,6 @@ import interfaces.Item;
 import items.CraftingTable;
 import items.Inventory;
 import main.Game;
-import materials.Coal;
 import materials.Material;
 import places.Asteroid;
 import places.Place;
@@ -54,7 +53,7 @@ public class Settler extends Character {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this, "Mine()");
 
-        List<Place> destinations = this.asteroid.getNeighbors();
+        List<Place> destinations = this.asteroid.GetNeighbors();
 
         Skeleton.getInstance().Print(this,"Hanyadik uticélt választod? (0-"+(destinations.size()-1)+")");
         String input = Skeleton.getInstance().GetInput("Adj meg egy sorszámot: ");
