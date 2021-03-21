@@ -8,6 +8,9 @@ import materials.MaterialStorage;
 import java.util.List;
 
 public class Recipe extends MaterialStorage {
+    /**
+     * A recepthez tartozó Item típusa
+     */
     private final Class<? extends Item> itemType;
 
     public Recipe(Class<? extends Item> itemType, List<Material> materialList){
@@ -23,6 +26,10 @@ public class Recipe extends MaterialStorage {
         skeleton.tabDecrement();
     }
 
+    /**
+     * Visszatér a recepthez tartozó Item típusával
+     * @return
+     */
     public Class<? extends Item> GetItemType(){
         Skeleton skeleton = Skeleton.getInstance();
         skeleton.tabIncrement();

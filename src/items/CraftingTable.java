@@ -16,6 +16,9 @@ import java.util.Map;
 public class CraftingTable {
     private static CraftingTable instance;
 
+    /**
+     * Az összes craftolható eszközhöz tartozó recept nyilvántartása
+     */
     private final Map<Class<? extends Item>, Recipe> recipes;
 
     public static CraftingTable getInstance() {
@@ -35,6 +38,13 @@ public class CraftingTable {
         skeleton.tabDecrement();
     }
 
+    /**
+     * Igazzal tér vissza, ha sikerült
+     * megcraftolni az elkészítendő itemet, hamissal, ha nem
+     * @param itemType
+     * @param settler
+     * @return
+     */
     public boolean Craft(Class<? extends Item> itemType, Settler settler) {
         Skeleton skeleton = Skeleton.getInstance();
         skeleton.tabIncrement();
@@ -82,6 +92,15 @@ public class CraftingTable {
         }
     }
 
+    /**
+     * Megszámlálja az egyes tárolókban a különböző nyersanyagok számát, majd összehasonlítja őket,
+     * hogy az inventoryban van-e elég nyersanyag a recipe szerinti item craftolásához, ha
+     * igen, leveszi az inventory-ból a szükséges nyersanyagokat, majd visszatér igazzal. Ha
+     * nincs elég nyersanyag, hamissal tér vissza
+     * @param inventory
+     * @param recipe
+     * @return
+     */
     public boolean HasEnoughMaterial(Inventory inventory, Recipe recipe) {
         Skeleton skeleton = Skeleton.getInstance();
         skeleton.tabIncrement();
@@ -112,6 +131,10 @@ public class CraftingTable {
         return true;
     }
 
+    /**
+     * Hozzáad egy receptet az elkészítendő itemek receptjeihez
+     * @param recipe
+     */
     public void AddRecipe(Recipe recipe) {
         Skeleton skeleton = Skeleton.getInstance();
         skeleton.tabIncrement();

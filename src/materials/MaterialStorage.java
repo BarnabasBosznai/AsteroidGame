@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class MaterialStorage {
+
+    /**
+     * A tárolóban lévő nyersanyagok
+     */
     protected List<Material> materials;
 
     public MaterialStorage(){
@@ -19,6 +23,12 @@ public abstract class MaterialStorage {
         skeleton.tabDecrement();
     }
 
+    /**
+     * Hozzáadja a tárolóhoz a paraméterként
+     * kapott nyersanyagot
+     * @param material
+     * @return
+     */
     public boolean AddMaterial(Material material) {
         Skeleton skeleton = Skeleton.getInstance();
         skeleton.tabIncrement();
@@ -30,6 +40,11 @@ public abstract class MaterialStorage {
         return true;
     }
 
+    /**
+     * Visszaad egy listát arról, hogy
+     * melyik nyersanyagból mennyi található a tárolóban
+     * @return
+     */
     public Map<Class<? extends Material>, Integer> GetAmountOfMaterials(){
         Skeleton skeleton = Skeleton.getInstance();
         skeleton.tabIncrement();
@@ -45,6 +60,10 @@ public abstract class MaterialStorage {
         return materialCounter.GetCountedMaterials();
     }
 
+    /**
+     *  Visszatér a tárolt nyersanyagok listájával
+     * @return
+     */
     public List<Material> GetMaterials(){
         Skeleton skeleton = Skeleton.getInstance();
         skeleton.tabIncrement();
