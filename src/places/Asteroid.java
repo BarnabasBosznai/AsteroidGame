@@ -89,10 +89,9 @@ public class Asteroid extends Place {
 
         if(!instance.GetInput("Az aszteroida üreges? [I/N]: ").equalsIgnoreCase("i")) {
             int n = characters.size();
+            List<Character> copy = List.copyOf(characters);
             for(int i = 0; i < n; i++)
-                characters.get(0).HitByStorm();
-
-
+                copy.get(i).HitByStorm();
         }
         instance.tabDecrement();
     }
