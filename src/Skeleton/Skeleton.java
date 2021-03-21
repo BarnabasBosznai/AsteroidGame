@@ -222,9 +222,9 @@ public class Skeleton {
         telepes.SetAsteroid(asteroid1);
 
         Skeleton skeleton = Skeleton.getInstance();
-        String input = skeleton.GetInput("Van TeleportGate-je a telepesnek? (igen/nem)");
+        String input = skeleton.GetInput("Van TeleportGate-je a telepesnek? [I/N]");
 
-        if(input.equals("igen")){
+        if(input.equals("I")){
             TeleportGate teleportGate1 = new TeleportGate();
             TeleportGate teleportGate2 = new TeleportGate();
             teleportGate1.SetPair(teleportGate2);
