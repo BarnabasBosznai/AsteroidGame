@@ -145,6 +145,11 @@ public class Skeleton {
         }
     }
 
+    private static void asteroidBeltClear() {
+        AsteroidBelt asteroidBelt = AsteroidBelt.getInstance();
+        asteroidBelt.ClearAsteroids();
+    }
+
     private static void moveMenu() {
         Settler telepes = new Settler();
         Asteroid asteroid1 = new Asteroid();
@@ -240,11 +245,15 @@ public class Skeleton {
     }
 
     private static void nearSunMenu() {
+        asteroidBeltInit();
         AsteroidBelt.getInstance().NearSun();
+        asteroidBeltClear();
     }
 
     private static void solarFlareMenu() {
+        asteroidBeltInit();
         AsteroidBelt.getInstance().SolarFlare();
+        asteroidBeltClear();
     }
 
     private static void controlRobotMenu() {

@@ -11,8 +11,6 @@ import java.util.*;
  * aszteroidákat, állapotukat, illetve a közöttük lévő kapcsolatokat.
  */
 public class AsteroidBelt implements Steppable {
-
-
     private static AsteroidBelt instance;
 
     /**
@@ -112,5 +110,9 @@ public class AsteroidBelt implements Steppable {
 
     public void AddAsteroid(Asteroid asteroid) {
         asteroids.add(asteroid);
+    }
+
+    public void ClearAsteroids() {
+        asteroids.clear();
     }
 }
