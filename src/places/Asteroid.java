@@ -91,8 +91,9 @@ public class Asteroid extends Place {
             for(int i = 0; i < n; i++)
                 characters.get(0).HitByStorm();
 
-            instance.tabDecrement();
+
         }
+        instance.tabDecrement();
     }
 
     public void TakeOff(Character character) {
