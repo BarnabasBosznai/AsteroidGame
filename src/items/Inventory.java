@@ -52,8 +52,8 @@ public class Inventory extends MaterialStorage {
         skeleton.tabIncrement();
         skeleton.Print(this, "AddMaterial(" + material.getClass().getSimpleName() + ")");
 
-        String input = skeleton.GetInput("van elég hely? (igen / nem)");
-        if(input.equals("igen")) {
+        String input = skeleton.GetInput("van elég hely? [I/N]");
+        if(input.equals("I")) {
             materials.add(material);
 
             skeleton.tabDecrement();
