@@ -16,10 +16,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ *A Game osztály felelős a játék működéséért, ő tárolja kollektíven a játékban résztvevő
+ * entitásokat, valamint ő kérdezgeti a lépésre képes résztvevőit a játéknak, hogy mit csinálnak a
+ * jelenlegi körben.
+ */
 public class Game {
     private static Game instance;
 
+    /**
+     * A játékban található összes telepes (settler).
+     */
     private final List<Settler> settlers;
+
+    /**
+     * A játékban található lépésre képes (steppable) entitások.
+     */
     private final List<Steppable> steppables;
 
     public static Game getInstance() {
@@ -40,10 +52,19 @@ public class Game {
         skeleton.tabDecrement();
     }
 
+    /**
+     * Elvégzi a játék inicializálását, majd elindítja a játékot.
+     */
     public void Start() {
 
     }
 
+    /**
+     * Ellenőrzi, hogy véget ért-e a játék. Ha a telepesek
+     * nyertek (felépült a bázis), akkor True a visszatérési értéke, ha vesztetettek (minden
+     * telepes meghalt, vagy megnyerhetetlenné vált a játék), akkor False.
+     * @return
+     */
     public boolean CheckGameOver() {
         Map<Asteroid, Map<Class<? extends Material>, Integer>> asteroidMaterialAmounts = new HashMap<>();
 
@@ -106,18 +127,37 @@ public class Game {
         return false;
     }
 
-   public void AddSteppable(Steppable steppable) {
+    /**
+     * Felveszi a paraméterként kapott
+     * steppablet a nyilvántartásba.
+     * @param steppable
+     */
+    public void AddSteppable(Steppable steppable) {
         this.steppables.add(steppable);
-   }
+    }
 
+    /**
+     *  Eltávolítja a paraméterként kapott
+     * steppable-t a nyilvántartásból.
+     * @param steppable
+     */
     public void RemoveSteppable(Steppable steppable) {
         this.steppables.remove(steppable);
     }
 
+    /**
+     * Hozzáad egy settlert a nyilvántartásba.
+     * @param settler
+     */
     public void AddSettler(Settler settler) {
         this.settlers.add(settler);
     }
 
+    /**
+     *  Eltávolítja a paraméterként kapott settler-t a
+     * settlerek nyilvántartásából.
+     * @param settler
+     */
     public void RemoveSettler(Settler settler) {
         this.settlers.remove(settler);
     }
