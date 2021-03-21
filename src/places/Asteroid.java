@@ -77,13 +77,22 @@ public class Asteroid extends Place {
         instance.tabIncrement();
         instance.Print(this, "SolarFlare()");
 
-        boolean res1 = instance.GetInput("Az aszteroida teljesen le van fúrva? [I/N]: ").equalsIgnoreCase("i");
-        boolean res2 = instance.GetInput("Az aszteroida üreges? [I/N]: ").equalsIgnoreCase("i");
-        if(!res1 || !res2)
-            for (Character character : characters)
-                character.HitByStorm();
+        if(!instance.GetInput("Az aszteroida teljesen le van fúrva? [I/N]: ").equalsIgnoreCase("i")) {
+            int n = characters.size();
+            for(int i = 0; i < n; i++)
+                characters.get(0).HitByStorm();
 
-        instance.tabDecrement();
+            instance.tabDecrement();
+            return;
+        }
+
+        if(!instance.GetInput("Az aszteroida üreges? [I/N]: ").equalsIgnoreCase("i")) {
+            int n = characters.size();
+            for(int i = 0; i < n; i++)
+                characters.get(0).HitByStorm();
+
+            instance.tabDecrement();
+        }
     }
 
     public void TakeOff(Character character) {
@@ -177,7 +186,7 @@ public class Asteroid extends Place {
                 String res = instance.GetInput("Mi az aszteroida nyersanyaga? [V/J/U/S]: ");
                 if(res.equalsIgnoreCase("u"))
                     new Uranium().OnNearSun(this);
-                else if(res.equalsIgnoreCase("v"))
+                else if(res.equalsIgnoreCase("j"))
                     new WaterIce().OnNearSun(this);
                 else
                     new Coal().OnNearSun(this);

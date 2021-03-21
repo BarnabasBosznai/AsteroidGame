@@ -6,6 +6,7 @@ import materials.MaterialStorage;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -78,14 +79,15 @@ public class AsteroidBelt implements Steppable {
         skeleton.tabIncrement();
         skeleton.Print(this, "RandomAsteroids()");
         List<Integer> indexes = new ArrayList<Integer>();
-        for (int i = 0; i < asteroids.size(); ++i) {
+        for (int i = 0; i < asteroids.size(); i++) {
             indexes.add(i);
         }
 
         Collections.shuffle(indexes);
-        int num = (int) (asteroids.size() * 0.1);
-        for(int i = 0; i < asteroids.size() - num; ++i){
-            indexes.remove(i);
+        int num = (int) (asteroids.size() * 1.0);
+        for(int i = 0; i < asteroids.size() - num; i++){
+            Integer integer = i;
+            indexes.remove(integer);
         }
 
         skeleton.tabDecrement();
@@ -126,5 +128,9 @@ public class AsteroidBelt implements Steppable {
         }
 
         skeleton.tabDecrement();
+    }
+
+    public void AddAsteroid(Asteroid asteroid) {
+        asteroids.add(asteroid);
     }
 }

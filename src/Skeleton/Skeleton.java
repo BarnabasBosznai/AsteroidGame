@@ -4,9 +4,13 @@ import characters.Robot;
 import characters.Settler;
 import items.CraftingTable;
 import items.Recipe;
+import main.Game;
 import materials.*;
 import places.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -49,6 +53,8 @@ public class Skeleton {
                 Stream.of(new Coal(), new Iron(), new Uranium()).collect(Collectors.toList())));
         craftingTable.AddRecipe(new Recipe(TeleportGate.class,
                 Stream.of(new Iron(), new Iron(), new WaterIce(), new Uranium()).collect(Collectors.toList())));
+
+        asteroidBeltInit();
 
         // Ez a menü
         boolean run=true;
@@ -103,7 +109,42 @@ public class Skeleton {
             }
         }
     }
-    
+
+    private static void asteroidBeltInit() {
+        AsteroidBelt asteroidBelt = AsteroidBelt.getInstance();
+        Random random = new Random();
+        List<Asteroid> asteroids = new ArrayList<>();
+        for(int i = 0; i < 10; i++)
+            asteroids.add(new Asteroid());
+
+        for(int i = 0; i < 10; i++) {
+            int finalI = i;
+            random.ints(2,0, 10).forEach(value -> {
+                if(!asteroids.get(finalI).GetNeighbors().stream().anyMatch(place -> asteroids.get(finalI) == place)) {
+                    asteroids.get(finalI).AddNeighbor(asteroids.get(value));
+                    asteroids.get(value).AddNeighbor(asteroids.get(finalI));
+                }
+            });
+        }
+
+        for(int i = 0; i < 10; i++)
+            asteroidBelt.AddAsteroid(asteroids.get(i));
+
+        Game game = Game.getInstance();
+        for(int i = 0; i < 10; i++) {
+            if(i % 2 == 0) {
+                Settler settler = new Settler();
+                game.AddSettler(settler);
+                game.AddSteppable(settler);
+                asteroids.get(random.nextInt(10)).Move(settler);
+            } else {
+                Robot robot = new Robot();
+                game.AddSteppable(robot);
+                asteroids.get(random.nextInt(10)).Move(robot);
+            }
+        }
+    }
+
     private static void moveMenu() {
         Settler telepes = new Settler();
         Asteroid asteroid1 = new Asteroid();
@@ -174,9 +215,8 @@ public class Skeleton {
                 material = telepes.GetInventory().GetMaterials().stream().filter(m -> m.CompatibleWith(new Coal())).findFirst().get();
             }
             telepes.PlaceMaterial(material);
-            instance.tabDecrement();
         }
-
+        instance.tabDecrement();
     }
 
     private static void installTeleportMenu() {
@@ -217,16 +257,6 @@ public class Skeleton {
         robot.SetAsteroid(asteroid1);
 
         robot.Step();
-    }
-
-
-
-    private void nearSun() {
-        AsteroidBelt.getInstance().NearSun();
-    }
-
-    private void solarFlare() {
-        AsteroidBelt.getInstance().SolarFlare();
     }
 
     //Tabulálás növelése
