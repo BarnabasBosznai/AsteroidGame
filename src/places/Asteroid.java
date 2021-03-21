@@ -169,6 +169,7 @@ public class Asteroid extends Place {
         for(TeleportGate teleportGate : teleportGates)
             teleportGate.RemoveFromAsteroid();
 
+        System.out.print("");
         for(Asteroid asteroid: neighbors)
             asteroid.RemoveNeighbor(this);
 
