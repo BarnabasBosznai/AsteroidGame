@@ -130,9 +130,8 @@ public class Asteroid extends Place {
         instance.tabIncrement();
         instance.Print(this, "AddNeighbors(Asteroid)");
 
-        this.neighbors.add(asteroid);
-
-        AsteroidBelt asteroidBelt = AsteroidBelt.getInstance();
+        if(!neighbors.contains(asteroid))
+            this.neighbors.add(asteroid);
 
         instance.tabDecrement();
     }
@@ -164,12 +163,9 @@ public class Asteroid extends Place {
         for(int i = 0; i < n; i++)
             characters.get(0).HitByExplosion();
 
-
-
         for(TeleportGate teleportGate : teleportGates)
             teleportGate.RemoveFromAsteroid();
 
-        System.out.print("");
         for(Asteroid asteroid: neighbors)
             asteroid.RemoveNeighbor(this);
 
