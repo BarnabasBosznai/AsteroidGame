@@ -4,10 +4,7 @@ import Skeleton.Skeleton;
 import interfaces.Steppable;
 import materials.MaterialStorage;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Az aszteroidamezőt reprezentáló osztály, menedzseli az aszteroidamezőben található
@@ -69,31 +66,6 @@ public class AsteroidBelt implements Steppable {
         skeleton.tabDecrement();
     }
 
-
-    /**
-     * Kiválaszt random aszteroidákat, amiken egy esemény végrahajtóik (nearSun vagy solarFlare)
-     * @return
-     */
-    private List<Integer> RandomAsteroids(){
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "RandomAsteroids()");
-        List<Integer> indexes = new ArrayList<Integer>();
-        for (int i = 0; i < asteroids.size(); i++) {
-            indexes.add(i);
-        }
-
-        Collections.shuffle(indexes);
-        int num = (int) (asteroids.size() * 1.0);
-        for(int i = 0; i < asteroids.size() - num; i++){
-            Integer integer = i;
-            indexes.remove(integer);
-        }
-
-        skeleton.tabDecrement();
-        return indexes;
-    }
-
     /**
      * Az aszteroidamező napközelbe került, vagyis meghívja az
      * aszteroidamezőben található összes aszteroidának a NearSun metódusát.
@@ -103,10 +75,14 @@ public class AsteroidBelt implements Steppable {
         skeleton.tabIncrement();
         skeleton.Print(this, "NearSun()");
 
-        var indexes = this.RandomAsteroids();
+        Random random = new Random();
+        int numberOfAsteroidsInvolved = (int) (asteroids.size() * 0.2);
+        int i = 0;
 
-        for(Integer idx : indexes){
+        while(i < numberOfAsteroidsInvolved && asteroids.size() != 0){
+            int idx = random.nextInt(asteroids.size() -1);
             asteroids.get(idx).NearSun();
+            ++i;
         }
 
         skeleton.tabDecrement();
@@ -121,10 +97,14 @@ public class AsteroidBelt implements Steppable {
         skeleton.tabIncrement();
         skeleton.Print(this, "SolarFlareSun()");
 
-        var indexes = this.RandomAsteroids();
+        Random random = new Random();
+        int numberOfAsteroidsInvolved = (int) (asteroids.size() * 0.2);
+        int i = 0;
 
-        for(Integer idx : indexes){
+        while(i < numberOfAsteroidsInvolved && asteroids.size() != 0){
+            int idx = random.nextInt(asteroids.size() -1);
             asteroids.get(idx).SolarFlare();
+            ++i;
         }
 
         skeleton.tabDecrement();
