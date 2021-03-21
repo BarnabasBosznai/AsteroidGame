@@ -79,8 +79,9 @@ public class Asteroid extends Place {
 
         if(!instance.GetInput("Az aszteroida teljesen le van fúrva? [I/N]: ").equalsIgnoreCase("i")) {
             int n = characters.size();
+            List<Character> copy = List.copyOf(characters);
             for(int i = 0; i < n; i++)
-                characters.get(0).HitByStorm();
+                copy.get(i).HitByStorm();
 
             instance.tabDecrement();
             return;
@@ -160,14 +161,16 @@ public class Asteroid extends Place {
         instance.Print(this, "Explosion()");
 
         int n = characters.size();
-        for(int i = 0; i < n; i++)
-            characters.get(0).HitByExplosion();
+        List<Character> copy = List.copyOf(characters);
+        for(int i = 0; i < copy.size(); i++)
+            copy.get(i).HitByExplosion();
 
         for(TeleportGate teleportGate : teleportGates)
             teleportGate.RemoveFromAsteroid();
 
-        for(Asteroid asteroid: neighbors)
-            asteroid.RemoveNeighbor(this);
+        List<Asteroid> copyNeighbor = List.copyOf(neighbors);
+        for(int i = 0; i < copyNeighbor.size(); ++i)
+            copyNeighbor.get(i).RemoveNeighbor(this);
 
         AsteroidBelt.getInstance().AsteroidExploded(this);
 

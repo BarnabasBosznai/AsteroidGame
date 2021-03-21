@@ -107,7 +107,7 @@ public class Skeleton {
     }
 
     private static void asteroidBeltInit() {
-        /*AsteroidBelt asteroidBelt = AsteroidBelt.getInstance();
+        AsteroidBelt asteroidBelt = AsteroidBelt.getInstance();
 
         Random random = new Random();
         List<Asteroid> asteroids = new ArrayList<>();
@@ -139,7 +139,7 @@ public class Skeleton {
                 game.AddSteppable(robot);
                 asteroids.get(random.nextInt(10)).Move(robot);
             }
-        }*/
+        }
     }
 
     private static void moveMenu() {
