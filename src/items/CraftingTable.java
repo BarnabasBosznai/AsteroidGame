@@ -13,6 +13,9 @@ import Skeleton.Skeleton;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A telepesek a CraftingTable segítségével tudnak új craftolható eszközöket készíteni
+ */
 public class CraftingTable {
     private static CraftingTable instance;
 

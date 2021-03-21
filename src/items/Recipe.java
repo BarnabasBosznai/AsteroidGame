@@ -7,6 +7,9 @@ import materials.MaterialStorage;
 
 import java.util.List;
 
+/**
+ * Egy készíthető Itemhez szükséges alapanyagok mennyiségének feljegyzése
+ */
 public class Recipe extends MaterialStorage {
     /**
      * A recepthez tartozó Item típusa

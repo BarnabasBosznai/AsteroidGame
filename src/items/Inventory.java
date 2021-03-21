@@ -9,6 +9,10 @@ import places.TeleportGate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A telepes itt tárolja a nála lévő nyersanyagokat, illetve megcraftolt eszközöket. Maximum 10
+ * db nyersanyagot képes eltárolni
+ */
 public class Inventory extends MaterialStorage {
 
     /**

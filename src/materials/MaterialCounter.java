@@ -5,6 +5,9 @@ import Skeleton.Skeleton;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Nyersanyagok megszámlálására alkalmas segédosztály
+ */
 public class MaterialCounter {
 
     /**
