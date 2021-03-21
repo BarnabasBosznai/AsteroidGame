@@ -108,7 +108,7 @@ public class Skeleton {
 
     private static void asteroidBeltInit() {
         AsteroidBelt asteroidBelt = AsteroidBelt.getInstance();
-
+        asteroidBelt.ClearAsteroids();
         Random random = new Random();
         List<Asteroid> asteroids = new ArrayList<>();
         for(int i = 0; i < 10; i++)
@@ -237,10 +237,12 @@ public class Skeleton {
     }
 
     private static void nearSunMenu() {
+        asteroidBeltInit();
         AsteroidBelt.getInstance().NearSun();
     }
 
     private static void solarFlareMenu() {
+        asteroidBeltInit();
         AsteroidBelt.getInstance().SolarFlare();
     }
 

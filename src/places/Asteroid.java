@@ -186,8 +186,8 @@ public class Asteroid extends Place {
         instance.tabIncrement();
         instance.Print(this, "NearSun()");
 
-        if (instance.GetInput("Az aszteroida teljesen le van fúrva? [I/N]").equalsIgnoreCase("i")) {
-            if(!instance.GetInput("Az aszteroida üreges? [I/N]").equalsIgnoreCase("i")) {
+        if (instance.GetInput("Az aszteroida teljesen le van fúrva? [I/N]: ").equalsIgnoreCase("i")) {
+            if(!instance.GetInput("Az aszteroida üreges? [I/N]: ").equalsIgnoreCase("i")) {
                 String res = instance.GetInput("Mi az aszteroida nyersanyaga? [V/J/U/S]: ");
                 if(res.equalsIgnoreCase("u"))
                     this.material = new Uranium();
