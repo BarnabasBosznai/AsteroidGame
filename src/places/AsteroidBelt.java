@@ -70,7 +70,7 @@ public class AsteroidBelt implements Steppable {
 
 
     /**
-     *
+     * Kiválaszt random aszteroidákat, amiken egy esemény végrahajtóik (nearSun vagy solarFlare)
      * @return
      */
     private List<Integer> RandomAsteroids(){

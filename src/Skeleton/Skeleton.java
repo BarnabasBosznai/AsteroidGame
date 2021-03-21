@@ -28,14 +28,14 @@ public class Skeleton {
 
     public void Print(Object o, String s) {
         for (int i = 0; i < tabValue; ++i)
-            System.out.print(" | ");
-        System.out.println(s);
+            System.out.print("    ");
+        System.out.println("->(:" + o.getClass().getSimpleName() + ")." + s);
     }
 
     public String GetInput(String s) {
         for (int i = 0; i < tabValue; ++i)
-            System.out.print(" | ");
-        System.out.print(s);
+            System.out.print("    ");
+        System.out.print("? " + s);
 
         Scanner in = new Scanner(System.in);
 
@@ -184,7 +184,19 @@ public class Skeleton {
         Asteroid asteroid1 = new Asteroid();
         telepes.SetAsteroid(asteroid1);
 
-        //telepes.AddItem(new TeleportGate()); itt még bármi lehet..., ugyanis egy pár kell
+        Skeleton skeleton = Skeleton.getInstance();
+        String input = skeleton.GetInput("Van TeleportGate-je a telepesnek? (igen/nem)");
+
+        if(input.equals("igen")){
+            TeleportGate teleportGate1 = new TeleportGate();
+            TeleportGate teleportGate2 = new TeleportGate();
+            teleportGate1.SetPair(teleportGate2);
+            teleportGate2.SetPair(teleportGate1);
+            telepes.AddItem(teleportGate1);
+            telepes.AddItem(teleportGate2);
+
+            telepes.PlaceTeleportGate();
+        }
     }
 
     private static void nearSunMenu() {

@@ -197,22 +197,7 @@ public class Settler extends Character {
     public TeleportGate GetTeleportGate() {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this,"GetTeleportGate()");
-        /**
-         * Invetory-nak a RemoveItem-je csak void-os, és azzal nem lehet dolgozni.
-         * Ha meg boolean-es lenne az meg nem jó.
-         * Mert kiveszed az inventory-ból, majd újra meghívod később a RemoveItem-et.
-         *
-         * Esetleg ha egy darabszámot adna vissza, akkor tudnánk a feladatleírásban lévő,
-         * "max. 4 teleportkapu lehet egy telepesnél egyszerre" kitételt megvalósítani.
-         * GetTeleportGateCount függvény teljesen megfelelne, csak nem OO.
-         * De egy GetItem és egy RemoveItem talán még nem elvetendő.
-         * A GetItem ad egy másolatot, amivel lehet dolgozni.
-         * A RemoveItem meg eltávolítja az Itemet.
-         *
-         *      Bobó v2
-         */
 
-        // Ilyet szabad, mármint a kasztolás
         TeleportGate retTeleportGate = (TeleportGate) this.inventory.GetItem(TeleportGate.class);
 
         Skeleton.getInstance().tabDecrement();
@@ -302,10 +287,6 @@ public class Settler extends Character {
      */
     @Override
     public void Step() {
-        /**
-         * Menü kerül ide. De nem a Skeleton-ban, mert itt nincs Step, csak a UseCase-ek.
-         * Ez lenne a Use-Case vezérelte rész.
-         */
 
         int input = (int)(Math.random()*7);  // Ez a lényege majd a menünek. Jelenleg nem használjuk ezt a függvényt egyáltalán.
 

@@ -122,6 +122,8 @@ public class Asteroid extends Place {
 
         this.neighbors.add(asteroid);
 
+        AsteroidBelt asteroidBelt = AsteroidBelt.getInstance();
+
         instance.tabDecrement();
     }
 
@@ -155,6 +157,9 @@ public class Asteroid extends Place {
 
         for(TeleportGate teleportGate : teleportGates)
             teleportGate.RemoveFromAsteroid();
+
+        for(Asteroid asteroid: neighbors)
+            asteroid.RemoveNeighbor(this);
 
         instance.tabDecrement();
     }
