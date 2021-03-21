@@ -2,9 +2,14 @@ package Skeleton;
 
 import characters.Robot;
 import characters.Settler;
-import places.Asteroid;
-import places.AsteroidBelt;
+import items.CraftingTable;
+import items.Recipe;
+import materials.*;
+import places.*;
+
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Skeleton {
 
@@ -23,20 +28,13 @@ public class Skeleton {
 
     public void Print(Object o, String s) {
         for (int i = 0; i < tabValue; ++i)
-        {
             System.out.print(" | ");
-        }
         System.out.println(s);
-
-
-        //o.getClass().getSimpleName()
     }
 
     public String GetInput(String s) {
         for (int i = 0; i < tabValue; ++i)
-        {
             System.out.print(" | ");
-        }
         System.out.print(s);
 
         Scanner in = new Scanner(System.in);
@@ -46,6 +44,12 @@ public class Skeleton {
     }
 
     public static void main(String[] args){
+        CraftingTable craftingTable = CraftingTable.getInstance();
+        craftingTable.AddRecipe(new Recipe(Robot.class,
+                Stream.of(new Coal(), new Iron(), new Uranium()).collect(Collectors.toList())));
+        craftingTable.AddRecipe(new Recipe(TeleportGate.class,
+                Stream.of(new Iron(), new Iron(), new WaterIce(), new Uranium()).collect(Collectors.toList())));
+
         // Ez a menü
         boolean run=true;
         while (run) {
@@ -97,11 +101,7 @@ public class Skeleton {
                     controlRobotMenu();
                     break;
             }
-
-
         }
-
-
     }
 
 
