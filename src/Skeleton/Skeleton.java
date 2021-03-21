@@ -103,10 +103,7 @@ public class Skeleton {
             }
         }
     }
-
-
-
-
+    
     private static void moveMenu() {
         Settler telepes = new Settler();
         Asteroid asteroid1 = new Asteroid();
@@ -161,8 +158,25 @@ public class Skeleton {
         Asteroid asteroid1 = new Asteroid();
         telepes.SetAsteroid(asteroid1);
 
-        // Itt kell már valami nyersanyagot rendesen kiválasztani
-        //telepes.PlaceMaterial();
+        Skeleton instance = Skeleton.getInstance();
+        instance.tabIncrement();
+        String res = instance.GetInput("Milyen nyersanyagot szeretnél lehelyezni? [V/J/U/S]: ");
+        String res2 = instance.GetInput("Van ilyen nyersanyaga a Telepes-nek? [I/N]: ");
+        if(res2.equalsIgnoreCase("i")) {
+            Material material = null;
+            if(res.equalsIgnoreCase("v")) {
+                material = telepes.GetInventory().GetMaterials().stream().filter(m -> m.CompatibleWith(new Iron())).findFirst().get();
+            } else if(res.equalsIgnoreCase("j")) {
+                material = telepes.GetInventory().GetMaterials().stream().filter(m -> m.CompatibleWith(new WaterIce())).findFirst().get();
+            } else if(res.equalsIgnoreCase("u")) {
+                material = telepes.GetInventory().GetMaterials().stream().filter(m -> m.CompatibleWith(new Uranium())).findFirst().get();
+            } else if(res.equalsIgnoreCase("s")) {
+                material = telepes.GetInventory().GetMaterials().stream().filter(m -> m.CompatibleWith(new Coal())).findFirst().get();
+            }
+            telepes.PlaceMaterial(material);
+            instance.tabDecrement();
+        }
+
     }
 
     private static void installTeleportMenu() {
