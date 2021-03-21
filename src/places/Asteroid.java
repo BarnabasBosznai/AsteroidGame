@@ -159,8 +159,9 @@ public class Asteroid extends Place {
         instance.tabIncrement();
         instance.Print(this, "Explosion()");
 
-        for(Character character : characters)
-            character.HitByExplosion();
+        int n = characters.size();
+        for(int i = 0; i < n; i++)
+            characters.get(0).HitByExplosion();
 
         AsteroidBelt.getInstance().AsteroidExploded(this);
 
