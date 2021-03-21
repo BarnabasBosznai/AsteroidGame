@@ -16,11 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Skeleton {
-
     private static Skeleton instance=null;
-
-    private int hol_van;
-
     private static int tabValue;
 
     public static Skeleton getInstance() {
@@ -114,12 +110,12 @@ public class Skeleton {
         AsteroidBelt asteroidBelt = AsteroidBelt.getInstance();
         Random random = new Random();
         List<Asteroid> asteroids = new ArrayList<>();
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 20; i++)
             asteroids.add(new Asteroid());
 
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 20; i++) {
             int finalI = i;
-            random.ints(2,0, 10).forEach(value -> {
+            random.ints(3,0, 20).forEach(value -> {
                 if(!asteroids.get(finalI).GetNeighbors().stream().anyMatch(place -> asteroids.get(finalI) == place)) {
                     asteroids.get(finalI).AddNeighbor(asteroids.get(value));
                     asteroids.get(value).AddNeighbor(asteroids.get(finalI));
@@ -127,27 +123,22 @@ public class Skeleton {
             });
         }
 
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 20; i++)
             asteroidBelt.AddAsteroid(asteroids.get(i));
 
         Game game = Game.getInstance();
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 15; i++) {
             if(i % 2 == 0) {
                 Settler settler = new Settler();
                 game.AddSettler(settler);
                 game.AddSteppable(settler);
-                asteroids.get(random.nextInt(10)).Move(settler);
+                asteroids.get(random.nextInt(20)).Move(settler);
             } else {
                 Robot robot = new Robot();
                 game.AddSteppable(robot);
-                asteroids.get(random.nextInt(10)).Move(robot);
+                asteroids.get(random.nextInt(20)).Move(robot);
             }
         }
-    }
-
-    private static void asteroidBeltClear() {
-        AsteroidBelt asteroidBelt = AsteroidBelt.getInstance();
-        asteroidBelt.ClearAsteroids();
     }
 
     private static void moveMenu() {
@@ -245,15 +236,11 @@ public class Skeleton {
     }
 
     private static void nearSunMenu() {
-        asteroidBeltInit();
         AsteroidBelt.getInstance().NearSun();
-        asteroidBeltClear();
     }
 
     private static void solarFlareMenu() {
-        asteroidBeltInit();
         AsteroidBelt.getInstance().SolarFlare();
-        asteroidBeltClear();
     }
 
     private static void controlRobotMenu() {
