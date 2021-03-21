@@ -2,8 +2,7 @@ package items;
 
 import Skeleton.Skeleton;
 import interfaces.Item;
-import materials.Material;
-import materials.MaterialStorage;
+import materials.*;
 import places.TeleportGate;
 
 import java.util.ArrayList;
@@ -28,6 +27,14 @@ public class Inventory extends MaterialStorage {
         skeleton.Print(this, "create(" + MaterialStorage.class.getSimpleName() + ")");
 
         this.items = new ArrayList<>();
+
+        materials.add(new Iron());
+        materials.add(new Iron());
+        materials.add(new Iron());
+        materials.add(new Coal());
+        materials.add(new WaterIce());
+        materials.add(new Uranium());
+        materials.add(new Uranium());
 
         skeleton.tabDecrement();
     }
