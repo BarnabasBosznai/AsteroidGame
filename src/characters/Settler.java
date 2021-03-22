@@ -268,7 +268,7 @@ public class Settler extends Character {
         Skeleton.getInstance().Print(this,"Drill()");
 
         boolean ret = asteroid.Drilled();
-        System.out.println(ret);
+
         Skeleton.getInstance().tabDecrement();
         return ret;
     }
