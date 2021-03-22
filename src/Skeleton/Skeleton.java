@@ -52,7 +52,7 @@ public class Skeleton {
 
         asteroidBeltInit();
 
-        // Ez a menü
+        // Ez a menü, a menüpontok sorszáma szerinti esetszétválasztás történik
         boolean run=true;
         while (run) {
             System.out.println("Válassz egy funkciót!");
@@ -106,31 +106,31 @@ public class Skeleton {
         }
     }
 
-    private static void asteroidBeltInit() {
+    private static void asteroidBeltInit() {    // A program kezdetben inicializálja az AsteroidBelt-et
         AsteroidBelt asteroidBelt = AsteroidBelt.getInstance();
         asteroidBelt.ClearAsteroids();
         Random random = new Random();
         List<Asteroid> asteroids = new ArrayList<>();
-        for(int i = 0; i < 10; i++)
+        for(int i = 0; i < 10; i++)     // Hozzáad aszteroidákat
             asteroids.add(new Asteroid());
 
         for(int i = 0; i < 10; i++) {
             int finalI = i;
             random.ints(2,0, 10).forEach(value -> {
                 if(asteroids.get(finalI).GetNeighbors().stream().noneMatch(place -> asteroids.get(value) == place)) {
-                    asteroids.get(finalI).AddNeighbor(asteroids.get(value));
+                    asteroids.get(finalI).AddNeighbor(asteroids.get(value));    // Néhányuk között szomszédságot képez
                     asteroids.get(value).AddNeighbor(asteroids.get(finalI));
                 }
             });
         }
 
         for(int i = 0; i < 10; i++)
-            asteroidBelt.AddAsteroid(asteroids.get(i));
+            asteroidBelt.AddAsteroid(asteroids.get(i)); // Majd hozzáadja az aszteroidákat az AsteroidBelt-hez
 
         Game game = Game.getInstance();
         for(int i = 0; i < 10; i++) {
             if(i % 2 == 0) {
-                Settler settler = new Settler();
+                Settler settler = new Settler();    // Ezt követően telepeseket és robotokat helyez le rájuk
                 game.AddSettler(settler);
                 game.AddSteppable(settler);
                 asteroids.get(random.nextInt(10)).Move(settler);
@@ -142,29 +142,27 @@ public class Skeleton {
         }
     }
 
-    private static void moveMenu() {
+    private static void moveMenu() {    // Ezzel lehet tesztelni a telepese mozgását
         Settler telepes = new Settler();
         Asteroid asteroid1 = new Asteroid();
         Asteroid asteroid2 = new Asteroid();
         Asteroid asteroid3 = new Asteroid();
-        asteroid1.AddNeighbor(asteroid2);
+        asteroid1.AddNeighbor(asteroid2); // Asteroid szomszédra mehet át
         asteroid2.AddNeighbor(asteroid1);
-        asteroid1.AddNeighbor(asteroid3);
-        asteroid3.AddNeighbor(asteroid1);
 
         TeleportGate teleportGate1 = new TeleportGate();
         TeleportGate teleportGate2 = new TeleportGate();
         teleportGate1.SetPair(teleportGate2);
         teleportGate2.SetPair(teleportGate1);
-        asteroid1.PlaceTeleport(teleportGate1);
-        asteroid2.PlaceTeleport(teleportGate2);
+        asteroid1.PlaceTeleport(teleportGate1); // Illetve teleportkapun keresztül megismert Asteroidra is
+        asteroid3.PlaceTeleport(teleportGate2);
 
         telepes.SetAsteroid(asteroid1);
 
-        telepes.Move();
+        telepes.Move();     // 0 a közvetlen mozgás, 1 a teleportkapus
     }
 
-    private static void mineMenu() {
+    private static void mineMenu() {    // Settler Mine tesztje
         Settler telepes = new Settler();
         Asteroid asteroid = new Asteroid();
 
@@ -173,9 +171,10 @@ public class Skeleton {
         telepes.Mine();
     }
 
-    private static void drillMenu() {
+    private static void drillMenu() {   // Settler Drill tesztje
         Settler telepes = new Settler();
         Asteroid asteroid1 = new Asteroid();
+
         telepes.SetAsteroid(asteroid1);
 
         telepes.Drill();
