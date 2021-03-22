@@ -152,6 +152,12 @@ public class Skeleton {
         asteroid1.AddNeighbor(asteroid3);
         asteroid3.AddNeighbor(asteroid1);
 
+        TeleportGate teleportGate1 = new TeleportGate();
+        TeleportGate teleportGate2 = new TeleportGate();
+        teleportGate1.SetPair(teleportGate2);
+        teleportGate2.SetPair(teleportGate1);
+        asteroid1.PlaceTeleport(teleportGate1);
+        asteroid2.PlaceTeleport(teleportGate2);
 
         telepes.SetAsteroid(asteroid1);
 
@@ -224,7 +230,7 @@ public class Skeleton {
         Skeleton skeleton = Skeleton.getInstance();
         String input = skeleton.GetInput("Van TeleportGate-je a telepesnek? [I/N]");
 
-        if(input.equals("I")){
+        if(input.equalsIgnoreCase("I")){
             TeleportGate teleportGate1 = new TeleportGate();
             TeleportGate teleportGate2 = new TeleportGate();
             teleportGate1.SetPair(teleportGate2);
