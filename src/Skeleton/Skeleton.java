@@ -207,17 +207,17 @@ public class Skeleton {
         String res = instance.GetInput("Milyen nyersanyagot szeretnél lehelyezni? [V/J/U/S]: ");
         String res2 = instance.GetInput("Van ilyen nyersanyaga a Telepes-nek? [I/N]: ");
         if(res2.equalsIgnoreCase("i")) {
-            Material material = null;
-            if(res.equalsIgnoreCase("v")) {
-                material = telepes.GetInventory().GetMaterials().stream().filter(m -> m.CompatibleWith(new Iron())).findFirst().get();
-            } else if(res.equalsIgnoreCase("j")) {
-                material = telepes.GetInventory().GetMaterials().stream().filter(m -> m.CompatibleWith(new WaterIce())).findFirst().get();
-            } else if(res.equalsIgnoreCase("u")) {
-                material = telepes.GetInventory().GetMaterials().stream().filter(m -> m.CompatibleWith(new Uranium())).findFirst().get();
-            } else if(res.equalsIgnoreCase("s")) {
-                material = telepes.GetInventory().GetMaterials().stream().filter(m -> m.CompatibleWith(new Coal())).findFirst().get();
-            }
-            telepes.PlaceMaterial(material);
+            Material m = null;
+            if(res.equalsIgnoreCase("V"))
+                m = new Iron();
+            else if(res.equalsIgnoreCase("J"))
+                m = new WaterIce();
+            else if(res.equalsIgnoreCase("U"))
+                m = new Uranium();
+            else if(res.equalsIgnoreCase("S"))
+                m = new Coal();
+
+            telepes.PlaceMaterial(m);
         }
         instance.tabDecrement();
     }
