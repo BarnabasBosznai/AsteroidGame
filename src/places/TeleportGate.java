@@ -4,6 +4,8 @@ import Skeleton.Skeleton;
 import characters.Character;
 import interfaces.Item;
 
+import java.util.List;
+
 /**
  * Egy teleportkaput reprezentáló osztály. A teleportkapuk segítségével el tudnak jutni a karakterek olyan
  * aszteroidákra is, amik alapból nem lennének szomszédosak. Ehhez szükséges a két aszteroidán elhelyezni a
@@ -106,5 +108,12 @@ public class TeleportGate extends Place implements Item {
             instance.tabDecrement();
             return false;
         }
+    }
+
+    /*NEW*/
+    public void OnNearSun(){
+        List<Asteroid> neighbors = this.asteroid.GetNeighboringAsteroids();
+        //vagy vmi random
+        this.SetAsteroid(neighbors.get(0));
     }
 }

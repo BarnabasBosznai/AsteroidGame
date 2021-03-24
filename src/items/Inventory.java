@@ -148,4 +148,24 @@ public class Inventory extends MaterialStorage {
         skeleton.tabDecrement();
         return null;
     }
+
+    /*NEW*/
+    public int GetNumberOfItems(Class<? extends Item> itemType){
+
+        Item searchHelperItem;
+        if(itemType == TeleportGate.class)
+            searchHelperItem = new TeleportGate();
+        else {
+            return 0;
+        }
+
+        int count = 0;
+        for(Item item : items){
+            if(item.CompatibleWith(searchHelperItem)) {
+               ++count;
+            }
+        }
+
+        return count;
+    }
 }

@@ -68,6 +68,7 @@ public class AsteroidBelt implements Steppable {
      * Az aszteroidamező napközelbe került, vagyis meghívja az
      * aszteroidamezőben található összes aszteroidának a NearSun metódusát.
      */
+    /*NEW*/ //igazabol nem, ez sztem maradhat
     public void NearSun() {
         Skeleton skeleton = Skeleton.getInstance();
         skeleton.tabIncrement();

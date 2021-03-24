@@ -93,6 +93,11 @@ public class Asteroid extends Place {
             for(int i = 0; i < n; i++)
                 copy.get(i).HitByStorm();
         }
+
+        /*NEW*/
+        for(TeleportGate teleportGate : teleportGates){
+            teleportGate.OnNearSun();
+        }
         instance.tabDecrement();
     }
 
@@ -231,6 +236,11 @@ public class Asteroid extends Place {
         instance.tabDecrement();
 
         return ret;
+    }
+
+    /*NEW*/
+    public List<Asteroid> GetNeighboringAsteroids(){
+        return this.neighbors;
     }
 
     @Override

@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * A telepeseket reprezentáló osztály. A játékos velük interaktál közvetlenül
  */
-public class Settler extends Character {
+public class Settler extends MiningCharacter {
     /**
      * A játékos inventoryja, amiben a nála található dolgokat tárolja.
      */
@@ -99,12 +99,13 @@ public class Settler extends Character {
         return false;
     }
 
+    /*
     /**
      * A telepes megpróbálja kinyeri az aszteroidában található
      * nyersanyagot. Ha az aszteroida magja üres, akkor False a visszatérési érték, ha sikerült
      * a bányászás, akkor True
      * @return
-     */
+
     public boolean Mine() {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this, "Mine()");
@@ -127,6 +128,10 @@ public class Settler extends Character {
 
         Skeleton.getInstance().tabDecrement();
         return false;
+    }*/
+
+    public boolean Mine() {
+        return this.Mine(inventory);
     }
 
     /**
@@ -148,12 +153,15 @@ public class Settler extends Character {
      * craftolás, a visszatérési érték True, egyébként False.
      * @return
      */
+    /*NEW*/
     public boolean CraftTeleportGates() {
         Skeleton.getInstance().tabIncrement();
         Skeleton.getInstance().Print(this, "CraftTeleportGates()");
 
-        TeleportGate teleportGate = GetTeleportGate();
-        if (teleportGate==null) {
+        //TeleportGate teleportGate = GetTeleportGate();
+
+        int numberOfTeleportGates = inventory.GetNumberOfItems(TeleportGate.class);
+        if (numberOfTeleportGates <= 1) {
             boolean ret = CraftingTable.getInstance().Craft(TeleportGate.class, this);
 
             Skeleton.getInstance().tabDecrement();
@@ -298,7 +306,7 @@ public class Settler extends Character {
                     failed = Move();
                     break;
                 case (2): // Bányászás
-                    failed = Mine();
+                    failed = Mine(inventory);
                     break;
                 case (3): // Fúrás
                     failed = Drill();

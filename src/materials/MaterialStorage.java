@@ -9,7 +9,8 @@ import java.util.Map;
 /**
  * A nyersanyagok tárolására szolgáló absztrakt osztály
  */
-public abstract class MaterialStorage {
+/*NEW*/ //Eddig abstract volt
+public class MaterialStorage {
 
     /**
      * A tárolóban lévő nyersanyagok
