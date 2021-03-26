@@ -3,6 +3,7 @@ package places;
 import Skeleton.Skeleton;
 import characters.Character;
 import interfaces.Item;
+import interfaces.Steppable;
 
 import java.util.List;
 
@@ -11,9 +12,26 @@ import java.util.List;
  * aszteroidákra is, amik alapból nem lennének szomszédosak. Ehhez szükséges a két aszteroidán elhelyezni a
  * teleportkapupár egy-egy elemét, a teleportkapupár ezután lesz működőképes állapotban.
  */
-public class TeleportGate extends Place implements Item {
+public class TeleportGate extends Place implements Item, Steppable {
     private Asteroid asteroid;
     private TeleportGate pair;
+    private boolean crazy;
+
+    /**
+     *  A teleportkapu magától mozgatja magát, ha megkergül.
+     */
+    @Override
+    public void Step() {
+        if (crazy){         // Ha megkergült odébb megy
+                            // Le kell venni az aktuális aszteroida szomszédságáról
+                            // Ki kell választani egy másik szomszédot random
+                            // Végül ott elfogadtatni magát
+            List<Asteroid> neighbors = this.asteroid.GetNeighboringAsteroids();
+            //vagy vmi random
+            this.SetAsteroid(neighbors.get(0));
+        }
+    }
+
 
     /**
      * Beállítja a paraméterként kapott aszteroidát a sajét aszteroidájaként.
@@ -27,6 +45,10 @@ public class TeleportGate extends Place implements Item {
         this.asteroid = asteroid;
 
         instance.tabDecrement();
+    }
+
+    public TeleportGate(){
+        crazy = false;      // Konstruktor így már kellhet
     }
 
     /**
@@ -112,8 +134,8 @@ public class TeleportGate extends Place implements Item {
 
     /*NEW*/
     public void OnNearSun(){
-        List<Asteroid> neighbors = this.asteroid.GetNeighboringAsteroids();
-        //vagy vmi random
-        this.SetAsteroid(neighbors.get(0));
+        crazy = true;   // Ekkor csak megkergül, innentől minden körben odébb megy
     }
+
+
 }
