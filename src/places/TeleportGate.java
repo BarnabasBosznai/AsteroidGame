@@ -17,18 +17,20 @@ public class TeleportGate extends Place implements Item, Steppable {
     private TeleportGate pair;
     private boolean crazy;
 
+    public TeleportGate(){
+        crazy = false;      // Konstruktor így már kellhet
+    }
+
     /**
      *  A teleportkapu magától mozgatja magát, ha megkergül.
      */
     @Override
     public void Step() {
-        if (crazy){         // Ha megkergült odébb megy
-            // Le kell venni az aktuális aszteroida szomszédságáról
-            // Ki kell választani egy másik szomszédot random
-            // Végül ott elfogadtatni magát
-            List<Asteroid> neighbors = this.asteroid.GetNeighboringAsteroids();
-            //vagy vmi random
-            this.SetAsteroid(neighbors.get(0));
+        if (crazy){
+            var asteroids = this.asteroid.GetNeighboringAsteroids();
+            this.asteroid.RemoveTeleportGate(this);
+            //vmi random, most elso
+            asteroids.get(0).PlaceTeleport(this);
         }
     }
 
@@ -45,10 +47,6 @@ public class TeleportGate extends Place implements Item, Steppable {
         this.asteroid = asteroid;
 
         instance.tabDecrement();
-    }
-
-    public TeleportGate(){
-        crazy = false;      // Konstruktor így már kellhet
     }
 
     /**
