@@ -54,7 +54,7 @@ public class Inventory extends MaterialStorage {
 
         String input = skeleton.GetInput("van elég hely? [I/N]: ");
         if(input.equalsIgnoreCase("I")) {
-            materials.add(material);
+            super.AddMaterial(material);
 
             skeleton.tabDecrement();
             return false;   // mert a diagramon a failed-nek kell megfelelnie

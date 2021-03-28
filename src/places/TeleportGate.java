@@ -23,9 +23,9 @@ public class TeleportGate extends Place implements Item, Steppable {
     @Override
     public void Step() {
         if (crazy){         // Ha megkergült odébb megy
-                            // Le kell venni az aktuális aszteroida szomszédságáról
-                            // Ki kell választani egy másik szomszédot random
-                            // Végül ott elfogadtatni magát
+            // Le kell venni az aktuális aszteroida szomszédságáról
+            // Ki kell választani egy másik szomszédot random
+            // Végül ott elfogadtatni magát
             List<Asteroid> neighbors = this.asteroid.GetNeighboringAsteroids();
             //vagy vmi random
             this.SetAsteroid(neighbors.get(0));
@@ -133,7 +133,7 @@ public class TeleportGate extends Place implements Item, Steppable {
     }
 
     /*NEW*/
-    public void OnNearSun(){
+    public void HitByStorm(){
         crazy = true;   // Ekkor csak megkergül, innentől minden körben odébb megy
     }
 

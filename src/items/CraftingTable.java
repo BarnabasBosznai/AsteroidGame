@@ -84,6 +84,10 @@ public class CraftingTable {
                 teleportGate1.SetPair(teleportGate2);
                 teleportGate2.SetPair(teleportGate1);
 
+                Game game = Game.getInstance();
+                game.AddSteppable(teleportGate1);
+                game.AddSteppable(teleportGate2);
+
                 skeleton.tabDecrement();
                 return true;
             }

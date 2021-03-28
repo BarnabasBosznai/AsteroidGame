@@ -41,7 +41,7 @@ public class MaterialStorage {
         materials.add(material);
 
         skeleton.tabDecrement();
-        return true;
+        return false;
     }
 
     /**

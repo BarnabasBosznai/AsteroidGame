@@ -96,7 +96,7 @@ public class Asteroid extends Place {
 
         /*NEW*/
         for(TeleportGate teleportGate : teleportGates){
-            teleportGate.OnNearSun();
+            teleportGate.HitByStorm();
         }
         instance.tabDecrement();
     }
