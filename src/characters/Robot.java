@@ -2,6 +2,8 @@ package characters;
 
 import interfaces.Item;
 
+import java.util.Random;
+
 /**
  * A robotokat reprezentáló osztály. A robotokat a Controller irányítja. Csak fúrásra és
  * szomszédos aszteroidák közötti mozgásra képesek. A telepesek tudják őket craftolni megfelelő
@@ -21,7 +23,8 @@ public class Robot extends Character implements Item {
      * ezáltal a robot átrobban egy szomszédos aszteroidára
      */
     public void HitByExplosion() {
-        while(!Move());
+        // TODO: woozy_face
+        while(!Move(this.asteroid.GetNeighbors().get(new Random().nextInt(this.asteroid.GetNeighbors().size() - 1))));
     }
 
     /**
@@ -30,7 +33,8 @@ public class Robot extends Character implements Item {
      */
     private void ControlRobot() {
         if (asteroid.Drilled()){
-            while(!Move());
+            // TODO: woozy_face
+            while(!Move(this.asteroid.GetNeighbors().get(new Random().nextInt(this.asteroid.GetNeighbors().size() - 1))));
         }
     }
 

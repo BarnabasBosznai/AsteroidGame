@@ -36,7 +36,7 @@ public abstract class Character implements Steppable {
      * nem.
      * @return
      */
-    public boolean Move() { // Véletlenszerű mozgás
+    public boolean Move(Place place) { // Véletlenszerű mozgás
         List<Place> destinations = this.asteroid.GetNeighbors();
 
         double random = Math.random()*(destinations.size()-1);

@@ -36,4 +36,9 @@ public class Uranium extends RadioactiveMaterial {
         if(nearSuns >= 3)
             asteroid.Explosion();
     }
+
+    @Override
+    public boolean CompatibleWith(Material material) {
+        return super.CompatibleWith(material) && this.nearSuns == ((Uranium)material).nearSuns;
+    }
 }

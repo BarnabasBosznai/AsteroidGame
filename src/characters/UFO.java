@@ -3,6 +3,8 @@ package characters;
 import main.Game;
 import materials.MaterialStorage;
 
+import java.util.Random;
+
 public class UFO extends MiningCharacter {
 
     protected MaterialStorage inventory;
@@ -18,7 +20,8 @@ public class UFO extends MiningCharacter {
     @Override
     public void Step() {
         if (this.Mine(inventory)){
-            while(!Move());
+            // TODO: woozy_face
+            while(!Move(this.asteroid.GetNeighbors().get(new Random().nextInt(this.asteroid.GetNeighbors().size() - 1))));
         }
     }
 }

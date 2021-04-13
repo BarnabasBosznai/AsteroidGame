@@ -12,6 +12,7 @@ import places.TeleportGate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 public class TestGame extends Game {
 
@@ -133,9 +134,37 @@ public class TestGame extends Game {
         settlerInventory.AddMaterial(material);
     }
 
-    public void Set(String objectID, String variable, String value){
-        //szopj le
-
+    public void Set(String objectID, String variable, String value) {
+        if(asteroids.containsKey(objectID)) {
+            if(variable.equals("layer")) {
+                asteroids.get(objectID).setThickness(Integer.parseInt(value));
+            } else if(variable.equals("material")) {
+                switch (value) {
+                    case "coal":
+                        asteroids.get(objectID).setMaterial(new Coal());
+                        break;
+                    case "iron":
+                        asteroids.get(objectID).setMaterial(new Iron());
+                        break;
+                    case "waterIce":
+                        asteroids.get(objectID).setMaterial(new WaterIce());
+                        break;
+                    case "uranium0":
+                        asteroids.get(objectID).setMaterial(new Uranium(0));
+                        break;
+                    case "uranium1":
+                        asteroids.get(objectID).setMaterial(new Uranium(1));
+                        break;
+                    case "uranium2":
+                        asteroids.get(objectID).setMaterial(new Uranium(2));
+                        break;
+                }
+            }
+        } else if(teleportgates.containsKey(objectID)) {
+            if(variable.equals("crazy")) {
+                teleportgates.get(objectID).setCrazy(Boolean.parseBoolean(value));
+            }
+        }
     }
 
     public void Pair(String teleportID1, String teleportID2){
@@ -163,6 +192,105 @@ public class TestGame extends Game {
 
     //WTF nemakarom
     public void Step(String command, List<String> parameters){
+        switch (command) {
+            case "drill":
+                if(parameters.size() == 1 && settlers.containsKey(parameters.get(0))) {
+                    settlers.get(parameters.get(0)).Drill();
+                }
+                break;
+            case "mine":
+                if(parameters.size() == 1 && settlers.containsKey(parameters.get(0))) {
+                    settlers.get(parameters.get(0)).Mine();
+                }
+                break;
+            case "placematerial":
+                if(parameters.size() == 2 && settlers.containsKey(parameters.get(0))) {
+                    Material mat;
+                    switch (parameters.get(1)) {
+                        case "coal":
+                            // Ne kérdezd xdd
+                            mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new Coal())).findFirst().orElse(null);
+                            if(mat != null)
+                                settlers.get(parameters.get(0)).PlaceMaterial(mat);
+                            break;
+                        case "iron":
+                            mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new Iron())).findFirst().orElse(null);
+                            if(mat != null)
+                                settlers.get(parameters.get(0)).PlaceMaterial(mat);
+                            break;
+                        case "waterIce":
+                            mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new WaterIce())).findFirst().orElse(null);
+                            if(mat != null)
+                                settlers.get(parameters.get(0)).PlaceMaterial(mat);
+                            break;
+                        case "uranium0":
+                            mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new Uranium(0))).findFirst().orElse(null);
+                            if(mat != null)
+                                settlers.get(parameters.get(0)).PlaceMaterial(mat);
+                            break;
+                        case "uranium1":
+                            mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new Uranium(1))).findFirst().orElse(null);
+                            if(mat != null)
+                                settlers.get(parameters.get(0)).PlaceMaterial(mat);
+                            break;
+                        case "uranium2":
+                            mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new Uranium(2))).findFirst().orElse(null);
+                            if(mat != null)
+                                settlers.get(parameters.get(0)).PlaceMaterial(mat);
+                            break;
+                    }
+                }
+                break;
+            case "nearsun":
+                for(String str : parameters) {
+                    if(asteroids.containsKey(str)) {
+                        asteroids.get(str).NearSun();
+                    }
+                }
+                break;
+            case "solarflare":
+                for(String str : parameters) {
+                    if(asteroids.containsKey(str)) {
+                        asteroids.get(str).SolarFlare();
+                    }
+                }
+                break;
+            case "move":
+                if(parameters.size() == 2 && settlers.containsKey(parameters.get(0))) {
+                    if(asteroids.containsKey(parameters.get(1))) {
+                        settlers.get(parameters.get(0)).Move(asteroids.get(parameters.get(1)));
+                    } else if(teleportgates.containsKey(parameters.get(1))) {
+                        settlers.get(parameters.get(0)).Move(teleportgates.get(parameters.get(1)));
+                    }
+                }
+                break;
+            case "placeteleport":
+                if(parameters.size() == 2 && settlers.containsKey(parameters.get(0))) {
+                    settlers.get(parameters.get(0)).PlaceTeleportGate(); // Upsz
+                }
+                break;
+            case "craft":
+                if(parameters.size() == 3 && settlers.containsKey(parameters.get(1))) {
+                    if(parameters.get(0).equals("teleportgates")) {
+                        settlers.get(parameters.get(1)).CraftTeleportGates(); // Upsz
+                    } else if(parameters.get(0).equals("robot")) {
+                        settlers.get(parameters.get(1)).CraftRobot(); // Upsz
+                    }
+                }
+                break;
+            default:
+                if(parameters.size() == 1) {
+                    if(robots.containsKey(parameters.get(0))) {
+                        robots.get(parameters.get(0)).Step();
+                    } else if(ufos.containsKey(parameters.get(0))) {
+                        ufos.get(parameters.get(0)).Step();
+                    } else if(teleportgates.containsKey(parameters.get(0))) {
+                        teleportgates.get(parameters.get(0)).Step();
+                    }
+                }
+                break;
+        }
+
 
         if(parameters.size() == 0){
             Steppable steppable = this.steppableMap.get(command);
@@ -170,6 +298,7 @@ public class TestGame extends Game {
         else{
 
         }
+
     }
 
     public void ListAsteroids(){
@@ -228,5 +357,21 @@ public class TestGame extends Game {
 
     public void RemoveAsteroid(Asteroid asteroid){
         this.asteroids.values().remove(asteroid);
+    }
+
+    public static void main(String[] args) {
+        boolean running = true;
+        Scanner scanner = new Scanner(System.in);
+
+        while(running) {
+            if(scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if(line.equalsIgnoreCase("exit")) {
+                    running = false;
+                } else {
+                    InputParser.executeCommand(scanner.nextLine());
+                }
+            }
+        }
     }
 }

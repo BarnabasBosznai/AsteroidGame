@@ -60,11 +60,10 @@ public class Settler extends MiningCharacter {
      * viszi át.Ha sikerült akkor true,ha nem akkor false.
      * @return
      */
-    @Override
+    /*@Override
     public boolean Move() {
         List<Place> destinations = this.asteroid.GetNeighbors();
 
-        // TODO: Ezt egyenlőre itt hagyom, de annyira nem adja
         System.out.println("Hanyadik uticélt választod? (0-"+(destinations.size() - 1)+")");
         System.out.println("Adj meg egy sorszámot: ");
         Scanner scan = new Scanner(System.in);
@@ -79,6 +78,15 @@ public class Settler extends MiningCharacter {
             return true;
         }
 
+        return false;
+    }*/
+    @Override
+    public boolean Move(Place place) {
+        Asteroid currentAsteroid = this.asteroid;
+        if(place.Move(this)){
+            currentAsteroid.TakeOff(this);
+            return true;
+        }
         return false;
     }
 
@@ -228,7 +236,7 @@ public class Settler extends MiningCharacter {
     @Override
     public void Step() {
 
-        int input = (int)(Math.random()*7);  // Ez a lényege majd a menünek. Jelenleg nem használjuk ezt a függvényt egyáltalán.
+       /* int input = (int)(Math.random()*7);  // Ez a lényege majd a menünek. Jelenleg nem használjuk ezt a függvényt egyáltalán.
 
 
         boolean failed = true;
@@ -259,6 +267,6 @@ public class Settler extends MiningCharacter {
                     failed = PlaceTeleportGate();
                     break;
             }
-        }
+        }*/
     }
 }

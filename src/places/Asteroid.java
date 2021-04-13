@@ -182,4 +182,12 @@ public class Asteroid extends Place {
             return false;
     }
 
+    public void setMaterial(Material material) {
+        this.material = material;
+    }
+
+    public void setThickness(int value) {
+        this.thickness = value;
+    }
+
 }
