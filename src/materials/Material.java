@@ -1,6 +1,5 @@
 package materials;
 
-import Skeleton.Skeleton;
 import places.Asteroid;
 
 /**
@@ -13,11 +12,6 @@ public abstract class Material {
      * @param asteroid
      */
     public void OnNearSun(Asteroid asteroid) {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this,"OnNearSun("+asteroid.getClass().getSimpleName()+")");
-
-        skeleton.tabDecrement();
     }
 
     /**
@@ -32,14 +26,6 @@ public abstract class Material {
      * @return
      */
     public boolean CompatibleWith(Material material) {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this,"CompatibleWith("+material.getClass().getSimpleName()+")");
-
-        skeleton.tabDecrement();
-
         return this.getClass() == material.getClass();
-
-
     }
 }

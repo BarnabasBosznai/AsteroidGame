@@ -1,11 +1,8 @@
 package places;
 
-import Skeleton.Skeleton;
 import characters.Character;
 import interfaces.Item;
 import interfaces.Steppable;
-
-import java.util.List;
 
 /**
  * Egy teleportkaput reprezentáló osztály. A teleportkapuk segítségével el tudnak jutni a karakterek olyan
@@ -40,13 +37,7 @@ public class TeleportGate extends Place implements Item, Steppable {
      * @param asteroid
      */
     public void SetAsteroid(Asteroid asteroid) {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "SetAsteroid(Asteroid)");
-
         this.asteroid = asteroid;
-
-        instance.tabDecrement();
     }
 
     /**
@@ -54,13 +45,7 @@ public class TeleportGate extends Place implements Item, Steppable {
      * @param teleportGate
      */
     public void SetPair(TeleportGate teleportGate) {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "SetPair(TeleportGate)");
-
         this.pair = teleportGate;
-
-        instance.tabDecrement();
     }
 
     /**
@@ -68,11 +53,6 @@ public class TeleportGate extends Place implements Item, Steppable {
      * @return
      */
     public Asteroid GetAsteroid() {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "GetAsteroid()");
-        instance.tabDecrement();
-
         return asteroid;
     }
 
@@ -80,16 +60,10 @@ public class TeleportGate extends Place implements Item, Steppable {
      * Eltávolítja a teleportkaput a jelenlegi aszteroidájáról, illetve a párját is az övéről.
      */
     public void RemoveFromAsteroid() {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "RemoveFromAsteroid()");
-
         pair.GetAsteroid().RemoveTeleportGate(pair);
         pair.SetAsteroid(null);
         asteroid.RemoveTeleportGate(this);
         asteroid = null;
-
-        instance.tabDecrement();
     }
 
     /**
@@ -99,11 +73,6 @@ public class TeleportGate extends Place implements Item, Steppable {
      */
     @Override
     public boolean CompatibleWith(Item item) {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "CompatibleWith(" + item.getClass().getSimpleName() + ")");
-        instance.tabDecrement();
-
         return this.getClass() == item.getClass();
     }
 
@@ -114,20 +83,8 @@ public class TeleportGate extends Place implements Item, Steppable {
      */
     @Override
     public boolean Move(Character character) {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "Move(" + character.getClass().getSimpleName() + ")");
-
         Asteroid asteroid = pair.GetAsteroid();
-
-        if(instance.GetInput("A kapu párja már valamelyik aszteroidára le van téve? [I/N]: ").equalsIgnoreCase("i")) {
-            boolean ret = asteroid.Move(character);
-            instance.tabDecrement();
-            return ret;
-        } else {
-            instance.tabDecrement();
-            return false;
-        }
+        return asteroid != null && asteroid.Move(character);
     }
 
     /*NEW*/

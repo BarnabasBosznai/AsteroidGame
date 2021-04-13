@@ -1,8 +1,6 @@
 package places;
 
-import Skeleton.Skeleton;
 import interfaces.Steppable;
-import materials.MaterialStorage;
 
 import java.util.*;
 
@@ -27,14 +25,7 @@ public class AsteroidBelt implements Steppable {
 
 
     private AsteroidBelt() {
-
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "create(" + AsteroidBelt.class.getSimpleName() + ")");
-
         this.asteroids = new ArrayList<>();
-
-        skeleton.tabDecrement();
     }
 
 
@@ -55,13 +46,7 @@ public class AsteroidBelt implements Steppable {
      * @param asteroid
      */
     public void AsteroidExploded(Asteroid asteroid) {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "AsteroidExploded("+ asteroid.getClass().getSimpleName() +" )");
-
         this.asteroids.remove(asteroid);
-
-        skeleton.tabDecrement();
     }
 
     /**
@@ -70,10 +55,6 @@ public class AsteroidBelt implements Steppable {
      */
     /*NEW*/ //igazabol nem, ez sztem maradhat
     public void NearSun() {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "NearSun()");
-
         Random random = new Random();
         int numberOfAsteroidsInvolved = (int) (asteroids.size() * 0.2);
         int i = 0;
@@ -83,8 +64,6 @@ public class AsteroidBelt implements Steppable {
             asteroids.get(idx).NearSun();
             ++i;
         }
-
-        skeleton.tabDecrement();
     }
 
     /**
@@ -92,10 +71,6 @@ public class AsteroidBelt implements Steppable {
      * meghívja a napviharba kerület aszterodiáknak a SolarFlare metódusát.
      */
     public void SolarFlare() {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "SolarFlareSun()");
-
         Random random = new Random();
         int numberOfAsteroidsInvolved = (int) (asteroids.size() * 0.2);
         int i = 0;
@@ -105,8 +80,6 @@ public class AsteroidBelt implements Steppable {
             asteroids.get(idx).SolarFlare();
             ++i;
         }
-
-        skeleton.tabDecrement();
     }
 
     public void AddAsteroid(Asteroid asteroid) {

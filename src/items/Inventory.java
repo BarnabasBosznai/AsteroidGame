@@ -1,6 +1,5 @@
 package items;
 
-import Skeleton.Skeleton;
 import interfaces.Item;
 import materials.*;
 import places.TeleportGate;
@@ -21,22 +20,7 @@ public class Inventory extends MaterialStorage {
 
     public Inventory(){
         super();
-
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "create(" + MaterialStorage.class.getSimpleName() + ")");
-
         this.items = new ArrayList<>();
-
-        materials.add(new Iron());
-        materials.add(new Iron());
-        materials.add(new Iron());
-        materials.add(new Coal());
-        materials.add(new WaterIce());
-        materials.add(new Uranium());
-        materials.add(new Uranium());
-
-        skeleton.tabDecrement();
     }
 
     /**
@@ -48,21 +32,13 @@ public class Inventory extends MaterialStorage {
      */
     @Override
     public boolean AddMaterial(Material material) {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "AddMaterial(" + material.getClass().getSimpleName() + ")");
 
-        String input = skeleton.GetInput("van elég hely? [I/N]: ");
-        if(input.equalsIgnoreCase("I")) {
+        if(materials.size() < 10) {
             super.AddMaterial(material);
-
-            skeleton.tabDecrement();
-            return false;   // mert a diagramon a failed-nek kell megfelelnie
-        }
-        else{
-            skeleton.tabDecrement();
             return true;
         }
+        else
+            return false;
     }
 
     /**
@@ -72,19 +48,12 @@ public class Inventory extends MaterialStorage {
      * @return
      */
     public Material RemoveMaterial(Material material) {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "RemoveMaterial(" + material.getClass().getSimpleName() + ")");
-
         for(Material m : materials){
             if(material.CompatibleWith(m)){
                 materials.remove(m);
-
-                skeleton.tabDecrement();
                 return m;
             }
         }
-        skeleton.tabDecrement();
         return null;
     }
 
@@ -94,13 +63,7 @@ public class Inventory extends MaterialStorage {
      * @param item
      */
     public void AddItem(Item item) {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "AddItem(" + item.getClass().getSimpleName() + ")");
-
         items.add(item);
-
-        skeleton.tabDecrement();
     }
 
     /**
@@ -110,13 +73,7 @@ public class Inventory extends MaterialStorage {
      * @return
      */
     public void RemoveItem(Item item) {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "RemoveItem(" + item.getClass().getSimpleName() + ")");
-
         items.remove(item);
-
-        skeleton.tabDecrement();
     }
 
     /**
@@ -126,41 +83,31 @@ public class Inventory extends MaterialStorage {
      * @return
      */
     public Item GetItem(Class<? extends Item> itemType){
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "GetItem(" + itemType.getSimpleName() + ")");
-
         Item searchHelperItem;
         if(itemType == TeleportGate.class)
             searchHelperItem = new TeleportGate();
         else {
-            skeleton.tabDecrement();
             return null;
         }
 
         for(Item item : items){
             if(item.CompatibleWith(searchHelperItem)) {
-                skeleton.tabDecrement();
                 return item;
             }
         }
 
-        skeleton.tabDecrement();
         return null;
     }
 
-    /*NEW*/
-    public int GetNumberOfItems(Class<? extends Item> itemType){
-
+    public int GetNumberOfItems(Class<? extends Item> itemType) {
         Item searchHelperItem;
         if(itemType == TeleportGate.class)
             searchHelperItem = new TeleportGate();
-        else {
+        else
             return 0;
-        }
 
         int count = 0;
-        for(Item item : items){
+        for(Item item : items) {
             if(item.CompatibleWith(searchHelperItem)) {
                ++count;
             }

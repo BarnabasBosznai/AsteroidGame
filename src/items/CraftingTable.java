@@ -7,7 +7,6 @@ import main.Game;
 import materials.*;
 import places.Asteroid;
 import places.TeleportGate;
-import Skeleton.Skeleton;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,13 +30,7 @@ public class CraftingTable {
     }
 
     private CraftingTable(){
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "create(" + MaterialStorage.class.getSimpleName() + ")");
-
         this.recipes = new HashMap<>();
-
-        skeleton.tabDecrement();
     }
 
     /**
@@ -48,18 +41,11 @@ public class CraftingTable {
      * @return
      */
     public boolean Craft(Class<? extends Item> itemType, Settler settler) {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "Craft(" + itemType.getSimpleName() + "," + settler.getClass().getSimpleName() + ")");
-
         Inventory inventory = settler.GetInventory();
-
         Recipe recipe = this.recipes.get(itemType);
-
         boolean hasEnoughMaterial = this.HasEnoughMaterial(inventory, recipe);
 
         if(!hasEnoughMaterial) {
-            skeleton.tabDecrement();
             return false;
         }
         else{
@@ -71,7 +57,6 @@ public class CraftingTable {
                 Asteroid asteroid = settler.GetAsteroid();
                 asteroid.Move(robot);
 
-                skeleton.tabDecrement();
                 return true;
             }
             else if(itemType.equals(TeleportGate.class)){
@@ -88,11 +73,9 @@ public class CraftingTable {
                 game.AddSteppable(teleportGate1);
                 game.AddSteppable(teleportGate2);
 
-                skeleton.tabDecrement();
                 return true;
             }
             else{
-                skeleton.tabDecrement();
                 return false;
             }
         }
@@ -108,20 +91,14 @@ public class CraftingTable {
      * @return
      */
     public boolean HasEnoughMaterial(Inventory inventory, Recipe recipe) {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "HasEnoughMaterial(" + inventory.getClass().getSimpleName() + "," + recipe.getClass().getSimpleName() + ")");
-
         var inventoryAmounts = inventory.GetAmountOfMaterials();
         var recipeAmounts = recipe.GetAmountOfMaterials();
 
         for(var materialType : recipeAmounts.keySet()){
             if(!inventoryAmounts.containsKey(materialType)) {
-                skeleton.tabDecrement();
                 return false;
             }
             if(inventoryAmounts.get(materialType) < recipeAmounts.get(materialType)){
-                skeleton.tabDecrement();
                 return false;
             }
         }
@@ -133,7 +110,6 @@ public class CraftingTable {
             inventory.RemoveMaterial(material);
         }
 
-        skeleton.tabDecrement();
         return true;
     }
 
@@ -142,12 +118,6 @@ public class CraftingTable {
      * @param recipe
      */
     public void AddRecipe(Recipe recipe) {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "AddRecipe(" + recipe.getClass().getSimpleName() + ")");
-
         this.recipes.put(recipe.GetItemType(), recipe);
-
-        skeleton.tabDecrement();
     }
 }

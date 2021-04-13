@@ -1,6 +1,5 @@
 package places;
 
-import Skeleton.Skeleton;
 import characters.Character;
 import materials.*;
 
@@ -41,12 +40,12 @@ public class Asteroid extends Place {
      * False-al, ha nem(az aszteroida köpenye már teljesen át volt fúrva).
      */
     public boolean Drilled() {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "Drilled()");
-        boolean res = instance.GetInput("Az aszteroida le van fúrva? [I/N]: ").equalsIgnoreCase("n");
-        instance.tabDecrement();
-        return !res;
+        if((thickness - 1) == 0) {
+            thickness--;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -54,61 +53,33 @@ public class Asteroid extends Place {
      * @return Ha az aszteroida magjában van nyersanyag, visszatér a nyersanyaggal, ha nem volt, null-al.
      */
     public Material RemoveMaterial() {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "RemoveMaterial()");
-        if(instance.GetInput("Az aszteroida le van fúrva? [I/N]: ").equalsIgnoreCase("i")) {
-            if (instance.GetInput("Az aszteroidában van nyersanyag? [I/N]: ").equalsIgnoreCase("i")) {
-                Material ret = material;
-                material = null;
-                instance.tabDecrement();
-                return ret;
-            }
+        if(thickness == 0 && material != null) {
+            Material ret = material;
+            material = null;
+            return ret;
+        } else {
+            return null;
         }
-        instance.tabDecrement();
-        return null;
     }
 
     /**
      * Napvihart kelt az aszteroidán. Meghívja az aszteroidán található karaktereken a saját HitByStorm metódusukat.
      */
     public void SolarFlare() {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "SolarFlare()");
-
-        if(!instance.GetInput("Az aszteroida teljesen le van fúrva? [I/N]: ").equalsIgnoreCase("i")) {
-            int n = characters.size();
-            List<Character> copy = List.copyOf(characters);
-            for(int i = 0; i < n; i++)
-                copy.get(i).HitByStorm();
-
-            instance.tabDecrement();
-            return;
-        }
-
-        if(!instance.GetInput("Az aszteroida üreges? [I/N]: ").equalsIgnoreCase("i")) {
+        if(thickness != 0 || material != null) {
             int n = characters.size();
             List<Character> copy = List.copyOf(characters);
             for(int i = 0; i < n; i++)
                 copy.get(i).HitByStorm();
         }
 
-        /*NEW*/
         for(TeleportGate teleportGate : teleportGates){
             teleportGate.HitByStorm();
         }
-        instance.tabDecrement();
     }
 
     public void TakeOff(Character character) {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "TakeOff("+ character.getClass().getSimpleName() +")");
-
         this.characters.remove(character);
-
-        instance.tabDecrement();
     }
 
     /**
@@ -116,14 +87,8 @@ public class Asteroid extends Place {
      * @param teleportGate
      */
     public void PlaceTeleport(TeleportGate teleportGate) {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "PlaceTeleport(TeleportGate)");
-
         this.teleportGates.add(teleportGate);
         teleportGate.SetAsteroid(this);
-
-        instance.tabDecrement();
     }
 
     /**
@@ -131,14 +96,8 @@ public class Asteroid extends Place {
      * @param asteroid
      */
     public void AddNeighbor(Asteroid asteroid) {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "AddNeighbors(Asteroid)");
-
         if(!neighbors.contains(asteroid))
             this.neighbors.add(asteroid);
-
-        instance.tabDecrement();
     }
 
     /**
@@ -146,13 +105,7 @@ public class Asteroid extends Place {
      * @param asteroid
      */
     public void RemoveNeighbor(Asteroid asteroid) {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "RemoveNeighbor(Asteroid)");
-
         this.neighbors.remove(asteroid);
-
-        instance.tabDecrement();
     }
 
     /**
@@ -160,11 +113,6 @@ public class Asteroid extends Place {
      *  asteriodbeltnek, illetve megszünteti a teleportkapu összeköttetést, ha volt rajta éles teleportkapu.
      */
     public void Explosion() {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "Explosion()");
-
-        int n = characters.size();
         List<Character> copy = List.copyOf(characters);
         for(int i = 0; i < copy.size(); i++)
             copy.get(i).HitByExplosion();
@@ -178,7 +126,6 @@ public class Asteroid extends Place {
 
         AsteroidBelt.getInstance().AsteroidExploded(this);
 
-        instance.tabDecrement();
     }
 
     /**
@@ -186,25 +133,8 @@ public class Asteroid extends Place {
      * található nyersanyagon az OnNearSun metódust.
      */
     public void NearSun() {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "NearSun()");
-
-        if (instance.GetInput("Az aszteroida teljesen le van fúrva? [I/N]: ").equalsIgnoreCase("i")) {
-            if(!instance.GetInput("Az aszteroida üreges? [I/N]: ").equalsIgnoreCase("i")) {
-                String res = instance.GetInput("Mi az aszteroida nyersanyaga? [V/J/U/S]: ");
-                if(res.equalsIgnoreCase("u"))
-                    this.material = new Uranium();
-                else if(res.equalsIgnoreCase("j"))
-                    this.material = new WaterIce();
-                else
-                    this.material = new Coal();
-
-                material.OnNearSun(this);
-            }
-        }
-
-        instance.tabDecrement();
+        if(thickness == 0 && material != null)
+            material.OnNearSun(this);
     }
 
     /**
@@ -212,13 +142,7 @@ public class Asteroid extends Place {
      * @param teleportGate
      */
     public void RemoveTeleportGate(TeleportGate teleportGate) {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "RemoveTeleportGate(TeleportGate)");
-
         this.teleportGates.remove(teleportGate);
-
-        instance.tabDecrement();
     }
 
     /**
@@ -226,14 +150,8 @@ public class Asteroid extends Place {
      * @return
      */
     public List<Place> GetNeighbors() {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "getNeighbors()");
-
         List<Place> ret = new ArrayList<>(neighbors);
         ret.addAll(teleportGates);
-
-        instance.tabDecrement();
 
         return ret;
     }
@@ -245,15 +163,8 @@ public class Asteroid extends Place {
 
     @Override
     public boolean Move(Character character) {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "Move(" + character.getClass().getSimpleName() + ")");
-
         this.characters.add(character);
         character.SetAsteroid(this);
-
-        instance.tabDecrement();
-
         return true;
     }
 
@@ -263,18 +174,12 @@ public class Asteroid extends Place {
      * @return True-val tér vissza, ha sikerült visszahelyezni, egyébként False.
      */
     public boolean PlaceMaterial(Material material) {
-        Skeleton instance = Skeleton.getInstance();
-        instance.tabIncrement();
-        instance.Print(this, "PlaceMaterial(" + material.getClass().getSimpleName() + ")");
-
-        if(instance.GetInput("Le lehet helyezni nyersanyagot az aszteroidára? [I/N]: ").equalsIgnoreCase("i")) {
+        if(thickness == 0 && this.material == null){
             this.material = material;
-            instance.tabDecrement();
             return true;
-        } else {
-            instance.tabDecrement();
-            return false;
         }
+        else
+            return false;
     }
 
 }

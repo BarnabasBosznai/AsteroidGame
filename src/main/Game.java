@@ -1,6 +1,5 @@
 package main;
 
-import Skeleton.Skeleton;
 import characters.Settler;
 import interfaces.Steppable;
 import materials.Coal;
@@ -9,7 +8,6 @@ import materials.Material;
 import materials.Uranium;
 import materials.WaterIce;
 import places.Asteroid;
-import places.AsteroidBelt;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,14 +40,8 @@ public class Game {
     }
 
     private Game(){
-
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this, "create(" + Game.class.getSimpleName() + ")");
         this.settlers = new ArrayList<>();
         this.steppables = new ArrayList<>();
-
-        skeleton.tabDecrement();
     }
 
     /**

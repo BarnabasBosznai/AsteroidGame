@@ -1,6 +1,5 @@
 package materials;
 
-import Skeleton.Skeleton;
 import places.Asteroid;
 
 /**
@@ -13,7 +12,6 @@ public class Uranium extends RadioactiveMaterial {
      * @param counter
      */
 
-    /*NEW*/
     private int nearSuns;
 
     public Uranium(){
@@ -23,13 +21,7 @@ public class Uranium extends RadioactiveMaterial {
 
     @Override
     public void Count(MaterialCounter counter) {
-        Skeleton skeleton = Skeleton.getInstance();
-        skeleton.tabIncrement();
-        skeleton.Print(this,"Count(" +counter.getClass().getSimpleName()+ ")");
-
         counter.Count(Uranium.class);
-
-        skeleton.tabDecrement();
     }
 
     /*NEW*/

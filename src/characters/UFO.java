@@ -3,7 +3,6 @@ package characters;
 import main.Game;
 import materials.MaterialStorage;
 
-/*NEW*/
 public class UFO extends MiningCharacter {
 
     protected MaterialStorage inventory;

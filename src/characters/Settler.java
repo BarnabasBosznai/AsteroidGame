@@ -1,6 +1,5 @@
 package characters;
 
-import Skeleton.Skeleton;
 import interfaces.Item;
 import items.CraftingTable;
 import items.Inventory;
@@ -44,12 +43,7 @@ public class Settler extends MiningCharacter {
      * tartózkodik felrobbant. Törli magát mindenhonnan, ahol nyilván volt tartva.
      */
     public void HitByExplosion() {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this, "HitByExplosion()");
-
         die();
-
-        Skeleton.getInstance().tabDecrement();
     }
 
     /**
@@ -58,14 +52,8 @@ public class Settler extends MiningCharacter {
      */
     @Override
     public void HitByStorm() {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this, "HitByStorm()");
-
         die();
-
-        Skeleton.getInstance().tabDecrement();
     }
-    /// Eddig
 
     /**
      * A játékos mozgás metódusa, ami egyik aszteroidáról egy másikra
@@ -74,15 +62,12 @@ public class Settler extends MiningCharacter {
      */
     @Override
     public boolean Move() {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this, "Mine()");
-
         List<Place> destinations = this.asteroid.GetNeighbors();
 
-        Skeleton.getInstance().Print(this,"Hanyadik uticélt választod? (0-"+(destinations.size()-1)+")");
-        String input = Skeleton.getInstance().GetInput("Adj meg egy sorszámot: ");
-
-        Scanner scan = new Scanner(input);
+        // TODO: Ezt egyenlőre itt hagyom, de annyira nem adja
+        System.out.println("Hanyadik uticélt választod? (0-"+(destinations.size() - 1)+")");
+        System.out.println("Adj meg egy sorszámot: ");
+        Scanner scan = new Scanner(System.in);
         int index = scan.nextInt();
 
         Place choosenDestination = destinations.get(index);
@@ -91,11 +76,9 @@ public class Settler extends MiningCharacter {
         if(choosenDestination.Move(this)){
             currentAsteroid.TakeOff(this);
 
-            Skeleton.getInstance().tabDecrement();
             return true;
         }
 
-        Skeleton.getInstance().tabDecrement();
         return false;
     }
 
@@ -140,12 +123,7 @@ public class Settler extends MiningCharacter {
      * @return
      */
     public boolean CraftRobot() {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this, "CraftRobot()");
-
-        boolean ret = CraftingTable.getInstance().Craft(Robot.class, this);
-        Skeleton.getInstance().tabDecrement();
-        return ret;
+        return CraftingTable.getInstance().Craft(Robot.class, this);
     }
 
     /**
@@ -155,20 +133,13 @@ public class Settler extends MiningCharacter {
      */
     /*NEW*/
     public boolean CraftTeleportGates() {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this, "CraftTeleportGates()");
-
         //TeleportGate teleportGate = GetTeleportGate();
 
         int numberOfTeleportGates = inventory.GetNumberOfItems(TeleportGate.class);
         if (numberOfTeleportGates <= 1) {
-            boolean ret = CraftingTable.getInstance().Craft(TeleportGate.class, this);
-
-            Skeleton.getInstance().tabDecrement();
-            return ret;
+            return CraftingTable.getInstance().Craft(TeleportGate.class, this);
         }
 
-        Skeleton.getInstance().tabDecrement();
         return false;
     }
 
@@ -179,22 +150,13 @@ public class Settler extends MiningCharacter {
      * @return
      */
     public boolean PlaceTeleportGate() {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this, "PlaceTeleportGate()");
-
-        // Itt már van vagy nincs kérdés?
         TeleportGate teleportGate = GetTeleportGate();
-
         if (teleportGate!=null){
             asteroid.PlaceTeleport(teleportGate);
-
             inventory.RemoveItem(teleportGate);
-
-            Skeleton.getInstance().tabDecrement();
             return true;
         }
 
-        Skeleton.getInstance().tabDecrement();
         return false;
     }
 
@@ -203,14 +165,7 @@ public class Settler extends MiningCharacter {
      * @return
      */
     public TeleportGate GetTeleportGate() {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this,"GetTeleportGate()");
-
-        TeleportGate retTeleportGate = (TeleportGate) this.inventory.GetItem(TeleportGate.class);
-
-        Skeleton.getInstance().tabDecrement();
-
-        return retTeleportGate;
+        return (TeleportGate) this.inventory.GetItem(TeleportGate.class);
     }
 
     /**
@@ -218,10 +173,6 @@ public class Settler extends MiningCharacter {
      * @return
      */
     public Inventory GetInventory(){
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this,"GetInventory()");
-
-        Skeleton.getInstance().tabDecrement();
         return inventory;
     }
 
@@ -230,10 +181,6 @@ public class Settler extends MiningCharacter {
      * @return
      */
     public Asteroid GetAsteroid(){
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this,"GetAsteroid()");
-
-        Skeleton.getInstance().tabDecrement();
         return asteroid;
     }
 
@@ -245,23 +192,14 @@ public class Settler extends MiningCharacter {
      * @return
      */
     public boolean PlaceMaterial(Material material) {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this,"PlaceMaterial("+material.getClass().getSimpleName()+")");
-
         Material pickedMaterial = inventory.RemoveMaterial(material);
         if (pickedMaterial!=null){
             if (!asteroid.PlaceMaterial(pickedMaterial)){
                 inventory.AddMaterial(pickedMaterial);
-
-                Skeleton.getInstance().tabDecrement();
                 return false;
             }
-
-            Skeleton.getInstance().tabDecrement();
             return true;
         }
-
-        Skeleton.getInstance().tabDecrement();
         return false;
     }
 
@@ -272,13 +210,7 @@ public class Settler extends MiningCharacter {
      * @return
      */
     public boolean Drill() {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this,"Drill()");
-
-        boolean ret = asteroid.Drilled();
-        System.out.println(ret);
-        Skeleton.getInstance().tabDecrement();
-        return ret;
+        return asteroid.Drilled();
     }
 
     /**
