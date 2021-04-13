@@ -1,6 +1,7 @@
 package places;
 
 import interfaces.Steppable;
+import main.Game;
 
 import java.util.*;
 
@@ -47,6 +48,8 @@ public class AsteroidBelt implements Steppable {
      */
     public void AsteroidExploded(Asteroid asteroid) {
         this.asteroids.remove(asteroid);
+
+        Game.getInstance().RemoveAsteroid(asteroid);
     }
 
     /**
