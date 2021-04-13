@@ -39,7 +39,7 @@ public class Game {
         return instance;
     }
 
-    private Game(){
+    public Game(){
         this.settlers = new ArrayList<>();
         this.steppables = new ArrayList<>();
     }
