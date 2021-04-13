@@ -290,15 +290,6 @@ public class TestGame extends Game {
                 }
                 break;
         }
-
-
-        if(parameters.size() == 0){
-            Steppable steppable = this.steppableMap.get(command);
-        }
-        else{
-
-        }
-
     }
 
     public void ListAsteroids(){
