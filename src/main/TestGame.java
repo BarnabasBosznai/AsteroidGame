@@ -1,9 +1,7 @@
 package main;
 
+import characters.*;
 import characters.Character;
-import characters.Robot;
-import characters.Settler;
-import characters.UFO;
 import interfaces.Steppable;
 import items.Inventory;
 import materials.*;
@@ -24,8 +22,8 @@ public class TestGame extends Game {
     private final Map<String, TeleportGate> teleportgates;
 
     private final Map<String, Steppable> steppableMap;
-    private final Map<String, TeleportGate> characterMap;
-    private final Map<String, TeleportGate> miningCharacterMap;
+    private final Map<String, Character> drillingCharacterMap;
+    private final Map<String, MiningCharacter> miningCharacterMap;
 
 
     public TestGame() {
@@ -38,41 +36,8 @@ public class TestGame extends Game {
         this.teleportgates = new HashMap<>();
 
         this.steppableMap = new HashMap<>();
-        this.characterMap = new HashMap<>();
+        this.drillingCharacterMap = new HashMap<>();
         this.miningCharacterMap = new HashMap<>();
-    }
-
-    private Map<String, Character> GetMiningCharacters(){
-        Map<String, Character> landableCharacters = new HashMap<>();
-
-        for(String settlerID : settlers.keySet())
-            landableCharacters.put(settlerID, settlers.get(settlerID));
-
-        for(String robotID : robots.keySet())
-            landableCharacters.put(robotID, robotID.get(robotID));
-
-        for(String ufoID : ufos.keySet())
-            landableCharacters.put(ufoID, ufoID.get(ufoID));
-
-        return landableCharacters;
-    }
-
-    private Map<String, Steppable> GetSteppables(){
-        Map<String, Steppable> steppables = new HashMap<>();
-
-        for(String settlerID : settlers.keySet())
-            steppables.put(settlerID, settlers.get(settlerID));
-
-        for(String robotID : robots.keySet())
-            steppables.put(robotID, robotID.get(robotID));
-
-        for(String ufoID : ufos.keySet())
-            steppables.put(ufoID, ufoID.get(ufoID));
-
-        for(String teleportgateID : teleportgates.keySet())
-            steppables.put(teleportgateID, teleportgates.get(teleportgateID));
-
-        return steppables;
     }
 
     public void Create(){
@@ -90,6 +55,10 @@ public class TestGame extends Game {
             Settler settler = new Settler();
 
             this.settlers.put(objectID, settler);
+            this.steppableMap.put(objectID, settler);
+            this.drillingCharacterMap.put(objectID, settler);
+            this.miningCharacterMap.put(objectID, settler);
+
             this.AddSettler(settler);
             this.AddSteppable(settler);
         }
@@ -97,18 +66,26 @@ public class TestGame extends Game {
             TeleportGate teleportGate = new TeleportGate();
 
             this.teleportgates.put(objectID, teleportGate);
+            this.steppableMap.put(objectID, teleportGate);
+
             this.AddSteppable(teleportGate);
         }
         else if(objectType == Robot.class){
             Robot robot = new Robot();
 
             this.robots.put(objectID, robot);
+            this.drillingCharacterMap.put(objectID, robot);
+            this.steppableMap.put(objectID, robot);
+
             this.AddSteppable(robot);
         }
         else if(objectType == UFO.class){
             UFO ufo = new UFO();
 
             this.ufos.put(objectID, ufo);
+            this.steppableMap.put(objectID, ufo);
+            this.miningCharacterMap.put(objectID, ufo);
+
             this.AddSteppable(ufo);
         }
     }
@@ -116,8 +93,7 @@ public class TestGame extends Game {
     public void Land(String asteroidID, String characterID){
         Asteroid asteroid = this.asteroids.get(asteroidID);
 
-        var miningCharacters = this.GetMiningCharacters();
-        Character character = miningCharacters.get(characterID);
+        Character character = this.miningCharacterMap.get(characterID);
 
         asteroid.Move(character);
     }
@@ -189,7 +165,7 @@ public class TestGame extends Game {
     public void Step(String command, List<String> parameters){
 
         if(parameters.size() == 0){
-            Steppable steppable = this.GetSteppables().get(command);
+            Steppable steppable = this.steppableMap.get(command);
         }
         else{
 
@@ -216,7 +192,7 @@ public class TestGame extends Game {
 
     }
 
-    public void public void GameStatus(){
+    public void GameStatus(){
         boolean gameStatus = this.CheckGameOver();
 
         //meg lekezelem kulon majd h settlers lost, az jelenleg nincs
@@ -230,15 +206,23 @@ public class TestGame extends Game {
 
         if (Settler.class.equals(type)) {
             this.settlers.values().remove(steppable);
+            this.steppableMap.values().remove(steppable);
+            this.drillingCharacterMap.values().remove(steppable);
+            this.miningCharacterMap.values().remove(steppable);
         }
         if (Robot.class.equals(type)) {
             this.robots.values().remove(steppable);
+            this.steppableMap.values().remove(steppable);
+            this.drillingCharacterMap.values().remove(steppable);
         }
         if (UFO.class.equals(type)) {
             this.ufos.values().remove(steppable);
+            this.steppableMap.values().remove(steppable);
+            this.miningCharacterMap.values().remove(steppable);
         }
         if (TeleportGate.class.equals(type)) {
             this.teleportgates.values().remove(steppable);
+            this.steppableMap.values().remove(steppable);
         }
     }
 
