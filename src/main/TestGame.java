@@ -22,7 +22,7 @@ public class TestGame extends Game {
     private final Map<String, UFO> ufos;
     private final Map<String, TeleportGate> teleportgates;
 
-    public TestGame(){
+    public TestGame() {
         super();
 
         this.asteroids = new HashMap<>();

@@ -20,7 +20,8 @@ import java.util.Map;
  * jelenlegi körben.
  */
 public class Game {
-    private static Game instance;
+    //private static Game instance;
+    private static TestGame instance;
 
     /**
      * A játékban található összes telepes (settler).
@@ -32,9 +33,16 @@ public class Game {
      */
     private final List<Steppable> steppables;
 
-    public static Game getInstance() {
+    /*public static Game getInstance() {
         if(instance == null)
             instance = new Game();
+
+        return instance;
+    }*/
+
+    public static TestGame getInstance() {
+        if(instance == null)
+            instance = new TestGame();
 
         return instance;
     }
