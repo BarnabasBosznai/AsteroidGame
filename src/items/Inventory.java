@@ -115,4 +115,15 @@ public class Inventory extends MaterialStorage {
 
         return count;
     }
+
+    public List<TeleportGate> GetTeleportGates() {
+        List<TeleportGate> teleportGates = new ArrayList<>();
+        TeleportGate tg = new TeleportGate();
+        for(Item item : items) {
+            if(item.CompatibleWith(tg))
+                teleportGates.add((TeleportGate)item);
+        }
+
+        return teleportGates;
+    }
 }

@@ -42,6 +42,17 @@ public class TestGame extends Game {
     }
 
     public void Create(){
+        steppableMap.forEach((key, value) -> super.RemoveSteppable(value));
+        settlers.forEach((key, value) -> super.RemoveSettler(value));
+
+        asteroids.clear();
+        settlers.clear();
+        robots.clear();
+        ufos.clear();
+        teleportgates.clear();
+        steppableMap.clear();
+        drillingCharacterMap.clear();
+        miningCharacterMap.clear();
 
     }
 
@@ -112,22 +123,16 @@ public class TestGame extends Game {
         Material material;
         if(materialType.equals("coal"))
             material = new Coal();
-
         else if(materialType.equals("iron"))
             material = new Iron();
-
         else if(materialType.equals("waterice"))
             material = new WaterIce();
-
         else if(materialType.equals("uranium0"))
             material = new Uranium(0);
-
         else if(materialType.equals("uranium1"))
             material = new Uranium(1);
-
         else if(materialType.equals("uranium2"))
             material = new Uranium(2);
-
         else
             return;
 
@@ -157,6 +162,9 @@ public class TestGame extends Game {
                         break;
                     case "uranium2":
                         asteroids.get(objectID).setMaterial(new Uranium(2));
+                        break;
+                    case "null":
+                        asteroids.get(objectID).setMaterial(null);
                         break;
                 }
             }
@@ -266,15 +274,15 @@ public class TestGame extends Game {
                 break;
             case "placeteleport":
                 if(parameters.size() == 2 && settlers.containsKey(parameters.get(0))) {
-                    settlers.get(parameters.get(0)).PlaceTeleportGate(); // Upsz
+                    settlers.get(parameters.get(0)).PlaceTeleportGate(); // TODO: Nem tudjuk jeleneleg hozzáadni TestGame Mapjaihoz
                 }
                 break;
             case "craft":
                 if(parameters.size() == 3 && settlers.containsKey(parameters.get(1))) {
                     if(parameters.get(0).equals("teleportgates")) {
-                        settlers.get(parameters.get(1)).CraftTeleportGates(); // Upsz
+                        settlers.get(parameters.get(1)).CraftTeleportGates(); // TODO: Nem tudjuk jeleneleg hozzáadni TestGame Mapjaihoz
                     } else if(parameters.get(0).equals("robot")) {
-                        settlers.get(parameters.get(1)).CraftRobot(); // Upsz
+                        settlers.get(parameters.get(1)).CraftRobot(); // TODO: Nem tudjuk jeleneleg hozzáadni TestGame Mapjaihoz
                     }
                 }
                 break;
@@ -292,12 +300,114 @@ public class TestGame extends Game {
         }
     }
 
-    public void ListAsteroids(){
+    public void ListAsteroids() {
+        int[] counter = {0};
 
+        asteroids.forEach((key, value) -> {
+            System.out.println("asteroid " + key + " " + value.GetThickness() + " " + value.GetMaterial());
+            System.out.println("neighbor ids:");
+            asteroids.forEach((key2, value2) -> {
+                if(!key.equals(key2) && value2.GetNeighbors().stream().filter(place -> place.equals(value)).findFirst().orElse(null) != null) {
+                    System.out.print(key2 + " ");
+                    counter[0]++;
+                }
+            });
+            if(counter[0] == 0)
+                System.out.print("-");
+            System.out.println();
+
+            counter[0] = 0;
+            System.out.println("teleportgates’s pair’s asteroid’s id: ");
+            teleportgates.forEach((key2, value2) -> {
+                value.GetTeleportGates().forEach(tg -> {
+                    if(value2.equals(tg)) {
+                        asteroids.entrySet().stream().filter(entry -> tg.GetAsteroid().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().ifPresent(System.out::print);
+                    }
+                });
+            });
+            if(counter[0] == 0)
+                System.out.print("-");
+            System.out.println();
+
+            counter[0] = 0;
+            System.out.println("character ids:");
+            drillingCharacterMap.forEach((key2, value2) -> {
+                value.GetCharacters().forEach(character -> {
+                    if(value2.equals(character)) {
+                        System.out.print(key2);
+                        counter[0]++;
+                    }
+                });
+            });
+            if(counter[0] == 0)
+                System.out.print("-");
+            System.out.println();
+
+            Map<Class<? extends Material>, Integer> matsOnAsteroid = new HashMap<>();
+            System.out.println("total amount of materials by material on asteroid:");
+            settlers.forEach((key2, value2) -> {
+                if(value.GetCharacters().stream().filter(character -> character.equals(value2)).findFirst().orElse(null) != null)
+                    value2.GetInventory().GetAmountOfMaterials().forEach(matsOnAsteroid::put);
+            });
+            if(matsOnAsteroid.containsKey(Coal.class))
+                System.out.print(matsOnAsteroid.get(Coal.class) + " ");
+            else
+                System.out.print("0 ");
+
+            if(matsOnAsteroid.containsKey(Iron.class))
+                System.out.print(matsOnAsteroid.get(Iron.class) + " ");
+            else
+                System.out.print("0 ");
+
+            if(matsOnAsteroid.containsKey(WaterIce.class))
+                System.out.print(matsOnAsteroid.get(WaterIce.class) + " ");
+            else
+                System.out.print("0 ");
+
+            if(matsOnAsteroid.containsKey(Uranium.class))
+                System.out.println(matsOnAsteroid.get(Uranium.class));
+            else
+                System.out.println("0");
+        });
     }
 
     public void ListSettlers(){
+        settlers.forEach((key, value) -> {
+            System.out.print("settler " + key + " ");
+            asteroids.entrySet().stream().filter(entry -> value.GetAsteroid().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().ifPresent(System.out::print);
+            System.out.println();
 
+            System.out.println("materials:");
+            var mats = value.GetInventory().GetAmountOfMaterials();
+            if(mats.containsKey(Coal.class))
+                System.out.print(mats.get(Coal.class) + " ");
+            else
+                System.out.print("0 ");
+
+            if(mats.containsKey(Iron.class))
+                System.out.print(mats.get(Iron.class) + " ");
+            else
+                System.out.print("0 ");
+
+            if(mats.containsKey(WaterIce.class))
+                System.out.print(mats.get(WaterIce.class) + " ");
+            else
+                System.out.print("0 ");
+
+            if(mats.containsKey(Uranium.class))
+                System.out.println(mats.get(Uranium.class));
+            else
+                System.out.println("0");
+
+            System.out.println("teleportgate ids");
+            teleportgates.forEach((key2, value2) -> {
+                value.GetInventory().GetTeleportGates().forEach(teleportGate -> {
+                    if(teleportGate.equals(value2))
+                        System.out.print(key2 + " ");
+                });
+            });
+            System.out.println();
+        });
     }
 
     public void ListRobots(){
@@ -329,20 +439,29 @@ public class TestGame extends Game {
             this.steppableMap.values().remove(steppable);
             this.drillingCharacterMap.values().remove(steppable);
             this.miningCharacterMap.values().remove(steppable);
+
+            super.RemoveSteppable(steppable);
+            super.RemoveSettler((Settler)steppable);
         }
         if (Robot.class.equals(type)) {
             this.robots.values().remove(steppable);
             this.steppableMap.values().remove(steppable);
             this.drillingCharacterMap.values().remove(steppable);
+
+            super.RemoveSteppable(steppable);
         }
         if (UFO.class.equals(type)) {
             this.ufos.values().remove(steppable);
             this.steppableMap.values().remove(steppable);
             this.miningCharacterMap.values().remove(steppable);
+
+            super.RemoveSteppable(steppable);
         }
         if (TeleportGate.class.equals(type)) {
             this.teleportgates.values().remove(steppable);
             this.steppableMap.values().remove(steppable);
+
+            super.RemoveSteppable(steppable);
         }
     }
 
@@ -351,16 +470,18 @@ public class TestGame extends Game {
     }
 
     public static void main(String[] args) {
+        TestGame.getInstance();
+
         boolean running = true;
         Scanner scanner = new Scanner(System.in);
 
         while(running) {
             if(scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                if(line.equalsIgnoreCase("exit")) {
+                if(line.equalsIgnoreCase("end")) {
                     running = false;
                 } else {
-                    InputParser.executeCommand(scanner.nextLine());
+                    InputParser.executeCommand(line);
                 }
             }
         }

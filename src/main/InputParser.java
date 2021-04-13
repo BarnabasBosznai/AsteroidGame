@@ -16,8 +16,10 @@ import java.util.List;
 
 public class InputParser {
     private static StringBuilder builder;
+    private static StringBuilder listCommandsBuilder;
     static {
         builder = new StringBuilder();
+        listCommandsBuilder = new StringBuilder();
     }
 
     public static void executeCommand(String line) {
@@ -32,9 +34,11 @@ public class InputParser {
                     break;
                 case "clear":
                     builder = new StringBuilder();
+                    listCommandsBuilder = new StringBuilder();
                     break;
                 case "create":
                     TestGame.getInstance().Create();
+                    builder.append("create").append(System.getProperty("line.separator"));
                     break;
                 case "add":
                     addCommand(split);
@@ -64,30 +68,63 @@ public class InputParser {
                     stepCommand(split);
                     break;
                 case "listasteroids":
-                    TestGame.getInstance().ListAsteroids();
+                    builder.append("listasteroids").append(System.getProperty("line.separator"));
+                    listCommandsBuilder.append("listasteroids ");
                     break;
                 case "listsettlers":
-                    TestGame.getInstance().ListSettlers();
+                    builder.append("listsettlers").append(System.getProperty("line.separator"));
+                    listCommandsBuilder.append("listsettlers ");
                     break;
                 case "listrobots":
-                    TestGame.getInstance().ListRobots();
+                    builder.append("listrobots").append(System.getProperty("line.separator"));
+                    listCommandsBuilder.append("listrobots ");
                     break;
                 case "listufos":
-                    TestGame.getInstance().ListUFOs();
+                    builder.append("listufos").append(System.getProperty("line.separator"));
+                    listCommandsBuilder.append("listufos ");
                     break;
                 case "listteleportgates":
-                    TestGame.getInstance().ListTeleportGates();
+                    builder.append("listteleportgates").append(System.getProperty("line.separator"));
+                    listCommandsBuilder.append("listteleportgates ");
                     break;
                 case "gamestatus":
-                    TestGame.getInstance().GameStatus();
+                    builder.append("gamestatus").append(System.getProperty("line.separator"));
+                    listCommandsBuilder.append("gamestatus ");
+                    break;
+                case "exit":
+                    {
+                        for(String str : listCommandsBuilder.toString().split(" ")) {
+                            switch(str) {
+                                case "listasteroids":
+                                    TestGame.getInstance().ListAsteroids();
+                                    break;
+                                case "listsettlers":
+                                    TestGame.getInstance().ListSettlers();
+                                    break;
+                                case "listrobots":
+                                    TestGame.getInstance().ListRobots();
+                                    break;
+                                case "listufos":
+                                    TestGame.getInstance().ListUFOs();
+                                    break;
+                                case "listteleportgates":
+                                    TestGame.getInstance().ListTeleportGates();
+                                    break;
+                                case "gamestatus":
+                                    TestGame.getInstance().GameStatus();
+                                    break;
+                            }
+                        }
+                        listCommandsBuilder = new StringBuilder();
+                    }
                     break;
             }
         }
     }
 
     private static void loadCommand(String[] params) {
-        if(params.length == 1) {
-            try(BufferedReader reader = new BufferedReader(new FileReader(params[0]))) {
+        if(params.length == 2) {
+            try(BufferedReader reader = new BufferedReader(new FileReader(params[1]))) {
                 builder.append("load ").append(params[0]).append(System.getProperty("line.separator"));
                 String line;
                 while((line = reader.readLine()) != null) {
@@ -102,10 +139,11 @@ public class InputParser {
     }
 
     private static void saveCommand(String[] params) {
-        if(params.length == 1) {
-            try(BufferedWriter writer = new BufferedWriter(new FileWriter(params[0]))) {
+        if(params.length == 2) {
+            try(BufferedWriter writer = new BufferedWriter(new FileWriter(params[1]))) {
                 writer.write(builder.toString());
                 builder = new StringBuilder();
+                listCommandsBuilder = new StringBuilder();
             } catch (Exception e) {
                 // Egyenlőre
                 e.printStackTrace();

@@ -190,4 +190,19 @@ public class Asteroid extends Place {
         this.thickness = value;
     }
 
+    public int GetThickness() {
+        return thickness;
+    }
+
+    public Material GetMaterial() {
+        return material;
+    }
+
+    public List<Character> GetCharacters() {
+        return characters;
+    }
+
+    public List<TeleportGate> GetTeleportGates() {
+        return teleportGates;
+    }
 }
