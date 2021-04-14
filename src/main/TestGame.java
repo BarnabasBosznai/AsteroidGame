@@ -170,7 +170,7 @@ public class TestGame extends Game {
             }
         } else if(teleportgates.containsKey(objectID)) {
             if(variable.equals("crazy")) {
-                teleportgates.get(objectID).setCrazy(Boolean.parseBoolean(value));
+                teleportgates.get(objectID).SetCrazy(Boolean.parseBoolean(value));
             }
         }
     }
@@ -411,15 +411,63 @@ public class TestGame extends Game {
     }
 
     public void ListRobots(){
+        if(this.robots.size() == 0){
+            System.out.println("robot - -");
+            System.out.println();
+            return;
+        }
+        for(String robotID : robots.keySet()){
+            Asteroid asteroid = this.robots.get(robotID).GetAsteroid();
+            String asteroidID = "";
 
+            for(var entry : asteroids.entrySet()){
+                if(entry.getValue().equals(asteroid))
+                    asteroidID = entry.getKey();
+            }
+            System.out.println("robot " + robotID + " " + asteroidID);
+
+        }
+        System.out.println();
     }
 
     public void ListUFOs(){
+        if(this.ufos.size() == 0){
+            System.out.println("ufo - -");
+            System.out.println();
+            return;
+        }
+        for(String ufoID : ufos.keySet()){
+            Asteroid asteroid = this.ufos.get(ufoID).GetAsteroid();
+            String asteroidID = "";
 
+            for(var entry : asteroids.entrySet()){
+                if(entry.getValue().equals(asteroid))
+                    asteroidID = entry.getKey();
+            }
+            System.out.println("ufo " + ufoID + " " + asteroidID);
+
+        }
+        System.out.println();
     }
 
     public void ListTeleportGates(){
+        if(this.teleportgates.size() == 0){
+            System.out.println("teleportgate - -");
+            System.out.println();
+            return;
+        }
+        for(String teleportgateID : teleportgates.keySet()){
+            Asteroid asteroid = this.teleportgates.get(teleportgateID).GetAsteroid();
+            String asteroidID = "";
 
+            for(var entry : asteroids.entrySet()){
+                if(entry.getValue().equals(asteroid))
+                    asteroidID = entry.getKey();
+            }
+            String crazy = teleportgates.get(teleportgateID).GetCrazy() ? "true" : "false";
+            System.out.println("teleportgate " + teleportgateID + " " + asteroidID + " " + crazy);
+        }
+        System.out.println();
     }
 
     public void GameStatus(){

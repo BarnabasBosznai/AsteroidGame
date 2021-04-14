@@ -92,7 +92,11 @@ public class TeleportGate extends Place implements Item, Steppable {
         crazy = true;   // Ekkor csak megkergül, innentől minden körben odébb megy
     }
 
-    public void setCrazy(boolean crazy) {
+    public void SetCrazy(boolean crazy) {
         this.crazy = crazy;
+    }
+
+    public boolean GetCrazy(){
+        return this.crazy;
     }
 }

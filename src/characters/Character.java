@@ -60,4 +60,8 @@ public abstract class Character implements Steppable {
     public void SetAsteroid(Asteroid asteroid){
         this.asteroid = asteroid;
     }
+
+    public Asteroid GetAsteroid(){
+        return this.asteroid;
+    }
 }
