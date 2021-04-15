@@ -53,7 +53,6 @@ public class CraftingTable {
                 Robot robot = new Robot();
 
                 Game.getInstance().AddSteppable(robot);
-
                 Asteroid asteroid = settler.GetAsteroid();
                 asteroid.Move(robot);
 

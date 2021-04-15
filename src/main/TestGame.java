@@ -118,6 +118,7 @@ public class TestGame extends Game {
         TeleportGate teleportGate = this.teleportgates.get(teleportID);
 
         settler.AddItem(teleportGate);
+        super.AddSteppable(teleportGate);
     }
 
     public void AddMaterial(String settlerID, String materialType){
@@ -201,7 +202,6 @@ public class TestGame extends Game {
         asteroid2.AddNeighbor(asteroid1);
     }
 
-    //WTF nemakarom
     public void Step(String command, List<String> parameters){
         switch (command) {
             case "drill":
@@ -235,18 +235,18 @@ public class TestGame extends Game {
                                 settlers.get(parameters.get(0)).PlaceMaterial(mat);
                             break;
                         case "uranium0":
-                            mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new Uranium(0))).findFirst().orElse(null);
-                            if(mat != null)
+                            mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new Uranium())).findFirst().orElse(null);
+                            if(mat != null && ((Uranium)mat).getNearSuns() == 0)
                                 settlers.get(parameters.get(0)).PlaceMaterial(mat);
                             break;
                         case "uranium1":
                             mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new Uranium(1))).findFirst().orElse(null);
-                            if(mat != null)
+                            if(mat != null && ((Uranium)mat).getNearSuns() == 1)
                                 settlers.get(parameters.get(0)).PlaceMaterial(mat);
                             break;
                         case "uranium2":
                             mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new Uranium(2))).findFirst().orElse(null);
-                            if(mat != null)
+                            if(mat != null && ((Uranium)mat).getNearSuns() == 2)
                                 settlers.get(parameters.get(0)).PlaceMaterial(mat);
                             break;
                     }
@@ -277,15 +277,33 @@ public class TestGame extends Game {
                 break;
             case "placeteleport":
                 if(parameters.size() == 2 && settlers.containsKey(parameters.get(0))) {
-                    settlers.get(parameters.get(0)).PlaceTeleportGate(); // TODO: Nem tudjuk jeleneleg hozzáadni TestGame Mapjaihoz
+                    settlers.get(parameters.get(0)).PlaceTeleportGate();
                 }
                 break;
             case "craft":
                 if(parameters.size() == 3 && settlers.containsKey(parameters.get(1))) {
                     if(parameters.get(0).equals("teleportgates")) {
-                        settlers.get(parameters.get(1)).CraftTeleportGates(); // TODO: Nem tudjuk jeleneleg hozzáadni TestGame Mapjaihoz
+                        settlers.get(parameters.get(1)).CraftTeleportGates();
+                        int[] index = {0};
+                        List<TeleportGate> gates = settlers.get(parameters.get(1)).GetInventory().GetTeleportGates();
+                        gates.forEach(teleportGate -> {
+                            if(!teleportgates.containsValue(teleportGate)) {
+                                teleportgates.put(parameters.get(2 + index[0]), teleportGate);
+                                index[0]++;
+                            }
+                        });
                     } else if(parameters.get(0).equals("robot")) {
-                        settlers.get(parameters.get(1)).CraftRobot(); // TODO: Nem tudjuk jeleneleg hozzáadni TestGame Mapjaihoz
+                        settlers.get(parameters.get(1)).CraftRobot();
+                        getSteppables().forEach(steppable -> {
+
+                        });
+                        robots.forEach((key, value) -> {
+                            getSteppables().forEach(steppable -> {
+                                if(value.equals(steppable) && !robots.containsValue(steppable))
+                                    robots.put(parameters.get(2), (Robot)steppable);
+                            });
+                        });
+
                     }
                 }
                 break;

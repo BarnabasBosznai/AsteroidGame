@@ -32,7 +32,6 @@ public class Uranium extends RadioactiveMaterial {
     @Override
     public String Print(){return "uranium"+(nearSuns);}
 
-    /*NEW*/
     @Override
     public void OnNearSun(Asteroid asteroid){
         nearSuns--;
@@ -41,8 +40,7 @@ public class Uranium extends RadioactiveMaterial {
 
     }
 
-    @Override
-    public boolean CompatibleWith(Material material) {
-        return super.CompatibleWith(material) && this.nearSuns == ((Uranium)material).nearSuns;
+    public int getNearSuns() {
+        return nearSuns;
     }
 }

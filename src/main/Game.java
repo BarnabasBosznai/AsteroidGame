@@ -163,4 +163,8 @@ public class Game {
     public void RemoveSettler(Settler settler) {
         this.settlers.remove(settler);
     }
+
+    public List<Steppable> getSteppables() {
+        return steppables;
+    }
 }
