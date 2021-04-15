@@ -32,7 +32,7 @@ public class Robot extends Character implements Item {
      * elérte átmegy egy másik aszteroidára.
      */
     private void ControlRobot() {
-        if (asteroid.Drilled()){
+        if (!asteroid.Drilled()){
             // TODO: woozy_face
             while(!Move(this.asteroid.GetNeighbors().get(new Random().nextInt(this.asteroid.GetNeighbors().size() - 1))));
         }
