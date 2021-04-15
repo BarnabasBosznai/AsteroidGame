@@ -1,5 +1,5 @@
 load napkozelben.txt
-add asteroid
+add asteroid ast2
 set ast0 layers 0
 set ast0 material coal
 set ast1 layers 0

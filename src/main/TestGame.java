@@ -334,6 +334,7 @@ public class TestGame extends Game {
         int[] counter = {0};
 
         asteroids.forEach((key, value) -> {
+            counter[0]=0;
             if (value.GetMaterial() == null)
                 System.out.println("asteroid " + key + " " + value.GetThickness() + " null");
             else
