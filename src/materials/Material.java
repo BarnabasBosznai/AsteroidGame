@@ -20,6 +20,8 @@ public abstract class Material {
      */
     public abstract void Count(MaterialCounter counter);
 
+    public abstract String Print();
+
     /**
      * Igazzal tér vissza, ha a paraméterként kapott material ugyanolyan típusú, mint ő, egyébként hamis.
      * @param material

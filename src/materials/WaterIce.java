@@ -24,4 +24,7 @@ public class WaterIce extends Material {
     public void Count(MaterialCounter counter) {
         counter.Count(WaterIce.class);
     }
+
+    @Override
+    public String Print(){return "waterice";}
 }

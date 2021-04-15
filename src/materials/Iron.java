@@ -12,4 +12,7 @@ public class Iron extends Material {
     public void Count(MaterialCounter counter) {
         counter.Count(Iron.class);
     }
+
+    @Override
+    public String Print(){return "iron";}
 }

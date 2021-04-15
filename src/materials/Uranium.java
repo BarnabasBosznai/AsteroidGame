@@ -16,7 +16,7 @@ public class Uranium extends RadioactiveMaterial {
 
     public Uranium(){
         super();
-        nearSuns = 0;
+        nearSuns = 2;
     }
 
     public Uranium(int expositions){
@@ -29,12 +29,16 @@ public class Uranium extends RadioactiveMaterial {
         counter.Count(Uranium.class);
     }
 
+    @Override
+    public String Print(){return "uranium"+(nearSuns);}
+
     /*NEW*/
     @Override
     public void OnNearSun(Asteroid asteroid){
-        ++nearSuns;
-        if(nearSuns >= 3)
+        nearSuns--;
+        if(nearSuns < 0)
             asteroid.Explosion();
+
     }
 
     @Override

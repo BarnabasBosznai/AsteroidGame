@@ -68,22 +68,27 @@ public class InputParser {
                     stepCommand(split);
                     break;
                 case "listasteroids":
+                    TestGame.getInstance().ListAsteroids();
                     builder.append("listasteroids").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("listasteroids ");
                     break;
                 case "listsettlers":
+                    TestGame.getInstance().ListSettlers();
                     builder.append("listsettlers").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("listsettlers ");
                     break;
                 case "listrobots":
+                    TestGame.getInstance().ListRobots();
                     builder.append("listrobots").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("listrobots ");
                     break;
                 case "listufos":
+                    TestGame.getInstance().ListUFOs();
                     builder.append("listufos").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("listufos ");
                     break;
                 case "listteleportgates":
+                    TestGame.getInstance().ListTeleportGates();
                     builder.append("listteleportgates").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("listteleportgates ");
                     break;
@@ -91,7 +96,7 @@ public class InputParser {
                     builder.append("gamestatus").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("gamestatus ");
                     break;
-                case "exit":
+                case "end": // ez nem kell
                     {
                         for(String str : listCommandsBuilder.toString().split(" ")) {
                             switch(str) {

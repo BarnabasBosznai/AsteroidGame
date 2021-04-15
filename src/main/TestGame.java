@@ -57,6 +57,7 @@ public class TestGame extends Game {
     }
 
     public void Add(Class<?> objectType, String objectID){
+
         if(objectType == Asteroid.class){
             Asteroid asteroid = new Asteroid();
 
@@ -141,7 +142,7 @@ public class TestGame extends Game {
 
     public void Set(String objectID, String variable, String value) {
         if(asteroids.containsKey(objectID)) {
-            if(variable.equals("layer")) {
+            if(variable.equals("layer") || variable.equals("layers")) {
                 asteroids.get(objectID).setThickness(Integer.parseInt(value));
             } else if(variable.equals("material")) {
                 switch (value) {
@@ -304,7 +305,10 @@ public class TestGame extends Game {
         int[] counter = {0};
 
         asteroids.forEach((key, value) -> {
-            System.out.println("asteroid " + key + " " + value.GetThickness() + " " + value.GetMaterial());
+            if (value.GetMaterial() == null)
+                System.out.println("asteroid " + key + " " + value.GetThickness() + " null");
+            else
+                System.out.println("asteroid " + key + " " + value.GetThickness() + " " + value.GetMaterial().Print());
             System.out.println("neighbor ids:");
             asteroids.forEach((key2, value2) -> {
                 if(!key.equals(key2) && value2.GetNeighbors().stream().filter(place -> place.equals(value)).findFirst().orElse(null) != null) {
@@ -322,6 +326,7 @@ public class TestGame extends Game {
                 value.GetTeleportGates().forEach(tg -> {
                     if(value2.equals(tg)) {
                         asteroids.entrySet().stream().filter(entry -> tg.GetAsteroid().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().ifPresent(System.out::print);
+                        counter[0]++;
                     }
                 });
             });
@@ -368,6 +373,7 @@ public class TestGame extends Game {
                 System.out.println(matsOnAsteroid.get(Uranium.class));
             else
                 System.out.println("0");
+            System.out.println();
         });
     }
 
@@ -399,13 +405,17 @@ public class TestGame extends Game {
             else
                 System.out.println("0");
 
-            System.out.println("teleportgate ids");
+            System.out.println("teleportgate ids:");
+            int[] counter = {0};
             teleportgates.forEach((key2, value2) -> {
                 value.GetInventory().GetTeleportGates().forEach(teleportGate -> {
                     if(teleportGate.equals(value2))
                         System.out.print(key2 + " ");
+                    counter[0]++;
                 });
             });
+            if (counter[0] == 0)
+                System.out.println("-");
             System.out.println();
         });
     }
@@ -526,7 +536,7 @@ public class TestGame extends Game {
         while(running) {
             if(scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                if(line.equalsIgnoreCase("end")) {
+                if(line.equalsIgnoreCase("exit")) {
                     running = false;
                 } else {
                     InputParser.executeCommand(line);

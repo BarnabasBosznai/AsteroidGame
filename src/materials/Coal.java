@@ -12,4 +12,7 @@ public class Coal extends Material {
     public void Count(MaterialCounter counter) {
         counter.Count(Coal.class);
     }
+
+    @Override
+    public String Print(){return "coal";}
 }
