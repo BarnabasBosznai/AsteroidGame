@@ -1,0 +1,11 @@
+create
+add asteroid ast0
+add asteroid ast1
+add asteroid ast2
+add asteroid ast3
+setneighbours ast0 ast1
+setneighbours ast2 ast3
+add teleportgate tel0
+add teleportgate tel1
+placeteleport tel0 ast1
+placeteleport tel1 ast2

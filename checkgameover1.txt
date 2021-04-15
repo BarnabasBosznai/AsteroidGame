@@ -1,0 +1,9 @@
+create
+add asteroid ast0
+add asteroid ast1
+add settler set0
+add settler set1
+add settler set2
+land ast0 set0
+land ast0 set1
+land ast1 set2

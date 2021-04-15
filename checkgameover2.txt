@@ -1,0 +1,3 @@
+create
+add asteroid ast0
+add asteroid ast1
