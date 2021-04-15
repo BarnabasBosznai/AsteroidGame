@@ -207,6 +207,7 @@ public class TestGame extends Game {
     }
 
     public void Step(String command, List<String> parameters){
+        System.out.println("step");
         switch (command) {
             case "drill":
                 if(parameters.size() == 1 && settlers.containsKey(parameters.get(0))) {
@@ -285,8 +286,12 @@ public class TestGame extends Game {
                 }
                 break;
             case "craft":
-                if(parameters.size() == 3 && settlers.containsKey(parameters.get(1))) {
+                System.out.println("craft");
+                if(parameters.size() == 4 && settlers.containsKey(parameters.get(1))) {
+                    System.out.println("craft2");
                     if(parameters.get(0).equals("teleportgates")) {
+                        System.out.println("basd");
+
                         settlers.get(parameters.get(1)).CraftTeleportGates();
                         int[] index = {0};
                         List<TeleportGate> gates = settlers.get(parameters.get(1)).GetInventory().GetTeleportGates();
