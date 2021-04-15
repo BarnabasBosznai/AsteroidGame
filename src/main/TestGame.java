@@ -298,10 +298,11 @@ public class TestGame extends Game {
                             }
                         });
                     } else if(parameters.get(0).equals("robot")) {
-                        settlers.get(parameters.get(1)).CraftRobot();
-                        Robot r = robots.remove("tempKey");
-                        robots.put(parameters.get(2), r);
-                        characterMap.put(parameters.get(2), r);
+                        if(settlers.get(parameters.get(1)).CraftRobot()) {
+                            Robot r = robots.remove("tempKey");
+                            robots.put(parameters.get(2), r);
+                            characterMap.put(parameters.get(2), r);
+                        }
                     }
                 }
                 break;
