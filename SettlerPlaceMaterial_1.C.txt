@@ -1,0 +1,6 @@
+load SettlerPlaceMaterial_Init.txt
+set ast0 layer 0
+set ast0 material coal
+step placematerial set0 uranium0
+listasteroids
+exit

@@ -1,0 +1,12 @@
+load controlteleportgate.txt
+set tel1 crazy true
+listasteroids
+step tel1
+listasteroids
+listteleportgates
+exit 
+
+
+
+
+

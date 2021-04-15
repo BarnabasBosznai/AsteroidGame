@@ -1,0 +1,25 @@
+create
+add asteroid ast0
+add settler set0
+add robot rob0
+add ufo ufo0
+land ast0 set0
+land ast0 rob0
+land ast0 ufo0
+set ast0 layers 0
+set ast0 material null
+add teleportgate tel0
+placeteleport tel0 ast0
+set tel0 crazy false
+step solarflare ast0
+listasteroids
+listsettlers
+listrobots
+listufos
+listteleportgates
+exit 
+
+
+
+
+

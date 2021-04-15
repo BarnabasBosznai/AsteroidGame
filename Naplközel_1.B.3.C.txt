@@ -1,0 +1,17 @@
+load napkozelben.txt
+add teleportgate
+add teleportgate
+pair tel0 tel1
+placeteleport tel0 ast0
+placeteleport tel1 ast1
+set ast0 layers 0
+set ast0 material uranium0
+set ast0 layers 1
+listasteroids
+step nearsun ast0
+listasteroids
+exit 
+
+
+
+

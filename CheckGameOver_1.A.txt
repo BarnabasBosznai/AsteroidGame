@@ -1,0 +1,16 @@
+load checkgameover1.txt
+addmaterial set0 coal
+addmaterial set0 coal
+addmaterial set0 coal
+addmaterial set0 iron
+addmaterial set0 waterice
+addmaterial set1 waterice
+addmaterial set1 coal
+addmaterial set1 uranium0
+gamestatus
+exit 
+
+
+
+
+

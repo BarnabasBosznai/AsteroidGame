@@ -1,0 +1,14 @@
+create
+add asteroid ast0
+add asteroid ast1
+add settler set0
+land ast0 set0
+addteleportgate set0 tel0
+addteleportgate set0 tel1
+pair tel0 tel1
+step placeteleport set0 tel0
+step move set0 ast1
+step placeteleport set0 tel1
+listsettlers
+listasteroids
+exit 

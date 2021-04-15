@@ -3,7 +3,9 @@ package main;
 import characters.*;
 import characters.Character;
 import interfaces.Steppable;
+import items.CraftingTable;
 import items.Inventory;
+import items.Recipe;
 import materials.*;
 import places.Asteroid;
 import places.AsteroidBelt;
@@ -13,6 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TestGame extends Game {
 
@@ -27,6 +31,12 @@ public class TestGame extends Game {
 
     public TestGame() {
         super();
+
+        CraftingTable craftingTable = CraftingTable.getInstance();
+        craftingTable.AddRecipe(new Recipe(Robot.class,
+                Stream.of(new Coal(), new Iron(), new Uranium()).collect(Collectors.toList())));
+        craftingTable.AddRecipe(new Recipe(TeleportGate.class,
+                Stream.of(new Iron(), new Iron(), new WaterIce(), new Uranium()).collect(Collectors.toList())));
 
         this.asteroids = new HashMap<>();
         this.settlers = new HashMap<>();
@@ -528,13 +538,24 @@ public class TestGame extends Game {
         boolean running = true;
         Scanner scanner = new Scanner(System.in);
 
-        while(running) {
-            if(scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                if(line.equalsIgnoreCase("exit")) {
-                    running = false;
-                } else {
-                    InputParser.executeCommand(line);
+        System.out.println("Fájlból történő tesztelés(0), vagy konzolból történő tesztelés(1): ");
+        int inp = scanner.nextInt();
+        if (inp==0) {
+            String in_txt = scanner.nextLine();
+            System.out.println("Adja meg a bemeneti fájl nevét: ");
+            in_txt = scanner.nextLine();
+            System.out.println("Adja meg a kimeneti fájl nevét: ");
+            String out_txt = scanner.nextLine();
+            InputParser.executeCommand("load "+in_txt);
+        } else {
+            while (running) {
+                if (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    if (line.equalsIgnoreCase("end")) {
+                        running = false;
+                    } else {
+                        InputParser.executeCommand(line);
+                    }
                 }
             }
         }

@@ -1,0 +1,8 @@
+create
+add asteroid ast0
+set ast0 layer 3
+add robot rob0
+land ast0 rob0
+step rob0
+listasteroids
+exit

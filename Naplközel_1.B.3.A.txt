@@ -1,0 +1,15 @@
+load napkozelben.txt
+set ast0 layers 0
+set ast0 material uranium0
+set ast1 layers 1
+add ufo ufo0
+add settler set0
+land ufo0 ast0
+land set0 ast0
+listasteroids
+step nearsun ast0
+listasteroids
+exit
+
+
+

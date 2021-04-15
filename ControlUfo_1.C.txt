@@ -1,0 +1,13 @@
+create
+add asteroid ast0
+add asteroid ast1
+setneighbours ast0 ast1
+set ast0 layer 3
+add ufo ufo0
+land ast0 ufo0
+step ufo0
+listasteroids
+exit 
+
+
+

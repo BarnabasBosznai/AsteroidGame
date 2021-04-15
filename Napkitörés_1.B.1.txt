@@ -1,0 +1,30 @@
+create
+add asteroid ast0
+add settler set0
+add robot rob0
+add ufo ufo0
+land ast0 set0
+land ast0 rob0
+land ast0 ufo0
+set ast0 layers 0
+set ast0 material coal
+add asteroid ast1
+add settler set1
+add robot rob1
+add ufo ufo1
+land ast1 set1
+land ast1 rob1
+land ast1 ufo1
+set ast1 layers 1
+set ast1 material null 
+step solarflare ast0
+step solarflare ast1
+listasteroids
+listsettlers
+listrobots
+listufos
+exit
+
+
+
+
