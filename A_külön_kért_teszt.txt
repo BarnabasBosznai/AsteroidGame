@@ -25,15 +25,11 @@ addteleportgate s1 tg4
 land a3 r1
 land a1 s1
 step mine s1
-step move s1 a1
 step move s1 a2
-step placematerial s1 uranium
-step nearsun a2
+step move s1 a3
+step placematerial s1 uranium0
+step nearsun a3
 listasteroids
 listsettlers
 listrobots
 exit
-
-
-
-

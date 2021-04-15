@@ -33,6 +33,8 @@ public class Settler extends MiningCharacter {
      */
     // Privát függvényhívások a szekvenciadiagromokon kívül mennek.
     private void die() {
+        for(TeleportGate tg : inventory.GetTeleportGates())
+            tg.RemoveFromAsteroid();
         Game.getInstance().RemoveSteppable(this);
         Game.getInstance().RemoveSettler(this);
         asteroid.TakeOff(this);

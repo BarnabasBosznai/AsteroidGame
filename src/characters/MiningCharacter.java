@@ -14,7 +14,7 @@ public abstract class MiningCharacter extends Character {
     public boolean Mine(MaterialStorage inventory) {
         Material material = asteroid.RemoveMaterial();
         if (material!=null){
-            if (inventory.AddMaterial(material)) {
+            if (!inventory.AddMaterial(material)) {
                 asteroid.PlaceMaterial(material);
             }
             else {

@@ -117,8 +117,10 @@ public class Asteroid extends Place {
         for(int i = 0; i < copy.size(); i++)
             copy.get(i).HitByExplosion();
 
-        for(TeleportGate teleportGate : teleportGates)
-            teleportGate.RemoveFromAsteroid();
+        List<TeleportGate> copyGates = List.copyOf(teleportGates);
+        for(int i = 0; i < copyGates.size(); i++)
+            copyGates.get(i).RemoveFromAsteroid();
+
 
         List<Asteroid> copyNeighbor = List.copyOf(neighbors);
         for(int i = 0; i < copyNeighbor.size(); ++i)

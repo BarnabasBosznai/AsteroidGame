@@ -3,6 +3,7 @@ package places;
 import characters.Character;
 import interfaces.Item;
 import interfaces.Steppable;
+import main.Game;
 
 /**
  * Egy teleportkaput reprezentáló osztály. A teleportkapuk segítségével el tudnak jutni a karakterek olyan
@@ -62,8 +63,11 @@ public class TeleportGate extends Place implements Item, Steppable {
     public void RemoveFromAsteroid() {
         pair.GetAsteroid().RemoveTeleportGate(pair);
         pair.SetAsteroid(null);
-        asteroid.RemoveTeleportGate(this);
-        asteroid = null;
+        if(asteroid != null)
+            asteroid.RemoveTeleportGate(this);
+
+        Game.getInstance().RemoveSteppable(this);
+        Game.getInstance().RemoveSteppable(pair);
     }
 
     /**
