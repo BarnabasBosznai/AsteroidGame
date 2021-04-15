@@ -1,7 +1,7 @@
 load controlteleportgate.txt
 set tel1 crazy false
 listasteroids
-step solarflare ast2
+step tel1
 listasteroids
 listteleportgates
 exit 
