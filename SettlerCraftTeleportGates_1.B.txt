@@ -1,11 +1,13 @@
 load SettlerCraftTeleportGates_Init.txt
+add teleportgate tel0
+add teleportgate tel1
 addteleportgate set0 tel0
 addteleportgate set0 tel1
 addmaterial set0 coal
 addmaterial set0 iron
 addmaterial set0 iron
 addmaterial set0 waterice
-addmaterial set0 uranium
+addmaterial set0 uranium0
 step craft teleportgates set0 tel2 tel3
 listsettlers
 exit

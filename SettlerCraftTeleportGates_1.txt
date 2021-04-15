@@ -3,7 +3,7 @@ addmaterial set0 coal
 addmaterial set0 iron
 addmaterial set0 iron
 addmaterial set0 waterice
-addmaterial set0 uranium
+addmaterial set0 uranium0
 step craft teleportgates set0 tel1 tel2
 listsettlers
 exit

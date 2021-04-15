@@ -45,7 +45,6 @@ public class CraftingTable {
         Recipe recipe = this.recipes.get(itemType);
         boolean hasEnoughMaterial = this.HasEnoughMaterial(inventory, recipe);
 
-        System.out.println("asd");
 
         if(!hasEnoughMaterial) {
             return false;
