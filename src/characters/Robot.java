@@ -1,6 +1,7 @@
 package characters;
 
 import interfaces.Item;
+import places.Place;
 
 import java.util.Random;
 
@@ -32,12 +33,11 @@ public class Robot extends Character implements Item {
      * elérte átmegy egy másik aszteroidára.
      */
     private void ControlRobot() {
-        if (!this.asteroid.Drilled(inventory)){
+        if (!this.asteroid.Drilled()){
             // TODO: woozy_face
-            int count = asteroid.GetNeighbors().size();
-            while(!Move(this.asteroid.GetNeighbors().get(new Random().nextInt(this.asteroid.GetNeighbors().size())))) {
-                --count;
-                if (count == 0)
+
+            for(Place place : asteroid.GetNeighbors()){
+                if(Move(place))
                     return;
             }
         }

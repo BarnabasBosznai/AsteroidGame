@@ -2,6 +2,7 @@ package characters;
 
 import main.Game;
 import materials.MaterialStorage;
+import places.Place;
 
 import java.util.Random;
 
@@ -21,10 +22,9 @@ public class UFO extends MiningCharacter {
     public void Step() {
         if (!this.Mine(inventory)){
             // TODO: woozy_face
-            int count = asteroid.GetNeighbors().size();
-            while(!Move(this.asteroid.GetNeighbors().get(new Random().nextInt(this.asteroid.GetNeighbors().size())))) {
-                --count;
-                if (count == 0)
+
+            for(Place place : asteroid.GetNeighbors()){
+                if(Move(place))
                     return;
             }
         }
