@@ -17,9 +17,15 @@ import java.util.List;
 public class InputParser {
     private static StringBuilder builder;
     private static StringBuilder listCommandsBuilder;
+    private static StringBuilder LogOutput;
     static {
         builder = new StringBuilder();
         listCommandsBuilder = new StringBuilder();
+        LogOutput = new StringBuilder();
+    }
+
+    public static void Log(String string) {
+        LogOutput.append(string);
     }
 
     public static void executeCommand(String line) {
@@ -70,30 +76,36 @@ public class InputParser {
                 case "listasteroids":
                     builder.append("listasteroids").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("listasteroids ");
+                    TestGame.getInstance().ListAsteroids();
                     break;
                 case "listsettlers":
                     builder.append("listsettlers").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("listsettlers ");
+                    TestGame.getInstance().ListSettlers();
                     break;
                 case "listrobots":
                     builder.append("listrobots").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("listrobots ");
+                    TestGame.getInstance().ListRobots();
                     break;
                 case "listufos":
                     builder.append("listufos").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("listufos ");
+                    TestGame.getInstance().ListUFOs();
                     break;
                 case "listteleportgates":
                     builder.append("listteleportgates").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("listteleportgates ");
+                    TestGame.getInstance().ListTeleportGates();
                     break;
                 case "gamestatus":
                     builder.append("gamestatus").append(System.getProperty("line.separator"));
                     listCommandsBuilder.append("gamestatus ");
+                    TestGame.getInstance().GameStatus();
                     break;
                 case "exit": // ez nem kell
                     {
-                        for(String str : listCommandsBuilder.toString().split(" ")) {
+                        /*for(String str : listCommandsBuilder.toString().split(" ")) {
                             switch(str) {
                                 case "listasteroids":
                                     TestGame.getInstance().ListAsteroids();
@@ -114,7 +126,9 @@ public class InputParser {
                                     TestGame.getInstance().GameStatus();
                                     break;
                             }
-                        }
+                        }*/
+                        System.out.println(LogOutput.toString());
+                        LogOutput = new StringBuilder();
                         listCommandsBuilder = new StringBuilder();
                     }
                     break;
