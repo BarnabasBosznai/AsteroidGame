@@ -3,6 +3,7 @@ add asteroid ast0
 add teleportgate tel0
 placeteleport tel0 ast0
 set ast0 layer 3
+set ast0 material iron
 add ufo ufo0
 land ast0 ufo0
 step ufo0
