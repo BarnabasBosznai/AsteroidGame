@@ -207,7 +207,7 @@ public class TestGame extends Game {
     }
 
     public void Step(String command, List<String> parameters){
-        System.out.println("step");
+
         switch (command) {
             case "drill":
                 if(parameters.size() == 1 && settlers.containsKey(parameters.get(0))) {
