@@ -3,6 +3,8 @@ add asteroid ast0
 add asteroid ast1
 add settler set0
 land ast0 set0
+add teleportgate tel0
+add teleportgate tel1
 addteleportgate set0 tel0
 addteleportgate set0 tel1
 pair tel0 tel1
