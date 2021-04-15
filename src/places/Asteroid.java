@@ -14,9 +14,9 @@ import java.util.Random;
 public class Asteroid extends Place {
     private int thickness;
     private Material material;
-    private List<Asteroid> neighbors;
-    private List<TeleportGate> teleportGates;
-    private List<Character> characters;
+    private final List<Asteroid> neighbors;
+    private final List<TeleportGate> teleportGates;
+    private final List<Character> characters;
 
     public Asteroid() {
         neighbors = new ArrayList<>();
@@ -26,10 +26,10 @@ public class Asteroid extends Place {
         Random random = new Random();
         material = null;    /// temporális
         /*switch (random.nextInt(4)) {
-            case 0: material = new Coal(); break;
-            case 1: material = new Iron(); break;
-            case 2: material = new Uranium(); break;
-            case 3: material = new WaterIce(); break;
+            case 0 -> material = new Coal();
+            case 1 -> material = new Iron();
+            case 2 -> material = new Uranium();
+            case 3 -> material = new WaterIce();
         }*/
 
         thickness = 0;      /// temporális

@@ -21,7 +21,12 @@ public class UFO extends MiningCharacter {
     public void Step() {
         if (!this.Mine(inventory)){
             // TODO: woozy_face
-            while(!Move(this.asteroid.GetNeighbors().get(new Random().nextInt(this.asteroid.GetNeighbors().size()))));
+            int count = asteroid.GetNeighbors().size();
+            while(!Move(this.asteroid.GetNeighbors().get(new Random().nextInt(this.asteroid.GetNeighbors().size())))) {
+                --count;
+                if (count == 0)
+                    return;
+            }
         }
     }
 }

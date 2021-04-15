@@ -74,8 +74,6 @@ public class CraftingTable {
                 game.AddSteppable(teleportGate1);
                 game.AddSteppable(teleportGate2);
 
-                System.out.println("megepult");
-
                 return true;
             }
             else{

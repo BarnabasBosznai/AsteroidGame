@@ -87,6 +87,8 @@ public class TeleportGate extends Place implements Item, Steppable {
      */
     @Override
     public boolean Move(Character character) {
+        if(pair == null)
+            return false;
         Asteroid asteroid = pair.GetAsteroid();
         return asteroid != null && asteroid.Move(character);
     }
