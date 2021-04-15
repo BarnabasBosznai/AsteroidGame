@@ -1,7 +1,7 @@
 create
 add asteroid ast0
 add teleportgate tel0
-placeteleport ast0 tel0
+placeteleport tel0 ast0
 set ast0 layer 0
 add robot rob0
 land ast0 rob0
