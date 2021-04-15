@@ -313,13 +313,13 @@ public class TestGame extends Game {
                 }
                 break;
             default:
-                if(parameters.size() == 1) {
-                    if(robots.containsKey(parameters.get(0))) {
-                        robots.get(parameters.get(0)).Step();
-                    } else if(ufos.containsKey(parameters.get(0))) {
-                        ufos.get(parameters.get(0)).Step();
-                    } else if(teleportgates.containsKey(parameters.get(0))) {
-                        teleportgates.get(parameters.get(0)).Step();
+                if(parameters.size() == 0) {
+                    if(robots.containsKey(command)) {
+                        robots.get(command).Step();
+                    } else if(ufos.containsKey(command)) {
+                        ufos.get(command).Step();
+                    } else if(teleportgates.containsKey(command)) {
+                        teleportgates.get(command).Step();
                     }
                 }
                 break;
