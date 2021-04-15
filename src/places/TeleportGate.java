@@ -49,6 +49,10 @@ public class TeleportGate extends Place implements Item, Steppable {
         this.pair = teleportGate;
     }
 
+    public TeleportGate GetPair(){
+        return this.pair;
+    }
+
     /**
      * Visszatért a teleportkapu aszteroidájával.
      * @return
