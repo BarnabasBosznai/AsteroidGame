@@ -344,8 +344,10 @@ public class TestGame extends Game {
             teleportgates.forEach((key2, value2) -> {
                 value.GetTeleportGates().forEach(tg -> {
                     if(value2.equals(tg)) {
-                        asteroids.entrySet().stream().filter(entry -> tg.GetPair().GetAsteroid().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().ifPresent(System.out::print);
-                        counter[0]++;
+                        if(tg.GetPair() != null && tg.GetPair().GetAsteroid() != null) {
+                            asteroids.entrySet().stream().filter(entry -> tg.GetPair().GetAsteroid().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().ifPresent(System.out::print);
+                            counter[0]++;
+                        }
                     }
                 });
             });
