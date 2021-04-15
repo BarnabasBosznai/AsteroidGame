@@ -57,6 +57,7 @@ public class CraftingTable {
                 Game.getInstance().AddSteppable(robot);
                 Asteroid asteroid = settler.GetAsteroid();
                 asteroid.Move(robot);
+                Game.getInstance().CraftTeleportGateHelper(robot);
 
                 return true;
             }

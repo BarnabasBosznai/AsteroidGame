@@ -285,7 +285,7 @@ public class TestGame extends Game {
                 }
                 break;
             case "craft":
-                if(parameters.size() == 4 && settlers.containsKey(parameters.get(1))) {
+                if(parameters.size() >= 3 && settlers.containsKey(parameters.get(1))) {
                     if(parameters.get(0).equals("teleportgates")) {
 
                         settlers.get(parameters.get(1)).CraftTeleportGates();
@@ -299,16 +299,9 @@ public class TestGame extends Game {
                         });
                     } else if(parameters.get(0).equals("robot")) {
                         settlers.get(parameters.get(1)).CraftRobot();
-                        getSteppables().forEach(steppable -> {
-
-                        });
-                        robots.forEach((key, value) -> {
-                            getSteppables().forEach(steppable -> {
-                                if(value.equals(steppable) && !robots.containsValue(steppable))
-                                    robots.put(parameters.get(2), (Robot)steppable);
-                            });
-                        });
-
+                        Robot r = robots.remove("tempKey");
+                        robots.put(parameters.get(2), r);
+                        characterMap.put(parameters.get(2), r);
                     }
                 }
                 break;
@@ -549,6 +542,10 @@ public class TestGame extends Game {
 
             super.RemoveSteppable(steppable);
         }
+    }
+
+    public void CraftTeleportGateHelper(Robot robot) {
+        robots.put("tempKey", robot);
     }
 
     public void RemoveAsteroid(Asteroid asteroid){

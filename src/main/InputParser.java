@@ -227,9 +227,10 @@ public class InputParser {
     }
 
     private static void stepCommand(String[] params) {
-        if(params.length == 2) {
+        if(params.length >= 2) {
             List<String> temp = new ArrayList<>(Arrays.asList(params).subList(2, params.length));
             TestGame.getInstance().Step(params[1], temp);
+
             builder.append("step ");
             for(String str : temp)
                 builder.append(str).append(" ");
