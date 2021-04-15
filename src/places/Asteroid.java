@@ -24,14 +24,16 @@ public class Asteroid extends Place {
         characters = new ArrayList<>();
 
         Random random = new Random();
-        switch (random.nextInt(4)) {
+        material = null;    /// temporális
+        /*switch (random.nextInt(4)) {
             case 0: material = new Coal(); break;
             case 1: material = new Iron(); break;
             case 2: material = new Uranium(); break;
             case 3: material = new WaterIce(); break;
-        }
+        }*/
 
-        thickness = random.ints(2,6).findFirst().getAsInt();
+        thickness = 0;      /// temporális
+        //thickness = random.ints(2,6).findFirst().getAsInt();
     }
 
     /**
