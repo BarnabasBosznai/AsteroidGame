@@ -45,6 +45,8 @@ public class CraftingTable {
         Recipe recipe = this.recipes.get(itemType);
         boolean hasEnoughMaterial = this.HasEnoughMaterial(inventory, recipe);
 
+        System.out.println("asd");
+
         if(!hasEnoughMaterial) {
             return false;
         }
@@ -71,6 +73,8 @@ public class CraftingTable {
                 Game game = Game.getInstance();
                 game.AddSteppable(teleportGate1);
                 game.AddSteppable(teleportGate2);
+
+                System.out.println("megepult");
 
                 return true;
             }
