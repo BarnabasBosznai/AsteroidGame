@@ -7,4 +7,5 @@ add robot rob0
 land ast0 rob0
 step rob0
 listasteroids
+listteleportgates
 exit 

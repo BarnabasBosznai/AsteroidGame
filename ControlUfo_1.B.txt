@@ -8,6 +8,7 @@ add ufo ufo0
 land ast0 ufo0
 step ufo0
 listasteroids
+listteleportgates
 exit 
 
 
