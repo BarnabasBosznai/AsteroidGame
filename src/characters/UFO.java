@@ -21,8 +21,6 @@ public class UFO extends MiningCharacter {
     @Override
     public void Step() {
         if (!this.Mine(inventory)){
-            // TODO: woozy_face
-
             for(Place place : asteroid.GetNeighbors()){
                 if(Move(place))
                     return;

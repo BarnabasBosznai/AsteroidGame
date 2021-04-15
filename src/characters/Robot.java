@@ -24,8 +24,10 @@ public class Robot extends Character implements Item {
      * ezáltal a robot átrobban egy szomszédos aszteroidára
      */
     public void HitByExplosion() {
-        // TODO: woozy_face
-        while(!Move(this.asteroid.GetNeighbors().get(new Random().nextInt(this.asteroid.GetNeighbors().size()))));
+        for(Place place : asteroid.GetNeighbors()){
+            if(Move(place))
+                return;
+        }
     }
 
     /**
@@ -34,8 +36,6 @@ public class Robot extends Character implements Item {
      */
     private void ControlRobot() {
         if (!this.asteroid.Drilled()){
-            // TODO: woozy_face
-
             for(Place place : asteroid.GetNeighbors()){
                 if(Move(place))
                     return;
