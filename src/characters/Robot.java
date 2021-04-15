@@ -34,7 +34,7 @@ public class Robot extends Character implements Item {
     private void ControlRobot() {
         if (!asteroid.Drilled()){
             // TODO: woozy_face
-            while(!Move(this.asteroid.GetNeighbors().get(new Random().nextInt(this.asteroid.GetNeighbors().size() - 1))));
+            while(!Move(this.asteroid.GetNeighbors().get(new Random().nextInt(this.asteroid.GetNeighbors().size()))));
         }
     }
 
