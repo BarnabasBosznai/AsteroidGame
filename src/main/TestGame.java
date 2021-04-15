@@ -11,6 +11,7 @@ import places.Asteroid;
 import places.AsteroidBelt;
 import places.TeleportGate;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,8 @@ public class TestGame extends Game {
     private final Map<String, Steppable> steppableMap;
     private final Map<String, Character> characterMap;
 
+    private boolean konzolos;
+
     public TestGame() {
         super();
 
@@ -38,6 +41,7 @@ public class TestGame extends Game {
         craftingTable.AddRecipe(new Recipe(TeleportGate.class,
                 Stream.of(new Iron(), new Iron(), new WaterIce(), new Uranium()).collect(Collectors.toList())));
 
+        this.konzolos = true;
         this.asteroids = new HashMap<>();
         this.settlers = new HashMap<>();
         this.robots = new HashMap<>();
@@ -155,7 +159,7 @@ public class TestGame extends Game {
                     case "iron":
                         asteroids.get(objectID).setMaterial(new Iron());
                         break;
-                    case "waterIce":
+                    case "waterice":
                         asteroids.get(objectID).setMaterial(new WaterIce());
                         break;
                     case "uranium0":
@@ -550,6 +554,10 @@ public class TestGame extends Game {
         this.asteroids.values().remove(asteroid);
     }
 
+    private void SetKonzolos(boolean bool){
+        this.konzolos=bool;
+    }
+
     public static void main(String[] args) {
         TestGame.getInstance();
 
@@ -564,8 +572,14 @@ public class TestGame extends Game {
             in_txt = scanner.nextLine();
             System.out.println("Adja meg a kimeneti fájl nevét: ");
             String out_txt = scanner.nextLine();
+
+            TestGame.getInstance().konzolos=false;
+            File out = new File(out_txt); // Valahogy teljesen máshogy
+
             InputParser.executeCommand("load "+in_txt);
+            InputParser.executeCommand("end");
         } else {
+            TestGame.getInstance().konzolos=true;
             while (running) {
                 if (scanner.hasNextLine()) {
                     String line = scanner.nextLine();
