@@ -23,9 +23,7 @@ public class TestGame extends Game {
     private final Map<String, TeleportGate> teleportgates;
 
     private final Map<String, Steppable> steppableMap;
-    private final Map<String, Character> drillingCharacterMap;
-    private final Map<String, MiningCharacter> miningCharacterMap;
-
+    private final Map<String, Character> characterMap;
 
     public TestGame() {
         super();
@@ -37,8 +35,7 @@ public class TestGame extends Game {
         this.teleportgates = new HashMap<>();
 
         this.steppableMap = new HashMap<>();
-        this.drillingCharacterMap = new HashMap<>();
-        this.miningCharacterMap = new HashMap<>();
+        this.characterMap = new HashMap<>();
     }
 
     public void Create(){
@@ -51,9 +48,6 @@ public class TestGame extends Game {
         ufos.clear();
         teleportgates.clear();
         steppableMap.clear();
-        drillingCharacterMap.clear();
-        miningCharacterMap.clear();
-
     }
 
     public void Add(Class<?> objectType, String objectID){
@@ -69,8 +63,7 @@ public class TestGame extends Game {
 
             this.settlers.put(objectID, settler);
             this.steppableMap.put(objectID, settler);
-            this.drillingCharacterMap.put(objectID, settler);
-            this.miningCharacterMap.put(objectID, settler);
+            this.characterMap.put(objectID, settler);
 
             this.AddSettler(settler);
             this.AddSteppable(settler);
@@ -87,8 +80,7 @@ public class TestGame extends Game {
             Robot robot = new Robot();
 
             this.robots.put(objectID, robot);
-            this.drillingCharacterMap.put(objectID, robot);
-            this.steppableMap.put(objectID, robot);
+            this.characterMap.put(objectID, robot);
 
             this.AddSteppable(robot);
         }
@@ -97,7 +89,7 @@ public class TestGame extends Game {
 
             this.ufos.put(objectID, ufo);
             this.steppableMap.put(objectID, ufo);
-            this.miningCharacterMap.put(objectID, ufo);
+            this.characterMap.put(objectID, ufo);
 
             this.AddSteppable(ufo);
         }
@@ -106,7 +98,7 @@ public class TestGame extends Game {
     public void Land(String asteroidID, String characterID){
         Asteroid asteroid = this.asteroids.get(asteroidID);
 
-        Character character = this.miningCharacterMap.get(characterID);
+        Character character = this.characterMap.get(characterID);
 
         asteroid.Move(character);
     }
@@ -336,7 +328,7 @@ public class TestGame extends Game {
 
             counter[0] = 0;
             System.out.println("character ids:");
-            drillingCharacterMap.forEach((key2, value2) -> {
+            characterMap.forEach((key2, value2) -> {
                 value.GetCharacters().forEach(character -> {
                     if(value2.equals(character)) {
                         System.out.print(key2);
@@ -481,11 +473,15 @@ public class TestGame extends Game {
     }
 
     public void GameStatus(){
-        boolean gameStatus = this.CheckGameOver();
+        GameState gameStatus = this.CheckGameStatus();
 
-        //meg lekezelem kulon majd h settlers lost, az jelenleg nincs
-        String print = gameStatus ? "settlers won" : "not ended";
-        System.out.println(print);
+        String gameStatusString;
+        switch (gameStatus){
+            case SETTLERSLOST -> gameStatusString = "settlers lost";
+            case SETTLERSWON -> gameStatusString = "settlers won";
+            default -> gameStatusString = "not ended";
+        }
+        System.out.println("game " + gameStatusString);
     }
 
     @Override
@@ -495,8 +491,7 @@ public class TestGame extends Game {
         if (Settler.class.equals(type)) {
             this.settlers.values().remove(steppable);
             this.steppableMap.values().remove(steppable);
-            this.drillingCharacterMap.values().remove(steppable);
-            this.miningCharacterMap.values().remove(steppable);
+            this.characterMap.values().remove(steppable);
 
             super.RemoveSteppable(steppable);
             super.RemoveSettler((Settler)steppable);
@@ -504,14 +499,14 @@ public class TestGame extends Game {
         if (Robot.class.equals(type)) {
             this.robots.values().remove(steppable);
             this.steppableMap.values().remove(steppable);
-            this.drillingCharacterMap.values().remove(steppable);
+            this.characterMap.values().remove(steppable);
 
             super.RemoveSteppable(steppable);
         }
         if (UFO.class.equals(type)) {
             this.ufos.values().remove(steppable);
             this.steppableMap.values().remove(steppable);
-            this.miningCharacterMap.values().remove(steppable);
+            this.characterMap.values().remove(steppable);
 
             super.RemoveSteppable(steppable);
         }

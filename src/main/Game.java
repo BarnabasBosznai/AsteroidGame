@@ -65,7 +65,9 @@ public class Game {
      * telepes meghalt, vagy megnyerhetetlenné vált a játék), akkor False.
      * @return
      */
-    public boolean CheckGameOver() {
+    public GameState CheckGameStatus() {
+        if(this.settlers.size() == 0)
+            return GameState.SETTLERSLOST;
         Map<Asteroid, Map<Class<? extends Material>, Integer>> asteroidMaterialAmounts = new HashMap<>();
 
         //counting the current materialAmounts of all asteroids in asteroidbelt
@@ -121,10 +123,10 @@ public class Game {
             }
 
             if(hasEnough)
-                return true;
+                return GameState.SETTLERSWON;
         }
 
-        return false;
+        return GameState.NOTENDED;
     }
 
     /**
