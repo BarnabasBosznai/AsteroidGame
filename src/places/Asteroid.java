@@ -40,7 +40,7 @@ public class Asteroid extends Place {
      * False-al, ha nem(az aszteroida köpenye már teljesen át volt fúrva).
      */
     public boolean Drilled() {
-        if((thickness - 1) == 0) {
+        if((thickness - 1) >= 0) {
             thickness--;
             return true;
         } else {

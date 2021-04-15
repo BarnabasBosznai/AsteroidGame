@@ -100,6 +100,7 @@ public class Inventory extends MaterialStorage {
     }
 
     public int GetNumberOfItems(Class<? extends Item> itemType) {
+
         Item searchHelperItem;
         if(itemType == TeleportGate.class)
             searchHelperItem = new TeleportGate();
