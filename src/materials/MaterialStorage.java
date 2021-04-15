@@ -26,7 +26,7 @@ public class MaterialStorage {
      */
     public boolean AddMaterial(Material material) {
         materials.add(material);
-        return false;
+        return true;
     }
 
     /**
