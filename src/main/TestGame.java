@@ -229,7 +229,7 @@ public class TestGame extends Game {
                             if(mat != null)
                                 settlers.get(parameters.get(0)).PlaceMaterial(mat);
                             break;
-                        case "waterIce":
+                        case "waterice":
                             mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new WaterIce())).findFirst().orElse(null);
                             if(mat != null)
                                 settlers.get(parameters.get(0)).PlaceMaterial(mat);
