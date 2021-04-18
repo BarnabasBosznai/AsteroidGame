@@ -560,6 +560,7 @@ public class TestGame extends Game {
         if(this.ufos.size() == 0){
             InputParser.Log("ufo - -");
             InputParser.Log(System.getProperty("line.separator"));
+            InputParser.Log(System.getProperty("line.separator"));
             return;
         }
         for(String ufoID : ufos.keySet()){
