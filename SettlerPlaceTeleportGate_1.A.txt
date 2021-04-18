@@ -1,6 +1,7 @@
 create
 add asteroid ast0
 add asteroid ast1
+setneighbours ast0 ast1
 add settler set0
 land ast0 set0
 add teleportgate tel0
