@@ -718,33 +718,39 @@ public class TestGame extends Game {
      */
     public static void main(String[] args) {
         TestGame.getInstance();
-
         boolean running = true;
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Fájlból történő tesztelés(0), vagy konzolból történő tesztelés(1): ");
-        int inp = scanner.nextInt();
-        if (inp==0) {
-            String in_txt = scanner.nextLine();
-            System.out.println("Adja meg a bemeneti fájl nevét: ");
-            in_txt = scanner.nextLine();
-            System.out.println("Adja meg a kimeneti fájl nevét: ");
-            String out_txt = scanner.nextLine();
-
-            File out = new File(out_txt); // Valahogy teljesen máshogy
-
-            InputParser.executeCommand("load "+in_txt);
-            InputParser.executeCommand("end");
-        } else {
-            while (running) {
-                if (scanner.hasNextLine()) {
-                    String line = scanner.nextLine();
-                    if (line.equalsIgnoreCase("end")) {
-                        running = false;
-                    } else {
-                        InputParser.executeCommand(line);
+        while(running) {
+            System.out.println("Fájlból történő tesztelés(0), konzolból történő tesztelés(1) vagy kilépés(2): ");
+            try {
+                int input = Integer.parseInt(scanner.nextLine());
+                if(input == 0) {
+                    InputParser.SetConsoleLog(false);
+                    System.out.println("Adja meg a bemeneti fájl nevét: ");
+                    String in_txt = scanner.nextLine();
+                    System.out.println("Adja meg a kimeneti fájl nevét: ");
+                    InputParser.SetOutputFile(scanner.nextLine());
+                    InputParser.executeCommand("load " + in_txt);
+                    System.out.println("Teszt befejeződött!");
+                } else if(input == 1) {
+                    InputParser.SetConsoleLog(true);
+                    System.out.println("Adja meg a parancsokat!");
+                    while (scanner.hasNextLine()) {
+                        String line = scanner.nextLine();
+                        if (!line.equalsIgnoreCase("end")) {
+                            InputParser.executeCommand(line);
+                        } else {
+                            break;
+                        }
                     }
+                } else if(input == 2) {
+                    running = false;
+                } else {
+                    System.out.println("Hibás választás! Próbáld újra!");
                 }
+            } catch (Exception e) {
+                System.out.println("Hibás választás! Próbáld újra!");
             }
         }
     }

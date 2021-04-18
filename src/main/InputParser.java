@@ -21,10 +21,29 @@ public class InputParser {
     private static StringBuilder builder;
     private static StringBuilder listCommandsBuilder;
     private static StringBuilder LogOutput;
+    private static Boolean consoleLog;
+    private static String outputFile;
     static {
         builder = new StringBuilder();
         listCommandsBuilder = new StringBuilder();
         LogOutput = new StringBuilder();
+        consoleLog = false;
+    }
+
+    /**
+     * Beállítja, hogy a kimenetet konzolra vagy fájlba történjen
+     * @param flag
+     */
+    public static void SetConsoleLog(boolean flag) {
+        consoleLog = flag;
+    }
+
+    /**
+     * Beállítja a kimeneti fájlt
+     * @param filepath: fájl ütvonala
+     */
+    public static void SetOutputFile(String filepath) {
+        outputFile = filepath;
     }
 
     /**
@@ -114,31 +133,18 @@ public class InputParser {
                     listCommandsBuilder.append("gamestatus ");
                     TestGame.getInstance().GameStatus();
                     break;
-                case "exit": // ez nem kell
+                case "exit":
                     {
-                        /*for(String str : listCommandsBuilder.toString().split(" ")) {
-                            switch(str) {
-                                case "listasteroids":
-                                    TestGame.getInstance().ListAsteroids();
-                                    break;
-                                case "listsettlers":
-                                    TestGame.getInstance().ListSettlers();
-                                    break;
-                                case "listrobots":
-                                    TestGame.getInstance().ListRobots();
-                                    break;
-                                case "listufos":
-                                    TestGame.getInstance().ListUFOs();
-                                    break;
-                                case "listteleportgates":
-                                    TestGame.getInstance().ListTeleportGates();
-                                    break;
-                                case "gamestatus":
-                                    TestGame.getInstance().GameStatus();
-                                    break;
+                        if(consoleLog) {
+                            System.out.println(LogOutput.toString());
+                        } else {
+                            try(BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
+                                writer.write(LogOutput.toString());
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        }*/
-                        System.out.println(LogOutput.toString());
+                        }
+
                         LogOutput = new StringBuilder();
                         listCommandsBuilder = new StringBuilder();
                     }
@@ -159,9 +165,7 @@ public class InputParser {
                 while((line = reader.readLine()) != null) {
                     executeCommand(line);
                 }
-
             } catch (Exception e) {
-                // Egyenlőre
                 e.printStackTrace();
             }
         }
@@ -178,7 +182,6 @@ public class InputParser {
                 builder = new StringBuilder();
                 listCommandsBuilder = new StringBuilder();
             } catch (Exception e) {
-                // Egyenlőre
                 e.printStackTrace();
             }
         }
