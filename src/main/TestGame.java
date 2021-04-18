@@ -651,10 +651,16 @@ public class TestGame extends Game {
         GameState gameStatus = this.CheckGameStatus();
 
         String gameStatusString;
-        switch (gameStatus){
-            case SETTLERSLOST -> gameStatusString = "settlers lost";
-            case SETTLERSWON -> gameStatusString = "settlers won";
-            default -> gameStatusString = "not ended";
+        switch (gameStatus) {
+            case SETTLERSLOST:
+                gameStatusString = "settlers lost";
+                break;
+            case SETTLERSWON:
+                gameStatusString = "settlers won";
+                break;
+            default:
+                gameStatusString = "not ended";
+                break;
         }
         //System.out.println("game " + gameStatusString);
         InputParser.Log("game " + gameStatusString + System.getProperty("line.separator"));
