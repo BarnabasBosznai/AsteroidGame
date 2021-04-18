@@ -322,8 +322,8 @@ public class TestGame extends Game {
 
     public void ListAsteroids() {
         int[] counter = {0};
-
         asteroids.forEach((key, value) -> {
+            counter[0]=0;
             if (value.GetMaterial() == null) {
                 //System.out.println("asteroid " + key + " " + value.GetThickness() + " null");
                 InputParser.Log("asteroid " + key + " " + value.GetThickness() + " null" + System.getProperty("line.separator"));
@@ -435,7 +435,8 @@ public class TestGame extends Game {
     public void ListSettlers(){
         settlers.forEach((key, value) -> {
             //System.out.print("settler " + key + " ");
-            InputParser.Log("settler " + key + " " + System.getProperty("line.separator"));
+            InputParser.Log("settler " + key + " " //+ System.getProperty("line.separator")
+                     );
             asteroids.entrySet().stream().filter(entry -> value.GetAsteroid().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().ifPresent(InputParser::Log);
             //System.out.println();
             InputParser.Log(System.getProperty("line.separator"));
