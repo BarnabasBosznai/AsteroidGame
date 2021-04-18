@@ -447,7 +447,7 @@ public class TestGame extends Game {
                 value.GetCharacters().forEach(character -> {
                     if(value2.equals(character)) {
                         //System.out.print(key2);
-                        InputParser.Log(key2);
+                        InputParser.Log(key2+" ");
                         counter[0]++;
                     }
                 });

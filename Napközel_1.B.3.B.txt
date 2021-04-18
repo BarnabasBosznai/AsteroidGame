@@ -1,0 +1,13 @@
+load napkozelben.txt
+set ast0 layers 0
+set ast0 material uranium0
+set ast1 layers 0
+add robot rob0
+land ast0 rob0
+listasteroids
+step nearsun ast0
+listasteroids
+exit
+
+
+
