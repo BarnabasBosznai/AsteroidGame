@@ -119,7 +119,7 @@ public class TeleportGate extends Place implements Item, Steppable {
      * Napvihar éri a teleportkaput, megkergül
      */
     public void HitByStorm(){
-        crazy = true;   // Ekkor csak megkergül, innentől minden körben odébb megy
+        crazy = true;
     }
 
     /**

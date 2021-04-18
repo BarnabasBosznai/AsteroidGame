@@ -30,7 +30,6 @@ public class Settler extends MiningCharacter {
      * Törli magát a game-ből, illetve ha van nála olyan teleportkapu, aminek
      * a párját már letette, azt is törli az aszteroidájáról
      */
-    // Privát függvényhívások a szekvenciadiagromokon kívül mennek.
     private void die() {
         for(TeleportGate tg : inventory.GetTeleportGates())
             tg.RemoveFromAsteroid();
@@ -175,7 +174,7 @@ public class Settler extends MiningCharacter {
     @Override
     public void Step() {
 
-       /* int input = (int)(Math.random()*7);  // Ez a lényege majd a menünek. Jelenleg nem használjuk ezt a függvényt egyáltalán.
+       /* int input = (int)(Math.random()*7);
 
 
         boolean failed = true;

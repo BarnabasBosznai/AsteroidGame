@@ -11,7 +11,6 @@ import places.Asteroid;
 import places.AsteroidBelt;
 import places.TeleportGate;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -290,7 +289,6 @@ public class TestGame extends Game {
                     Material mat;
                     switch (parameters.get(1)) {
                         case "coal":
-                            // Ne kérdezd xdd
                             mat = settlers.get(parameters.get(0)).GetInventory().GetMaterials().stream().filter(material -> material.CompatibleWith(new Coal())).findFirst().orElse(null);
                             if(mat != null)
                                 settlers.get(parameters.get(0)).PlaceMaterial(mat);
@@ -395,38 +393,30 @@ public class TestGame extends Game {
         asteroids.forEach((key, value) -> {
             counter[0]=0;
             if (value.GetMaterial() == null) {
-                //System.out.println("asteroid " + key + " " + value.GetThickness() + " null");
                 InputParser.Log("asteroid " + key + " " + value.GetThickness() + " null" + System.getProperty("line.separator"));
             }
             else {
-                //System.out.println("asteroid " + key + " " + value.GetThickness() + " " + value.GetMaterial().Print());
                 InputParser.Log("asteroid " + key + " " + value.GetThickness() + " " + value.GetMaterial().Print() + System.getProperty("line.separator"));
             }
-            //System.out.println("neighbor ids:");
             InputParser.Log("neighbor ids:" + System.getProperty("line.separator"));
 
             asteroids.forEach((key2, value2) -> {
                 if(!key.equals(key2) && value2.GetNeighbors().stream().filter(place -> place.equals(value)).findFirst().orElse(null) != null) {
-                    //System.out.print(key2 + " ");
                     InputParser.Log(key2 + " ");
                     counter[0]++;
                 }
             });
             if(counter[0] == 0) {
-                //System.out.print("-");
                 InputParser.Log("-");
             }
             InputParser.Log(System.getProperty("line.separator"));
-            //System.out.println();
 
             counter[0] = 0;
-            //System.out.println("teleportgates’s pair’s asteroid’s id: ");
             InputParser.Log("teleportgates’s pair’s asteroid’s id: " + System.getProperty("line.separator"));
             teleportgates.forEach((key2, value2) -> {
                 value.GetTeleportGates().forEach(tg -> {
                     if(value2.equals(tg)) {
                         if(tg.GetPair() != null && tg.GetPair().GetAsteroid() != null) {
-                            //asteroids.entrySet().stream().filter(entry -> tg.GetPair().GetAsteroid().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().ifPresent(System.out::print);
                             asteroids.entrySet().stream().filter(entry -> tg.GetPair().GetAsteroid().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().ifPresent(InputParser::Log);
                             counter[0]++;
                         }
@@ -434,70 +424,54 @@ public class TestGame extends Game {
                 });
             });
             if(counter[0] == 0) {
-                //System.out.print("-");
                 InputParser.Log("-");
             }
-            //System.out.println();
             InputParser.Log(System.getProperty("line.separator"));
 
             counter[0] = 0;
-            //System.out.println("character ids:");
             InputParser.Log("character ids:" + System.getProperty("line.separator"));
             characterMap.forEach((key2, value2) -> {
                 value.GetCharacters().forEach(character -> {
                     if(value2.equals(character)) {
-                        //System.out.print(key2);
                         InputParser.Log(key2+" ");
                         counter[0]++;
                     }
                 });
             });
             if(counter[0] == 0) {
-                //System.out.print("-");
                 InputParser.Log("-");
             }
-            //System.out.println();
             InputParser.Log(System.getProperty("line.separator"));
 
             Map<Class<? extends Material>, Integer> matsOnAsteroid = new HashMap<>();
-            //System.out.println("total amount of materials by material on asteroid:");
             InputParser.Log("total amount of materials by material on asteroid:" + System.getProperty("line.separator"));
             settlers.forEach((key2, value2) -> {
                 if(value.GetCharacters().stream().filter(character -> character.equals(value2)).findFirst().orElse(null) != null)
                     value2.GetInventory().GetAmountOfMaterials().forEach(matsOnAsteroid::put);
             });
             if(matsOnAsteroid.containsKey(Coal.class)) {
-                //System.out.print(matsOnAsteroid.get(Coal.class) + " ");
                 InputParser.Log(matsOnAsteroid.get(Coal.class) + " ");
             } else {
-                //System.out.print("0 ");
                 InputParser.Log("0 ");
             }
 
             if(matsOnAsteroid.containsKey(Iron.class)) {
-                //System.out.print(matsOnAsteroid.get(Iron.class) + " ");
                 InputParser.Log(matsOnAsteroid.get(Iron.class) + " ");
             } else {
-                //System.out.print("0 ");
                 InputParser.Log("0 ");
             }
 
             if(matsOnAsteroid.containsKey(WaterIce.class)) {
-                //System.out.print(matsOnAsteroid.get(WaterIce.class) + " ");
                 InputParser.Log(matsOnAsteroid.get(WaterIce.class) + " ");
             } else {
-                //System.out.print("0 ");
                 InputParser.Log("0 ");
             }
 
             if(matsOnAsteroid.containsKey(Uranium.class)) {
-                //System.out.println(matsOnAsteroid.get(Uranium.class));
                 InputParser.Log(matsOnAsteroid.get(Uranium.class) + System.getProperty("line.separator"));
             } else {
-                //System.out.println("0");
                 InputParser.Log("0 " + System.getProperty("line.separator"));
             }
-            //System.out.println();
             InputParser.Log(System.getProperty("line.separator"));
         });
     }
@@ -507,14 +481,11 @@ public class TestGame extends Game {
      */
     public void ListSettlers(){
         settlers.forEach((key, value) -> {
-            //System.out.print("settler " + key + " ");
             InputParser.Log("settler " + key + " " //+ System.getProperty("line.separator")
                      );
             asteroids.entrySet().stream().filter(entry -> value.GetAsteroid().equals(entry.getValue())).map(Map.Entry::getKey).findFirst().ifPresent(InputParser::Log);
-            //System.out.println();
             InputParser.Log(System.getProperty("line.separator"));
 
-            //System.out.println("materials:");
             InputParser.Log("materials:" + System.getProperty("line.separator"));
             var mats = value.GetInventory().GetAmountOfMaterials();
             if(mats.containsKey(Coal.class)) {
@@ -542,23 +513,19 @@ public class TestGame extends Game {
             }
             InputParser.Log(System.getProperty("line.separator"));
 
-            //System.out.println("teleportgate ids:");
             InputParser.Log("teleportgate ids:" + System.getProperty("line.separator"));
             int[] counter = {0};
             teleportgates.forEach((key2, value2) -> {
                 value.GetInventory().GetTeleportGates().forEach(teleportGate -> {
                     if(teleportGate.equals(value2)) {
-                        //System.out.print(key2 + " ");
                         InputParser.Log(key2 + " ");
                     }
                     counter[0]++;
                 });
             });
             if (counter[0] == 0) {
-                //System.out.println("-");
                 InputParser.Log("-" + System.getProperty("line.separator"));
             }
-            //System.out.println();
             InputParser.Log(System.getProperty("line.separator"));
         });
     }
@@ -568,9 +535,7 @@ public class TestGame extends Game {
      */
     public void ListRobots(){
         if(this.robots.size() == 0){
-            //System.out.println("robot - -");
             InputParser.Log("robot - -" + System.getProperty("line.separator"));
-            //System.out.println();
             InputParser.Log(System.getProperty("line.separator"));
             return;
         }
@@ -582,11 +547,9 @@ public class TestGame extends Game {
                 if(entry.getValue().equals(asteroid))
                     asteroidID = entry.getKey();
             }
-            //System.out.println("robot " + robotID + " " + asteroidID);
             InputParser.Log("robot " + robotID + " " + asteroidID + System.getProperty("line.separator"));
 
         }
-        //System.out.println();
         InputParser.Log(System.getProperty("line.separator"));
     }
 
@@ -595,9 +558,7 @@ public class TestGame extends Game {
      */
     public void ListUFOs(){
         if(this.ufos.size() == 0){
-            //System.out.println("ufo - -");
             InputParser.Log("ufo - -");
-            //System.out.println();
             InputParser.Log(System.getProperty("line.separator"));
             return;
         }
@@ -609,11 +570,9 @@ public class TestGame extends Game {
                 if(entry.getValue().equals(asteroid))
                     asteroidID = entry.getKey();
             }
-            //System.out.println("ufo " + ufoID + " " + asteroidID);
             InputParser.Log("ufo " + ufoID + " " + asteroidID + System.getProperty("line.separator"));
 
         }
-        //System.out.println();
         InputParser.Log(System.getProperty("line.separator"));
     }
 
@@ -624,8 +583,6 @@ public class TestGame extends Game {
         if(this.teleportgates.size() == 0){
             InputParser.Log("teleportgate - -" + System.getProperty("line.separator"));
             InputParser.Log(System.getProperty("line.separator"));
-            //System.out.println("teleportgate - -");
-            //System.out.println();
             return;
         }
         for(String teleportgateID : teleportgates.keySet()){
@@ -637,10 +594,8 @@ public class TestGame extends Game {
                     asteroidID = entry.getKey();
             }
             String crazy = teleportgates.get(teleportgateID).GetCrazy() ? "true" : "false";
-            //System.out.println("teleportgate " + teleportgateID + " " + asteroidID + " " + crazy);
             InputParser.Log("teleportgate " + teleportgateID + " " + asteroidID + " " + crazy + System.getProperty("line.separator"));
         }
-        //System.out.println();
         InputParser.Log(System.getProperty("line.separator"));
     }
 
@@ -662,7 +617,6 @@ public class TestGame extends Game {
                 gameStatusString = "not ended";
                 break;
         }
-        //System.out.println("game " + gameStatusString);
         InputParser.Log("game " + gameStatusString + System.getProperty("line.separator"));
     }
 

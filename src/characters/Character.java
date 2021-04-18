@@ -21,12 +21,12 @@ public abstract class Character implements Steppable {
      * Lereagálja, hogy felrobbant az aszteroida, amin éppen
      * tartózkodik.
      */
-    abstract public void HitByExplosion();  // Nem általános egyikük függvénye sem.
+    abstract public void HitByExplosion();
 
     /**
      * Lereagálja, hogy napviharba került az aszteroida, amin éppen tartózkodik.
      */
-    public void HitByStorm() { // Robot-nak ez a függvénye.
+    public void HitByStorm() {
         Game.getInstance().RemoveSteppable(this);
         asteroid.TakeOff(this);
     }
@@ -37,7 +37,7 @@ public abstract class Character implements Steppable {
      * @param place: a hely, ahova menni akar a karakter
      * @return true: sikerült a mozgás, false: nem sikerült
      */
-    public boolean Move(Place place) { // Véletlenszerű mozgás
+    public boolean Move(Place place) {
         List<Place> destinations = this.asteroid.GetNeighbors();
 
         double random = Math.random()*(destinations.size()-1);

@@ -20,8 +20,6 @@ import java.util.Map;
  * jelenlegi körben.
  */
 public class Game {
-    //private static Game instance;
-
     /**
      * A tesztelhető Game osztály egyetlen példánya
      */
@@ -36,13 +34,6 @@ public class Game {
      * A játékban található lépésre képes (steppable) entitások.
      */
     private final List<Steppable> steppables;
-
-    /*public static Game getInstance() {
-        if(instance == null)
-            instance = new Game();
-
-        return instance;
-    }*/
 
     /**
      * Visszatér a tesztelhető Game osztály egyetlen objetumával

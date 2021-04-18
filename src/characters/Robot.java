@@ -3,8 +3,6 @@ package characters;
 import interfaces.Item;
 import places.Place;
 
-import java.util.Random;
-
 /**
  * A robotokat reprezentáló osztály. A robotokat a Controller irányítja. Csak fúrásra és
  * szomszédos aszteroidák közötti mozgásra képesek. A telepesek tudják őket craftolni megfelelő
