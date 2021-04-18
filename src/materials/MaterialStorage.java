@@ -14,6 +14,9 @@ public class MaterialStorage {
      */
     protected List<Material> materials;
 
+    /**
+     * Konstruktor
+     */
     public MaterialStorage(){
         this.materials = new ArrayList<>();
     }
@@ -21,8 +24,8 @@ public class MaterialStorage {
     /**
      * Hozzáadja a tárolóhoz a paraméterként
      * kapott nyersanyagot
-     * @param material
-     * @return
+     * @param material: a hozzáadandó material
+     * @return true: sikerült hozzáadni, false: nem sikerült
      */
     public boolean AddMaterial(Material material) {
         materials.add(material);
@@ -32,7 +35,7 @@ public class MaterialStorage {
     /**
      * Visszaad egy listát arról, hogy
      * melyik nyersanyagból mennyi található a tárolóban
-     * @return
+     * @return nyersanyagok típusai és mennyiségei map-ként
      */
     public Map<Class<? extends Material>, Integer> GetAmountOfMaterials(){
         MaterialCounter materialCounter = new MaterialCounter();
@@ -46,7 +49,7 @@ public class MaterialStorage {
 
     /**
      *  Visszatér a tárolt nyersanyagok listájával
-     * @return
+     * @return materials: a tárolt nyersanyagok listája
      */
     public List<Material> GetMaterials(){
         return this.materials;

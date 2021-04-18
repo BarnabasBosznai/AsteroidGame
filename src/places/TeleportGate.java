@@ -11,12 +11,26 @@ import main.Game;
  * teleportkapupár egy-egy elemét, a teleportkapupár ezután lesz működőképes állapotban.
  */
 public class TeleportGate extends Place implements Item, Steppable {
+    /**
+     * A teleportkapu aszteroidája, amin letették
+     */
     private Asteroid asteroid;
+
+    /**
+     * A teleportkapu párja
+     */
     private TeleportGate pair;
+
+    /**
+     * Azt jelzi, hogy a teleportkapu megkergült-e már
+     */
     private boolean crazy;
 
+    /**
+     * Konstruktor
+     */
     public TeleportGate(){
-        crazy = false;      // Konstruktor így már kellhet
+        crazy = false;
     }
 
     /**
@@ -35,7 +49,7 @@ public class TeleportGate extends Place implements Item, Steppable {
 
     /**
      * Beállítja a paraméterként kapott aszteroidát a sajét aszteroidájaként.
-     * @param asteroid
+     * @param asteroid: a beállítandó aszteroida
      */
     public void SetAsteroid(Asteroid asteroid) {
         this.asteroid = asteroid;
@@ -43,19 +57,23 @@ public class TeleportGate extends Place implements Item, Steppable {
 
     /**
      * Beállítja a paraméterként kapott teleportkaput a párjaként.
-     * @param teleportGate
+     * @param teleportGate: a beállítandó teleportkapu
      */
     public void SetPair(TeleportGate teleportGate) {
         this.pair = teleportGate;
     }
 
+    /**
+     * Visszatér a teleportkapu párjával
+     * @return teleportgate: a teleportkapu párja
+     */
     public TeleportGate GetPair(){
         return this.pair;
     }
 
     /**
      * Visszatért a teleportkapu aszteroidájával.
-     * @return
+     * @return asteroid: a teleportkapu aszteroidája, ha letették valahova, null: ha nem
      */
     public Asteroid GetAsteroid() {
         return asteroid;
@@ -76,8 +94,8 @@ public class TeleportGate extends Place implements Item, Steppable {
 
     /**
      * Igazzal tér vissza, ha a paraméterként kapott Item ugyanolyan típusú, mint ő, egyébként hamis.
-     * @param item
-     * @return
+     * @param item: az összehasonlítandó item
+     * @return true: megegyezik a típusuk, false: nem egyezik meg
      */
     @Override
     public boolean CompatibleWith(Item item) {
@@ -86,7 +104,7 @@ public class TeleportGate extends Place implements Item, Steppable {
 
     /**
      * Megpróbálja átteleportálni a charactert a teleportkapu párjának az aszteroidájára.
-     * @param character
+     * @param character: a teleportálandó karakter
      * @return Ha a párját már lehelyezték valahova, létrejön a teleportálás és visszatér True-val, ha nem, False-al.
      */
     @Override
@@ -97,15 +115,25 @@ public class TeleportGate extends Place implements Item, Steppable {
         return asteroid != null && asteroid.Move(character);
     }
 
-    /*NEW*/
+    /**
+     * Napvihar éri a teleportkaput, megkergül
+     */
     public void HitByStorm(){
         crazy = true;   // Ekkor csak megkergül, innentől minden körben odébb megy
     }
 
+    /**
+     * Beállítja a teleportkapu crazy attribútumát (csak teszteléshez)
+     * @param crazy: a beállítandó érték
+     */
     public void SetCrazy(boolean crazy) {
         this.crazy = crazy;
     }
 
+    /**
+     * Viszatér a teleportkapu crazy attribútumának értékével (csak teszteléshez)
+     * @return true: megkergült a teleportkapu, false: nem kergült meg
+     */
     public boolean GetCrazy(){
         return this.crazy;
     }

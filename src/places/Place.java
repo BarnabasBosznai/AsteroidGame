@@ -7,8 +7,8 @@ import characters.Character;
  */
 public abstract class Place {
     /**
-     * @param character
-     * @return
+     * @param character: a karakter, aki ide szeretne mozogni
+     * @return true: sikerült a mozgás, false: nem sikerült
      */
     public abstract boolean Move(Character character);
 }

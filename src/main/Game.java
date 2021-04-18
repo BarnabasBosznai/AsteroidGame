@@ -21,6 +21,10 @@ import java.util.Map;
  */
 public class Game {
     //private static Game instance;
+
+    /**
+     * A tesztelhető Game osztály egyetlen példánya
+     */
     private static TestGame instance;
 
     /**
@@ -40,6 +44,10 @@ public class Game {
         return instance;
     }*/
 
+    /**
+     * Visszatér a tesztelhető Game osztály egyetlen objetumával
+     * @return testgame: az egyetlen TestGame objektum
+     */
     public static TestGame getInstance() {
         if(instance == null)
             instance = new TestGame();
@@ -47,6 +55,9 @@ public class Game {
         return instance;
     }
 
+    /**
+     * Konstruktor
+     */
     public Game(){
         this.settlers = new ArrayList<>();
         this.steppables = new ArrayList<>();
@@ -61,9 +72,10 @@ public class Game {
 
     /**
      * Ellenőrzi, hogy véget ért-e a játék. Ha a telepesek
-     * nyertek (felépült a bázis), akkor True a visszatérési értéke, ha vesztetettek (minden
-     * telepes meghalt, vagy megnyerhetetlenné vált a játék), akkor False.
-     * @return
+     * nyertek (felépült a bázis), vesztetettek (minden
+     * telepes meghalt, vagy megnyerhetetlenné vált a játék),
+     * vagy még nem ért véget
+     * @return SETTLERSLOST: a telepesek vesztettek, SETTLERSWON: a telepesek nyertek, NOTENDED: még nem ért véget
      */
     public GameState CheckGameStatus() {
         if(this.settlers.size() == 0)
@@ -132,7 +144,7 @@ public class Game {
     /**
      * Felveszi a paraméterként kapott
      * steppablet a nyilvántartásba.
-     * @param steppable
+     * @param steppable: a hozzáadandó steppable
      */
     public void AddSteppable(Steppable steppable) {
         this.steppables.add(steppable);
@@ -141,7 +153,7 @@ public class Game {
     /**
      *  Eltávolítja a paraméterként kapott
      * steppable-t a nyilvántartásból.
-     * @param steppable
+     * @param steppable: az eltávolítandó steppable
      */
     public void RemoveSteppable(Steppable steppable) {
         this.steppables.remove(steppable);
@@ -149,7 +161,7 @@ public class Game {
 
     /**
      * Hozzáad egy settlert a nyilvántartásba.
-     * @param settler
+     * @param settler: a hozzáadandó settler
      */
     public void AddSettler(Settler settler) {
         this.settlers.add(settler);
@@ -158,7 +170,7 @@ public class Game {
     /**
      *  Eltávolítja a paraméterként kapott settler-t a
      * settlerek nyilvántartásából.
-     * @param settler
+     * @param settler: az eltávolítandó settler
      */
     public void RemoveSettler(Settler settler) {
         this.settlers.remove(settler);

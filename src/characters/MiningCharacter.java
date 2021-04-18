@@ -6,10 +6,11 @@ import materials.MaterialStorage;
 public abstract class MiningCharacter extends Character {
 
     /**
-     * A telepes megpróbálja kinyeri az aszteroidában található
+     * A karakter megpróbálja kinyeri az aszteroidában található
      * nyersanyagot. Ha az aszteroida magja üres, akkor False a visszatérési érték, ha sikerült
      * a bányászás, akkor True
-     * @return
+     * @param inventory: a tároló, amibe a bányászott nyersanyagot eltesszük
+     * @return true: a bányászás sikerült, false: nem sikerült
      */
     public boolean Mine(MaterialStorage inventory) {
         Material material = asteroid.RemoveMaterial();

@@ -19,19 +19,44 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Tesztelést támogató Game osztály
+ */
 public class TestGame extends Game {
 
+    /**
+     * A játékban lévő aszteroidák id szerint kereshetően
+     */
     private final Map<String, Asteroid> asteroids;
+
+    /**
+     * A játékban lévő telepesek id szerint kereshetően
+     */
     private final Map<String, Settler> settlers;
+
+    /**
+     * A játékban lévő robotok id szerint kereshetően
+     */
     private final Map<String, Robot> robots;
+
+    /**
+     * A játékban lévő ufok id szerint kereshetően
+     */
     private final Map<String, UFO> ufos;
+
+    /**
+     * A játékban lévő teleportkapuk id szerint kereshetően
+     */
     private final Map<String, TeleportGate> teleportgates;
 
-    private final Map<String, Steppable> steppableMap;
+    /**
+     * A játékban lévő karakterek id szerint kereshetően
+     */
     private final Map<String, Character> characterMap;
 
-    private boolean konzolos;
-
+    /**
+     * Konstruktor
+     */
     public TestGame() {
         super();
 
@@ -41,19 +66,19 @@ public class TestGame extends Game {
         craftingTable.AddRecipe(new Recipe(TeleportGate.class,
                 Stream.of(new Iron(), new Iron(), new WaterIce(), new Uranium()).collect(Collectors.toList())));
 
-        this.konzolos = true;
         this.asteroids = new HashMap<>();
         this.settlers = new HashMap<>();
         this.robots = new HashMap<>();
         this.ufos = new HashMap<>();
         this.teleportgates = new HashMap<>();
 
-        this.steppableMap = new HashMap<>();
         this.characterMap = new HashMap<>();
     }
 
+    /**
+     * Inicializálás
+     */
     public void Create(){
-        steppableMap.forEach((key, value) -> super.RemoveSteppable(value));
         settlers.forEach((key, value) -> super.RemoveSettler(value));
 
         asteroids.clear();
@@ -61,9 +86,13 @@ public class TestGame extends Game {
         robots.clear();
         ufos.clear();
         teleportgates.clear();
-        steppableMap.clear();
     }
 
+    /**
+     * Hozzáad a játékhoz az objectType-al egyező típusú, objectID id-jű objektumot
+     * @param objectType: az objektum típusa
+     * @param objectID: az objektum id-je
+     */
     public void Add(Class<?> objectType, String objectID){
 
         if(objectType == Asteroid.class){
@@ -76,7 +105,6 @@ public class TestGame extends Game {
             Settler settler = new Settler();
 
             this.settlers.put(objectID, settler);
-            this.steppableMap.put(objectID, settler);
             this.characterMap.put(objectID, settler);
 
             this.AddSettler(settler);
@@ -86,7 +114,6 @@ public class TestGame extends Game {
             TeleportGate teleportGate = new TeleportGate();
 
             this.teleportgates.put(objectID, teleportGate);
-            this.steppableMap.put(objectID, teleportGate);
 
             this.AddSteppable(teleportGate);
         }
@@ -102,13 +129,17 @@ public class TestGame extends Game {
             UFO ufo = new UFO();
 
             this.ufos.put(objectID, ufo);
-            this.steppableMap.put(objectID, ufo);
             this.characterMap.put(objectID, ufo);
 
             this.AddSteppable(ufo);
         }
     }
 
+    /**
+     * Egy karakter rámozog egy aszteroidára
+     * @param asteroidID: az aszteroida id-je
+     * @param characterID: a karakter id-je
+     */
     public void Land(String asteroidID, String characterID){
         Asteroid asteroid = this.asteroids.get(asteroidID);
 
@@ -117,6 +148,11 @@ public class TestGame extends Game {
         asteroid.Move(character);
     }
 
+    /**
+     * Hozzáad egy telepeshez egy teleportkaput
+     * @param settlerID: telepes id-je
+     * @param teleportID: teleportkapu id-je
+     */
     public void AddTeleportGate(String settlerID, String teleportID){
         Settler settler = this.settlers.get(settlerID);
         TeleportGate teleportGate = this.teleportgates.get(teleportID);
@@ -125,6 +161,11 @@ public class TestGame extends Game {
         super.AddSteppable(teleportGate);
     }
 
+    /**
+     * Hozzáad egy telepeshez egy nyersanyagot
+     * @param settlerID: telepes id-je
+     * @param materialType: nyersanyag id-je
+     */
     public void AddMaterial(String settlerID, String materialType){
         Inventory settlerInventory = settlers.get(settlerID).GetInventory();
 
@@ -147,6 +188,12 @@ public class TestGame extends Game {
         settlerInventory.AddMaterial(material);
     }
 
+    /**
+     * Beállítja egy ojektum egy attribútumának értékét
+     * @param objectID: objketum id-je
+     * @param variable: attribútum
+     * @param value: érték
+     */
     public void Set(String objectID, String variable, String value) {
         if(asteroids.containsKey(objectID)) {
             if(variable.equals("layer") || variable.equals("layers")) {
@@ -183,6 +230,11 @@ public class TestGame extends Game {
         }
     }
 
+    /**
+     * Összepárosít két teleportkaput
+     * @param teleportID1: egyik teleportkapu id-je
+     * @param teleportID2: másik teleportkapu id-je
+     */
     public void Pair(String teleportID1, String teleportID2){
         TeleportGate teleportGate1 = this.teleportgates.get(teleportID1);
         TeleportGate teleportGate2 = this.teleportgates.get(teleportID2);
@@ -191,6 +243,11 @@ public class TestGame extends Game {
         teleportGate2.SetPair(teleportGate1);
     }
 
+    /**
+     * Elhelyez egy teleportkaput egy aszteroidán
+     * @param teleportID: teleportkapu id-je
+     * @param asteroidID: aszteroida id-je
+     */
     public void PlaceTeleport(String teleportID, String asteroidID){
         TeleportGate teleportGate = this.teleportgates.get(teleportID);
         Asteroid asteroid = this.asteroids.get(asteroidID);
@@ -198,6 +255,11 @@ public class TestGame extends Game {
         asteroid.PlaceTeleport(teleportGate);
     }
 
+    /**
+     * Két aszteroidából szomszédokat csinál
+     * @param asteroidID1: egyik aszteroida id-je
+     * @param asteroidID2: másik aszteroida id-je
+     */
     public void SetNeighbours(String asteroidID1, String asteroidID2){
         Asteroid asteroid1 = this.asteroids.get(asteroidID1);
         Asteroid asteroid2 = this.asteroids.get(asteroidID2);
@@ -206,6 +268,11 @@ public class TestGame extends Game {
         asteroid2.AddNeighbor(asteroid1);
     }
 
+    /**
+     * Léptet egy objektumot a játékban
+     * @param command: parancs (vagy objektum id-je, ha nincsenek paraméterek)
+     * @param parameters: paraméterek
+     */
     public void Step(String command, List<String> parameters){
         switch (command) {
             case "drill":
@@ -320,6 +387,9 @@ public class TestGame extends Game {
         }
     }
 
+    /**
+     * Kilistázza a játékban lévő aszteroidákat, azok tulajdonságaival
+     */
     public void ListAsteroids() {
         int[] counter = {0};
         asteroids.forEach((key, value) -> {
@@ -432,6 +502,9 @@ public class TestGame extends Game {
         });
     }
 
+    /**
+     * Kilistázza a játékban lévő telepeseket, azok tulajdonságaival
+     */
     public void ListSettlers(){
         settlers.forEach((key, value) -> {
             //System.out.print("settler " + key + " ");
@@ -490,6 +563,9 @@ public class TestGame extends Game {
         });
     }
 
+    /**
+     * Kilistázza a játékban lévő robotokat, azok tulajdonságaival
+     */
     public void ListRobots(){
         if(this.robots.size() == 0){
             //System.out.println("robot - -");
@@ -514,6 +590,9 @@ public class TestGame extends Game {
         InputParser.Log(System.getProperty("line.separator"));
     }
 
+    /**
+     * Kilistázza a játékban lévő ufokat, azok tulajdonságaival
+     */
     public void ListUFOs(){
         if(this.ufos.size() == 0){
             //System.out.println("ufo - -");
@@ -538,6 +617,9 @@ public class TestGame extends Game {
         InputParser.Log(System.getProperty("line.separator"));
     }
 
+    /**
+     * Kilistázza a játékban lévő teleportkapukat, azok tulajdonságaival
+     */
     public void ListTeleportGates(){
         if(this.teleportgates.size() == 0){
             InputParser.Log("teleportgate - -" + System.getProperty("line.separator"));
@@ -562,6 +644,9 @@ public class TestGame extends Game {
         InputParser.Log(System.getProperty("line.separator"));
     }
 
+    /**
+     * Kirja a játék állapotát
+     */
     public void GameStatus(){
         GameState gameStatus = this.CheckGameStatus();
 
@@ -575,13 +660,16 @@ public class TestGame extends Game {
         InputParser.Log("game " + gameStatusString + System.getProperty("line.separator"));
     }
 
+    /**
+     * Eltávolít egy steppable-t a játékból
+     * @param steppable: az eltávolítandó steppable
+     */
     @Override
     public void RemoveSteppable(Steppable steppable){
         Class<? extends Steppable> type = steppable.getClass();
 
         if (Settler.class.equals(type)) {
             this.settlers.values().remove(steppable);
-            this.steppableMap.values().remove(steppable);
             this.characterMap.values().remove(steppable);
 
             super.RemoveSteppable(steppable);
@@ -589,21 +677,18 @@ public class TestGame extends Game {
         }
         if (Robot.class.equals(type)) {
             this.robots.values().remove(steppable);
-            this.steppableMap.values().remove(steppable);
             this.characterMap.values().remove(steppable);
 
             super.RemoveSteppable(steppable);
         }
         if (UFO.class.equals(type)) {
             this.ufos.values().remove(steppable);
-            this.steppableMap.values().remove(steppable);
             this.characterMap.values().remove(steppable);
 
             super.RemoveSteppable(steppable);
         }
         if (TeleportGate.class.equals(type)) {
             this.teleportgates.values().remove(steppable);
-            this.steppableMap.values().remove(steppable);
 
             super.RemoveSteppable(steppable);
         }
@@ -613,14 +698,18 @@ public class TestGame extends Game {
         robots.put("tempKey", robot);
     }
 
+    /**
+     * Eltávolít egy aszteroidát a nyilvántartásból
+     * @param asteroid: aszteroida
+     */
     public void RemoveAsteroid(Asteroid asteroid){
         this.asteroids.values().remove(asteroid);
     }
 
-    private void SetKonzolos(boolean bool){
-        this.konzolos=bool;
-    }
-
+    /**
+     * Main
+     * @param args: args
+     */
     public static void main(String[] args) {
         TestGame.getInstance();
 
@@ -636,13 +725,11 @@ public class TestGame extends Game {
             System.out.println("Adja meg a kimeneti fájl nevét: ");
             String out_txt = scanner.nextLine();
 
-            TestGame.getInstance().konzolos=false;
             File out = new File(out_txt); // Valahogy teljesen máshogy
 
             InputParser.executeCommand("load "+in_txt);
             InputParser.executeCommand("end");
         } else {
-            TestGame.getInstance().konzolos=true;
             while (running) {
                 if (scanner.hasNextLine()) {
                     String line = scanner.nextLine();

@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Tesztesetek beolvasását és végrehajtását segító osztály
+ */
 public class InputParser {
     private static StringBuilder builder;
     private static StringBuilder listCommandsBuilder;
@@ -24,10 +27,18 @@ public class InputParser {
         LogOutput = new StringBuilder();
     }
 
+    /**
+     * Hozzáadja a kimeneti stringhez a paramétert
+     * @param string: hozzáadandó string
+     */
     public static void Log(String string) {
         LogOutput.append(string);
     }
 
+    /**
+     * Értelmez egy sort és végrehajt
+     * @param line: sor
+     */
     public static void executeCommand(String line) {
         String[] split = line.split(" ");
         if(split.length > 0) {
@@ -136,6 +147,10 @@ public class InputParser {
         }
     }
 
+    /**
+     * Beolvas egy file-t
+     * @param params: paraméterek
+     */
     private static void loadCommand(String[] params) {
         if(params.length == 2) {
             try(BufferedReader reader = new BufferedReader(new FileReader(params[1]))) {
@@ -152,6 +167,10 @@ public class InputParser {
         }
     }
 
+    /**
+     * Elment egy file-t
+     * @param params: paraméterek
+     */
     private static void saveCommand(String[] params) {
         if(params.length == 2) {
             try(BufferedWriter writer = new BufferedWriter(new FileWriter(params[1]))) {
@@ -165,6 +184,10 @@ public class InputParser {
         }
     }
 
+    /**
+     * Végrehajtja az add parancsot
+     * @param params: paraméterek
+     */
     private static void addCommand(String[] params) {
         if(params.length == 3) {
             switch (params[1]) {
@@ -192,6 +215,10 @@ public class InputParser {
         }
     }
 
+    /**
+     * Végrehajtja a land parancsot
+     * @param params: paraméterek
+     */
     private static void landCommand(String[] params) {
         if(params.length == 3) {
             TestGame.getInstance().Land(params[1], params[2]);
@@ -199,6 +226,10 @@ public class InputParser {
         }
     }
 
+    /**
+     * Végrehajtja az addteleportgate parancsot
+     * @param params: paraméterek
+     */
     private static void addeleportgateCommand(String[] params) {
         if(params.length == 3) {
             TestGame.getInstance().AddTeleportGate(params[1], params[2]);
@@ -206,6 +237,10 @@ public class InputParser {
         }
     }
 
+    /**
+     * Végrehajtja az addmaterial parancsot
+     * @param params: paraméterek
+     */
     private static void addmaterialCommand(String[] params) {
         if(params.length == 3) {
             TestGame.getInstance().AddMaterial(params[1], params[2]);
@@ -213,6 +248,10 @@ public class InputParser {
         }
     }
 
+    /**
+     * Végrehajtja a set parancsot
+     * @param params: paraméterek
+     */
     private static void setCommand(String[] params) {
         if(params.length == 4) {
             TestGame.getInstance().Set(params[1], params[2], params[3]);
@@ -220,12 +259,20 @@ public class InputParser {
         }
     }
 
+    /**
+     * Végrehajtja a pair parancsot
+     * @param params: paraméterek
+     */
     private static void pairCommand(String[] params) {
         if(params.length == 3) {
             TestGame.getInstance().Pair(params[1], params[2]);
         }
     }
 
+    /**
+     * Végrehajtja a placeteleport parancsot
+     * @param params: paraméterek
+     */
     private static void placeteleportCommand(String[] params) {
         if(params.length == 3) {
             TestGame.getInstance().PlaceTeleport(params[1], params[2]);
@@ -233,6 +280,10 @@ public class InputParser {
         }
     }
 
+    /**
+     * Végrehajtja a setneighbours parancsot
+     * @param params: paraméterek
+     */
     private static void setneighboursCommand(String[] params) {
         if(params.length == 3) {
             TestGame.getInstance().SetNeighbours(params[1], params[2]);
@@ -240,6 +291,10 @@ public class InputParser {
         }
     }
 
+    /**
+     * Végrehajtja a step parancsot
+     * @param params: paraméterek
+     */
     private static void stepCommand(String[] params) {
         if(params.length >= 2) {
             List<String> temp = new ArrayList<>(Arrays.asList(params).subList(2, params.length));

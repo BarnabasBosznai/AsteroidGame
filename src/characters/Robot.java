@@ -31,8 +31,8 @@ public class Robot extends Character implements Item {
     }
 
     /**
-     *  Irányítja a robotot.Mindaddig fúr amíg el nem éri a magot, ha
-     * elérte átmegy egy másik aszteroidára.
+     *  Irányítja a robotot. Mindaddig fúr amíg el nem éri a magot, ha
+     *  elérte átmegy egy másik aszteroidára.
      */
     private void ControlRobot() {
         if (!this.asteroid.Drilled()){
@@ -45,8 +45,8 @@ public class Robot extends Character implements Item {
 
     /**
      * Igazzal tér vissza, ha a paraméterként kapott item ugyanolyan típusú, mint ő, egyébként hamis.
-     * @param item
-     * @return
+     * @param item: összehasonlítandó item
+     * @return true: megegyezik, false: nem egyezik meg
      */
     @Override
     public boolean CompatibleWith(Item item) {

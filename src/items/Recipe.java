@@ -15,6 +15,11 @@ public class Recipe extends MaterialStorage {
      */
     private final Class<? extends Item> itemType;
 
+    /**
+     * Konstruktor
+     * @param itemType: a recepttel elkészíthető item típusa
+     * @param materialList: a recept (nyersanyagok)
+     */
     public Recipe(Class<? extends Item> itemType, List<Material> materialList){
         super();
         this.itemType = itemType;
@@ -23,7 +28,7 @@ public class Recipe extends MaterialStorage {
 
     /**
      * Visszatér a recepthez tartozó Item típusával
-     * @return
+     * @return itemType: a recepttel elkészíthető item típusa
      */
     public Class<? extends Item> GetItemType(){
         return this.itemType;

@@ -6,8 +6,8 @@ package interfaces;
 public interface Item {
     /**
      * Igazzal tér vissza, ha a paraméterként kapott Item ugyanolyan típusú, mint ő, egyébként hamis.
-     * @param item
-     * @return
+     * @param item: összehasonlítandó item
+     * @return true: megegyezik a paraméter típusa a sajátjával, false: nem egyezik meg
      */
     boolean CompatibleWith(Item item);
 }

@@ -12,7 +12,7 @@ public class MaterialCounter {
      * A számláláskor az egyes nyersanyagok ezen
      * a listán növelik a hozzájuk tartozó előfordulási számot
      */
-    private Map<Class<? extends Material>, Integer> amountOfMaterials;
+    private final Map<Class<? extends Material>, Integer> amountOfMaterials;
 
     public MaterialCounter(){
         this.amountOfMaterials = new HashMap<>();
@@ -21,7 +21,7 @@ public class MaterialCounter {
     /**
      * Megnöveli az amountOfMaterials attribútum
      * materialType-hoz tartozó értékét
-     * @param materialType
+     * @param materialType: a megnövelendő nyersanyag típusa
      */
     public void Count(Class<? extends Material> materialType){
         if(amountOfMaterials.containsKey(materialType)){
@@ -36,7 +36,7 @@ public class MaterialCounter {
     /**
      * Visszaad egy listát arról, hogy melyik
      * nyersanyagból mennyi van
-     * @return
+     * @return megszámlált nyersanyagok típusai és mennyiségei map-ként
      */
     public Map<Class<? extends Material>, Integer> GetCountedMaterials(){
         return this.amountOfMaterials;

@@ -8,9 +8,6 @@ import materials.Material;
 import places.Asteroid;
 import places.Place;
 import places.TeleportGate;
-import java.util.Scanner;
-
-import java.util.List;
 
 /**
  * A telepeseket reprezentáló osztály. A játékos velük interaktál közvetlenül
@@ -19,7 +16,7 @@ public class Settler extends MiningCharacter {
     /**
      * A játékos inventoryja, amiben a nála található dolgokat tárolja.
      */
-    private Inventory inventory;
+    private final Inventory inventory;
 
     /**
      * Settler konstruktora
@@ -30,6 +27,8 @@ public class Settler extends MiningCharacter {
 
     /**
      * Settler "destruktora"
+     * Törli magát a game-ből, illetve ha van nála olyan teleportkapu, aminek
+     * a párját már letette, azt is törli az aszteroidájáról
      */
     // Privát függvényhívások a szekvenciadiagromokon kívül mennek.
     private void die() {
@@ -57,31 +56,6 @@ public class Settler extends MiningCharacter {
         die();
     }
 
-    /**
-     * A játékos mozgás metódusa, ami egyik aszteroidáról egy másikra
-     * viszi át.Ha sikerült akkor true,ha nem akkor false.
-     * @return
-     */
-    /*@Override
-    public boolean Move() {
-        List<Place> destinations = this.asteroid.GetNeighbors();
-
-        System.out.println("Hanyadik uticélt választod? (0-"+(destinations.size() - 1)+")");
-        System.out.println("Adj meg egy sorszámot: ");
-        Scanner scan = new Scanner(System.in);
-        int index = scan.nextInt();
-
-        Place choosenDestination = destinations.get(index);
-        Asteroid currentAsteroid = this.asteroid;
-
-        if(choosenDestination.Move(this)){
-            currentAsteroid.TakeOff(this);
-
-            return true;
-        }
-
-        return false;
-    }*/
     @Override
     public boolean Move(Place place) {
         Asteroid currentAsteroid = this.asteroid;
@@ -92,37 +66,11 @@ public class Settler extends MiningCharacter {
         return false;
     }
 
-    /*
     /**
-     * A telepes megpróbálja kinyeri az aszteroidában található
-     * nyersanyagot. Ha az aszteroida magja üres, akkor False a visszatérési érték, ha sikerült
-     * a bányászás, akkor True
-     * @return
-
-    public boolean Mine() {
-        Skeleton.getInstance().tabIncrement();
-        Skeleton.getInstance().Print(this, "Mine()");
-
-        Material material = asteroid.RemoveMaterial();
-
-        if (material!=null){
-
-            if (inventory.AddMaterial(material)) {
-
-                asteroid.PlaceMaterial(material);
-            }
-
-            else {
-
-                Skeleton.getInstance().tabDecrement();
-                return true;
-            }
-        }
-
-        Skeleton.getInstance().tabDecrement();
-        return false;
-    }*/
-
+     * A telepes megpróbál bányászni, ha sikerült, a saját inventory-jába teszi el
+     * a bányászott nyersanyagot
+     * @return true: a bányászás sikerült, false: nem sikerült
+     */
     public boolean Mine() {
         return this.Mine(inventory);
     }
@@ -130,7 +78,7 @@ public class Settler extends MiningCharacter {
     /**
      * A telepes ezzel készít robotot. Ha sikerült a craftolás, a
      * visszatérési érték True, egyébként False.
-     * @return
+     * @return true: sikerült a craftolás, false: nem sikerült
      */
     public boolean CraftRobot() {
         return CraftingTable.getInstance().Craft(Robot.class, this);
@@ -139,12 +87,9 @@ public class Settler extends MiningCharacter {
     /**
      * A telepes ezzel készít teleportkapupárt. Ha sikerült a
      * craftolás, a visszatérési érték True, egyébként False.
-     * @return
+     * @return true: sikerült a craftolás, false: nem sikerült
      */
-    /*NEW*/
     public boolean CraftTeleportGates() {
-        //TeleportGate teleportGate = GetTeleportGate();
-
         int numberOfTeleportGates = inventory.GetNumberOfItems(TeleportGate.class);
         if (numberOfTeleportGates <= 1) {
             return CraftingTable.getInstance().Craft(TeleportGate.class, this);
@@ -154,10 +99,10 @@ public class Settler extends MiningCharacter {
     }
 
     /**
-     *  A telepes megpróbálja elhelyezni a nála található
+     * A telepes megpróbálja elhelyezni a nála található
      * teleportkapupár egyik tagját az aszteroidáján. Ha sikerrel járt, a visszatérési érték
      * True, egyébként False.
-     * @return
+     * @return true: sikerült letenni, false: nem sikerült
      */
     public boolean PlaceTeleportGate() {
         TeleportGate teleportGate = GetTeleportGate();
@@ -172,7 +117,7 @@ public class Settler extends MiningCharacter {
 
     /**
      * Visszatér egy a telepesnél található teleportkapuval.
-     * @return
+     * @return teleportgate: a telepes egy teleportkapuja, ha van nála, null: ha nincs nála
      */
     public TeleportGate GetTeleportGate() {
         return (TeleportGate) this.inventory.GetItem(TeleportGate.class);
@@ -180,26 +125,18 @@ public class Settler extends MiningCharacter {
 
     /**
      * Inventory gettere
-     * @return
+     * @return inventory: a telepes inventory-ja
      */
     public Inventory GetInventory(){
         return inventory;
     }
 
     /**
-     * Aktuális tartozkodási hely gettere
-     * @return
-     */
-    public Asteroid GetAsteroid(){
-        return asteroid;
-    }
-
-    /**
      * Elhelyezi az aszteroida magjába a
      * nyersanyagot tárolás céljából. Ha nem üres az aszteroida magja akkor false a
      * visszatérési érték, ha sikeresen lehelyeztük akkor true.
-     * @param material
-     * @return
+     * @param material: az elhelyezendő material
+     * @return true: sikerült az elhelyezés, false: nem sikerült
      */
     public boolean PlaceMaterial(Material material) {
         Material pickedMaterial = inventory.RemoveMaterial(material);
@@ -217,7 +154,7 @@ public class Settler extends MiningCharacter {
      * Eggyel csökkenti az aszteroida köpenyének rétegét.True a
      * visszatérési érték ha sikeresen végrehajtódott a művelet,false ha nem lehet tovább
      * fúrni az aszteroidán mivel nincs már rajta köpeny réteg.
-     * @return
+     * @return true: sikerült a fúrás, false: nem sikerült
      */
     public boolean Drill() {
         return asteroid.Drilled();
@@ -225,7 +162,7 @@ public class Settler extends MiningCharacter {
 
     /**
      * Az inventoryhoz hozzá ad egy itemet.
-     * @param item
+     * @param item: az item, amit hozzá akarunk adni az inventoryhoz
      */
     public void AddItem(Item item) {
         inventory.AddItem(item);

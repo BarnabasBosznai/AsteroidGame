@@ -6,13 +6,17 @@ package materials;
 public class Iron extends Material {
     /**
      * Növeli a paraméterként kapott számlálóban a típusához tartozó értéket.
-     * @param counter
+     * @param counter: a számoláshoz használt segédosztály
      */
     @Override
     public void Count(MaterialCounter counter) {
         counter.Count(Iron.class);
     }
 
+    /**
+     * Kiírja a nyersanyag típusát
+     * @return string: a nyersanyag típusa stringként a kiíratáshoz
+     */
     @Override
     public String Print(){return "iron";}
 }

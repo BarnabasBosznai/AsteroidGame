@@ -6,7 +6,7 @@ package interfaces;
 public interface Steppable {
 
     /**
-     * : Az adott körben végzendő tevékenységek kiválasztása és elvégzése.
+     * Az adott körben végzendő tevékenységek kiválasztása és elvégzése.
      */
     void Step();
 }

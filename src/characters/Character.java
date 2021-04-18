@@ -9,7 +9,7 @@ import java.util.List;
 import java.lang.Math;
 
 /**
- * A játékban műveletek végrehajtására képes karakterek (Settler, Robot) abszrakt ősosztálya.
+ * A játékban a mozgásra képes karakterek (Robot, MiningCharacter) abszrakt ősosztálya.
  */
 public abstract class Character implements Steppable {
     /**
@@ -32,9 +32,10 @@ public abstract class Character implements Steppable {
     }
 
     /**
-     * Átviszi egy elérhető aszteroidára a karaktert.True ha sikerült false ha
+     * Atviszi egy elérhető aszteroidára a karaktert.True ha sikerült false ha
      * nem.
-     * @return
+     * @param place: a hely, ahova menni akar a karakter
+     * @return true: sikerült a mozgás, false: nem sikerült
      */
     public boolean Move(Place place) { // Véletlenszerű mozgás
         List<Place> destinations = this.asteroid.GetNeighbors();
@@ -55,12 +56,16 @@ public abstract class Character implements Steppable {
 
     /**
      * Beállítja az aktuális aszteroida helyét.
-     * @param asteroid
+     * @param asteroid: a karakter új aszteroidája
      */
     public void SetAsteroid(Asteroid asteroid){
         this.asteroid = asteroid;
     }
 
+    /**
+     * Visszaadja a karakter aszteroidáját
+     * @return asteroid: a karakter aszteroidája
+     */
     public Asteroid GetAsteroid(){
         return this.asteroid;
     }

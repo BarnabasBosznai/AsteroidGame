@@ -9,23 +9,27 @@ import places.Asteroid;
 public abstract class Material {
     /**
      * Lereagálja, hogy a nyersanyagot tartalmazó aszteroida napközelbe került.
-     * @param asteroid
+     * @param asteroid: aszteroida, ami napközelbe került
      */
     public void OnNearSun(Asteroid asteroid) {
     }
 
     /**
      * Növeli a paraméterként kapott számlálóban a típusához tartozó értéket.
-     * @param counter
+     * @param counter: a számláláshoz használt segédosztály
      */
     public abstract void Count(MaterialCounter counter);
 
+    /**
+     * Kiírja a nyersanyag típusát
+     * @return string: a nyersanyag típusa stringként a kiíratáshoz
+     */
     public abstract String Print();
 
     /**
      * Igazzal tér vissza, ha a paraméterként kapott material ugyanolyan típusú, mint ő, egyébként hamis.
-     * @param material
-     * @return
+     * @param material: összehasonlítandó nyersanyag
+     * @return true: megegyezik a típus, false: nem egyezik meg
      */
     public boolean CompatibleWith(Material material) {
         return this.getClass() == material.getClass();

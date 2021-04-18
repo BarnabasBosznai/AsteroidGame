@@ -9,7 +9,7 @@ import places.Asteroid;
 public class WaterIce extends Material {
     /**
      * Lereagálja, hogy a nyersanyagot tartalmazó aszteroida napközelbe került.
-     * @param asteroid
+     * @param asteroid: aszteroida, ami napközelbe került
      */
     @Override
     public void OnNearSun(Asteroid asteroid) {
@@ -18,13 +18,17 @@ public class WaterIce extends Material {
 
     /**
      * Növeli a paraméterként kapott számlálóban a típusához tartozó értéket.
-     * @param counter
+     * @param counter: a számláláshoz használt segédosztály
      */
     @Override
     public void Count(MaterialCounter counter) {
         counter.Count(WaterIce.class);
     }
 
+    /**
+     * Kiírja a nyersanyag típusát
+     * @return string: a nyersanyag típusa stringként a kiíratáshoz
+     */
     @Override
     public String Print(){return "waterice";}
 }

@@ -15,6 +15,9 @@ import java.util.Map;
  * A telepesek a CraftingTable segítségével tudnak új craftolható eszközöket készíteni
  */
 public class CraftingTable {
+    /**
+     * Az osztály egyetlen példánya (Singleton minta)
+     */
     private static CraftingTable instance;
 
     /**
@@ -22,6 +25,10 @@ public class CraftingTable {
      */
     private final Map<Class<? extends Item>, Recipe> recipes;
 
+    /**
+     * Az osztály példányának lekérdezése
+     * @return craftingtable: az egyetlen CraftingTable objektum
+     */
     public static CraftingTable getInstance() {
         if(instance == null)
             instance = new CraftingTable();
@@ -29,6 +36,9 @@ public class CraftingTable {
         return instance;
     }
 
+    /**
+     * Konstruktor
+     */
     private CraftingTable(){
         this.recipes = new HashMap<>();
     }
@@ -36,9 +46,9 @@ public class CraftingTable {
     /**
      * Igazzal tér vissza, ha sikerült
      * megcraftolni az elkészítendő itemet, hamissal, ha nem
-     * @param itemType
-     * @param settler
-     * @return
+     * @param itemType: a craftolandó eszköz típusa
+     * @param settler: a settler, aki épít
+     * @return true: sikerült a craftolás, false: nem sikerült
      */
     public boolean Craft(Class<? extends Item> itemType, Settler settler) {
         Inventory inventory = settler.GetInventory();
@@ -87,9 +97,9 @@ public class CraftingTable {
      * hogy az inventoryban van-e elég nyersanyag a recipe szerinti item craftolásához, ha
      * igen, leveszi az inventory-ból a szükséges nyersanyagokat, majd visszatér igazzal. Ha
      * nincs elég nyersanyag, hamissal tér vissza
-     * @param inventory
-     * @param recipe
-     * @return
+     * @param inventory: a telepes inventory-ja
+     * @param recipe: az eszköz elkészítéséhez tartozó recept
+     * @return true: van elég nyersanyaga a telepesnek, false: nincs elég
      */
     public boolean HasEnoughMaterial(Inventory inventory, Recipe recipe) {
         var inventoryAmounts = inventory.GetAmountOfMaterials();
@@ -116,7 +126,7 @@ public class CraftingTable {
 
     /**
      * Hozzáad egy receptet az elkészítendő itemek receptjeihez
-     * @param recipe
+     * @param recipe: az új recept
      */
     public void AddRecipe(Recipe recipe) {
         this.recipes.put(recipe.GetItemType(), recipe);

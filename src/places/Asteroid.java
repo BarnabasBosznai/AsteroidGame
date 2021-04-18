@@ -12,12 +12,34 @@ import java.util.Random;
  * különböző műveletek végzésére képesek.
  */
 public class Asteroid extends Place {
+    /**
+     * Az aszteroida köpenyének vastagsága
+     */
     private int thickness;
+
+    /**
+     * Az aszteroida magjában található nyersanyag
+     */
     private Material material;
+
+    /**
+     * Az aszteroidával szomszédos aszteroidák
+     */
     private final List<Asteroid> neighbors;
+
+    /**
+     * Az aszteroidán található teleportkapuk
+     */
     private final List<TeleportGate> teleportGates;
+
+    /**
+     * Az aszteroidán található karakterek
+     */
     private final List<Character> characters;
 
+    /**
+     * Konstruktor
+     */
     public Asteroid() {
         neighbors = new ArrayList<>();
         teleportGates = new ArrayList<>();
@@ -80,13 +102,17 @@ public class Asteroid extends Place {
         }
     }
 
+    /**
+     * Elment egy karakter az aszteroidáról
+     * @param character: a karakter, aki elment az aszteroidáról
+     */
     public void TakeOff(Character character) {
         this.characters.remove(character);
     }
 
     /**
      * Elhelyez egy teleportkaput az aszteroidán. Beállítja a teleportgate asteroid attribútumának saját magát.
-     * @param teleportGate
+     * @param teleportGate: az elhelyezendő teleportkapu
      */
     public void PlaceTeleport(TeleportGate teleportGate) {
         this.teleportGates.add(teleportGate);
@@ -95,7 +121,7 @@ public class Asteroid extends Place {
 
     /**
      * Hozzáad egy aszteroidát az aszteroida szomszédsági listájához.
-     * @param asteroid
+     * @param asteroid: az új szomszédos aszteroida
      */
     public void AddNeighbor(Asteroid asteroid) {
         if(!neighbors.contains(asteroid))
@@ -104,7 +130,7 @@ public class Asteroid extends Place {
 
     /**
      * Törli a szomszédsági listából a paraméterként kapott aszteroidát.
-     * @param asteroid
+     * @param asteroid: az eltávolítandó szomszédos aszteroida
      */
     public void RemoveNeighbor(Asteroid asteroid) {
         this.neighbors.remove(asteroid);
@@ -143,7 +169,7 @@ public class Asteroid extends Place {
 
     /**
      * Eltávolítja az aszteroidáról a paraméterként kapott teleportkaput.
-     * @param teleportGate
+     * @param teleportGate: az eltávolítandó teleportkapu
      */
     public void RemoveTeleportGate(TeleportGate teleportGate) {
         this.teleportGates.remove(teleportGate);
@@ -151,7 +177,7 @@ public class Asteroid extends Place {
 
     /**
      * Visszatér az aszteroidáról elérhető helyekkel.
-     * @return
+     * @return az aszteroidáról elérhető helyek
      */
     public List<Place> GetNeighbors() {
         List<Place> ret = new ArrayList<>(neighbors);
@@ -160,11 +186,19 @@ public class Asteroid extends Place {
         return ret;
     }
 
-    /*NEW*/
+    /**
+     * Visszatér a szomszédos aszteroidákkal
+     * @return asteroids: szomszédos aszteroidák
+     */
     public List<Asteroid> GetNeighboringAsteroids(){
         return this.neighbors;
     }
 
+    /**
+     * Egy karakter rámegy az aszteroidára
+     * @param character: a karakter, aki idejött
+     * @return true: sikerült a mozgás, false: nem sikerült
+     */
     @Override
     public boolean Move(Character character) {
         this.characters.add(character);
@@ -174,7 +208,7 @@ public class Asteroid extends Place {
 
     /**
      * Visszahelyezi a paraméterül kapott nyersanyagot az aszteroida magjába.
-     * @param material
+     * @param material: a visszahelyezendő nyersanyag
      * @return True-val tér vissza, ha sikerült visszahelyezni, egyébként False.
      */
     public boolean PlaceMaterial(Material material) {
@@ -186,26 +220,50 @@ public class Asteroid extends Place {
             return false;
     }
 
+    /**
+     * Beállítja az aszteroida magjának a paraméterül kapott nyersanyagot
+     * @param material: a beállítandó nyersanyag
+     */
     public void setMaterial(Material material) {
         this.material = material;
     }
 
+    /**
+     * Beállítja az aszteroida köpenyének vastagságát
+     * @param value: új vastagság
+     */
     public void setThickness(int value) {
         this.thickness = value;
     }
 
+    /**
+     * Visszaadja az aszteroida köpenyének vastagságát
+     * @return thickness: az aszteroida köpenyének vastagsága
+     */
     public int GetThickness() {
         return thickness;
     }
 
+    /**
+     * Visszatér az aszteroida magjában található nyersanyaggal
+     * @return material: ha van benne nyersanyag, null: ha nincs benne
+     */
     public Material GetMaterial() {
         return material;
     }
 
+    /**
+     * Visszatér az aszteroidán található karakterekkel
+     * @return characters: az aszteroidán található karakterek
+     */
     public List<Character> GetCharacters() {
         return characters;
     }
 
+    /**
+     * Visszatér az aszteroidán található teleportkapukkal
+     * @return teleportgates: az aszteroidán található teleportkapuk
+     */
     public List<TeleportGate> GetTeleportGates() {
         return teleportGates;
     }

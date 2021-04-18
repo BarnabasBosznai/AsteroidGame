@@ -9,7 +9,7 @@ public abstract class RadioactiveMaterial extends Material {
 
     /**
      * Napközelbe érve egy teljesen megfúrt aszteroidán felrobban, vele együtt az aszteroida is.
-     * @param asteroid
+     * @param asteroid: a nyersanyagot tartalmazó aszteroida
      */
     @Override
     public void OnNearSun(Asteroid asteroid) {
