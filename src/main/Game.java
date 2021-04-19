@@ -8,6 +8,7 @@ import materials.Material;
 import materials.Uranium;
 import materials.WaterIce;
 import places.Asteroid;
+import view.View;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +40,7 @@ public class Game {
      * Visszatér a tesztelhető Game osztály egyetlen objetumával
      * @return testgame: az egyetlen TestGame objektum
      */
+    
     public static TestGame getInstance() {
         if(instance == null)
             instance = new TestGame();
@@ -59,6 +61,7 @@ public class Game {
      */
     public void Start() {
 
+        //itt majd minden esemeny utan meg lehetne hivni a view.Draw()-t
     }
 
     /**

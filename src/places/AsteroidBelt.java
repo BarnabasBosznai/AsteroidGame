@@ -17,6 +17,10 @@ public class AsteroidBelt implements Steppable {
      */
     private final List<Asteroid> asteroids;
 
+    /**
+     * Visszatér az AsteroidBelt osztály egyetlen objektumával
+     * @return asteroidbelt: az egyetlen AsteroidBelt objektum
+     */
     public static AsteroidBelt getInstance() {
         if(instance == null)
             instance = new AsteroidBelt();
@@ -25,6 +29,9 @@ public class AsteroidBelt implements Steppable {
     }
 
 
+    /**
+     * Konstruktor
+     */
     private AsteroidBelt() {
         this.asteroids = new ArrayList<>();
     }
@@ -44,7 +51,7 @@ public class AsteroidBelt implements Steppable {
      * Eltávolítja a paraméterül kapott
      * aszteroidát az aszteroidamezőből, vagyis törli a nyilvántartásból az aszteroidát, illetve
      * frissíti az érintett aszteroidák szomszédsági listáját.
-     * @param asteroid
+     * @param asteroid: a felrobbant aszteroida
      */
     public void AsteroidExploded(Asteroid asteroid) {
         this.asteroids.remove(asteroid);
@@ -84,11 +91,11 @@ public class AsteroidBelt implements Steppable {
         }
     }
 
+    /**
+     * Hozzáad egy aszteroida az aszteroidamezőhöz
+     * @param asteroid: az új aszteroida
+     */
     public void AddAsteroid(Asteroid asteroid) {
         asteroids.add(asteroid);
-    }
-
-    public void ClearAsteroids() {
-        asteroids.clear();
     }
 }
