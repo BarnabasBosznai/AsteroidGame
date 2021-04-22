@@ -2,6 +2,8 @@ package places;
 
 import interfaces.Steppable;
 import main.Game;
+import view.AsteroidBeltView;
+import view.View;
 
 import java.util.*;
 
@@ -34,6 +36,7 @@ public class AsteroidBelt implements Steppable {
      */
     private AsteroidBelt() {
         this.asteroids = new ArrayList<>();
+        View.getInstance().AddDrawable(new AsteroidBeltView(this, 0));
     }
 
 

@@ -4,6 +4,9 @@ import characters.Character;
 import interfaces.Item;
 import interfaces.Steppable;
 import main.Game;
+import view.RobotView;
+import view.TeleportGateView;
+import view.View;
 
 /**
  * Egy teleportkaput reprezentáló osztály. A teleportkapuk segítségével el tudnak jutni a karakterek olyan
@@ -25,6 +28,8 @@ public class TeleportGate extends Place implements Item, Steppable {
      * Azt jelzi, hogy a teleportkapu megkergült-e már
      */
     private boolean crazy;
+
+    TeleportGateView view;
 
     /**
      * Konstruktor
@@ -90,6 +95,8 @@ public class TeleportGate extends Place implements Item, Steppable {
 
         Game.getInstance().RemoveSteppable(this);
         Game.getInstance().RemoveSteppable(pair);
+
+        this.view.TeleportGateDestroyed();
     }
 
     /**
@@ -136,5 +143,9 @@ public class TeleportGate extends Place implements Item, Steppable {
      */
     public boolean GetCrazy(){
         return this.crazy;
+    }
+
+    public void SettlerMoved(Asteroid asteroid){
+
     }
 }

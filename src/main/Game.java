@@ -62,6 +62,8 @@ public class Game {
     public void Start() {
 
         //itt majd minden esemeny utan meg lehetne hivni a view.Draw()-t
+
+        //View.getInstance().DrawAll();
     }
 
     /**

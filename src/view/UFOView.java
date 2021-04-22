@@ -1,19 +1,23 @@
 package view;
 
+import characters.Character;
 import characters.UFO;
 
-public class UFOView extends Drawable{
+public class UFOView extends DrawableCharacter {
 
     private final UFO ufo;
 
-    public UFOView(UFO u, Position pos, int z){
+    public UFOView(UFO u){
         this.ufo = u;
-        this.pos = pos;
-        this.zIndex = z;
     }
 
     @Override
-    public void Draw() {
+    public void Draw(Position pos) {
 
+    }
+
+    @Override
+    public Character GetCharacter() {
+        return this.ufo;
     }
 }

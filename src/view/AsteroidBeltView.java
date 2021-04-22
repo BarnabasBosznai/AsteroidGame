@@ -6,9 +6,8 @@ public class AsteroidBeltView extends Drawable {
 
     private final AsteroidBelt asteroidBelt;
 
-    public AsteroidBeltView(AsteroidBelt ab, Position pos, int z){
+    public AsteroidBeltView(AsteroidBelt ab, int z){
         this.asteroidBelt = ab;
-        this.pos = pos;
         this.zIndex = z;
     }
 

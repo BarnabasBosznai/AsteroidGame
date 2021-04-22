@@ -7,6 +7,8 @@ import main.Game;
 import materials.*;
 import places.Asteroid;
 import places.TeleportGate;
+import view.TeleportGateView;
+import view.View;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -83,6 +85,8 @@ public class CraftingTable {
                 Game game = Game.getInstance();
                 game.AddSteppable(teleportGate1);
                 game.AddSteppable(teleportGate2);
+
+                View.getInstance().AddDrawable(new TeleportGateView(teleportGate1, teleportGate1, 1));
 
                 return true;
             }

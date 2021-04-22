@@ -2,6 +2,9 @@ package places;
 
 import characters.Character;
 import materials.*;
+import view.AsteroidView;
+import view.RobotView;
+import view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,8 @@ public class Asteroid extends Place {
      */
     private final List<Character> characters;
 
+    private final AsteroidView view;
+
     /**
      * Konstruktor
      */
@@ -56,6 +61,8 @@ public class Asteroid extends Place {
 
         thickness = 0;      /// temporális
         //thickness = random.ints(2,6).findFirst().getAsInt();
+
+        this.view = View.getInstance().AddAsteroidView(this);
     }
 
     /**
@@ -156,6 +163,7 @@ public class Asteroid extends Place {
 
         AsteroidBelt.getInstance().AsteroidExploded(this);
 
+        view.AsteroidExploded();
     }
 
     /**

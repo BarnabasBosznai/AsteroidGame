@@ -8,6 +8,9 @@ import materials.Material;
 import places.Asteroid;
 import places.Place;
 import places.TeleportGate;
+import view.RobotView;
+import view.SettlerView;
+import view.View;
 
 /**
  * A telepeseket reprezentáló osztály. A játékos velük interaktál közvetlenül
@@ -23,6 +26,9 @@ public class Settler extends MiningCharacter {
      */
     public Settler() {
         inventory = new Inventory();
+
+        this.view = new SettlerView(this);
+        View.getInstance().AddDrawableCharacter(this.view);
     }
 
     /**
@@ -36,6 +42,8 @@ public class Settler extends MiningCharacter {
         Game.getInstance().RemoveSteppable(this);
         Game.getInstance().RemoveSettler(this);
         asteroid.TakeOff(this);
+
+        this.DiedAlert();
     }
 
     /**
@@ -60,6 +68,9 @@ public class Settler extends MiningCharacter {
         Asteroid currentAsteroid = this.asteroid;
         if(place.Move(this)){
             currentAsteroid.TakeOff(this);
+
+            this.view.CharacterMoved(currentAsteroid, this.asteroid);
+
             return true;
         }
         return false;

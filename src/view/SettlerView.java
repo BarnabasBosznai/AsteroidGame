@@ -1,19 +1,23 @@
 package view;
 
+import characters.Character;
 import characters.Settler;
 
-public class SettlerView extends Drawable {
+public class SettlerView extends DrawableCharacter {
 
     private final Settler settler;
 
-    public SettlerView(Settler s, Position pos, int z){
+    public SettlerView(Settler s){
         this.settler = s;
-        this.pos = pos;
-        this.zIndex = z;
     }
 
     @Override
-    public void Draw() {
+    public void Draw(Position pos) {
 
+    }
+
+    @Override
+    public Character GetCharacter() {
+        return this.settler;
     }
 }

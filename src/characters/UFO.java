@@ -3,6 +3,9 @@ package characters;
 import main.Game;
 import materials.MaterialStorage;
 import places.Place;
+import view.RobotView;
+import view.UFOView;
+import view.View;
 
 import java.util.Random;
 
@@ -18,6 +21,9 @@ public class UFO extends MiningCharacter {
      */
     public UFO(){
         this.inventory = new MaterialStorage();
+
+        this.view = new UFOView(this);
+        View.getInstance().AddDrawableCharacter(this.view);
     }
 
     /**
@@ -27,6 +33,8 @@ public class UFO extends MiningCharacter {
     public void HitByExplosion() {
         Game.getInstance().RemoveSteppable(this);
         asteroid.TakeOff(this);
+
+        this.DiedAlert();
     }
 
     /**

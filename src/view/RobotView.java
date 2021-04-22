@@ -1,19 +1,23 @@
 package view;
 
+import characters.Character;
 import characters.Robot;
 
-public class RobotView extends Drawable {
+public class RobotView extends DrawableCharacter {
 
     private final Robot robot;
 
-    public RobotView(Robot r, Position pos, int z){
+    public RobotView(Robot r){
         this.robot = r;
-        this.pos = pos;
-        this.zIndex = z;
     }
 
     @Override
-    public void Draw() {
+    public void Draw(Position pos) {
 
+    }
+
+    @Override
+    public Character GetCharacter() {
+        return this.robot;
     }
 }
