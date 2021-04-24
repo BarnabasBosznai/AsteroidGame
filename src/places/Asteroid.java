@@ -3,8 +3,7 @@ package places;
 import characters.Character;
 import materials.*;
 import view.AsteroidView;
-import view.RobotView;
-import view.View;
+import view.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +61,7 @@ public class Asteroid extends Place {
         thickness = 0;      /// temporális
         //thickness = random.ints(2,6).findFirst().getAsInt();
 
-        this.view = View.getInstance().AddAsteroidView(this);
+        this.view = Controller.getInstance().AddAsteroidView(this);
     }
 
     /**

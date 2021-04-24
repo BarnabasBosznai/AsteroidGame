@@ -8,12 +8,9 @@ import materials.Material;
 import materials.Uranium;
 import materials.WaterIce;
 import places.Asteroid;
-import view.View;
+import view.Controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *A Game osztály felelős a játék működéséért, ő tárolja kollektíven a játékban résztvevő
@@ -24,7 +21,7 @@ public class Game {
     /**
      * A tesztelhető Game osztály egyetlen példánya
      */
-    private static TestGame instance;
+    private static Game instance;
 
     /**
      * A játékban található összes telepes (settler).
@@ -34,16 +31,16 @@ public class Game {
     /**
      * A játékban található lépésre képes (steppable) entitások.
      */
-    private final List<Steppable> steppables;
+    private final Queue<Steppable> steppables;
 
     /**
      * Visszatér a tesztelhető Game osztály egyetlen objetumával
      * @return testgame: az egyetlen TestGame objektum
      */
     
-    public static TestGame getInstance() {
+    public static Game getInstance() {
         if(instance == null)
-            instance = new TestGame();
+            instance = new Game();
 
         return instance;
     }
@@ -53,17 +50,41 @@ public class Game {
      */
     public Game(){
         this.settlers = new ArrayList<>();
-        this.steppables = new ArrayList<>();
+        this.steppables = new ArrayDeque<>();
     }
 
     /**
      * Elvégzi a játék inicializálását, majd elindítja a játékot.
      */
     public void Start() {
+        this.Init();
+    }
 
-        //itt majd minden esemeny utan meg lehetne hivni a view.Draw()-t
+    private void Init(){
+        //TODO
+    }
 
-        //View.getInstance().DrawAll();
+    public void NextStep(){
+        //lehet felesleges, elfer
+        if(steppables.size() == 0) {
+            Controller.getInstance().GameEnded(GameState.SETTLERSLOST);
+            return;
+        }
+
+        Steppable currentSteppable = this.steppables.peek();
+        currentSteppable.Step();
+
+        //le kell kezelni, hogy step kozben torolhette mar magat a sorbol
+        if(currentSteppable.equals(this.steppables.peek())){
+            this.steppables.poll();
+            this.steppables.add(currentSteppable);
+        }
+
+        //check
+        GameState currentGameState = this.CheckGameStatus();
+        if(currentGameState != GameState.NOTENDED){
+            Controller.getInstance().GameEnded(currentGameState);
+        }
     }
 
     /**
@@ -170,9 +191,5 @@ public class Game {
      */
     public void RemoveSettler(Settler settler) {
         this.settlers.remove(settler);
-    }
-
-    public List<Steppable> getSteppables() {
-        return steppables;
     }
 }

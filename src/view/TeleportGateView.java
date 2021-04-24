@@ -22,11 +22,11 @@ public class TeleportGateView extends Drawable {
     }
 
     public void TeleportGateDestroyed(){
-        View.getInstance().TeleportGateDestroyed(this);
+        Controller.getInstance().TeleportGateDestroyed(this);
     }
 
     //majd vmit kell kezdeni azzal is, h kovesse le telepest
     public void TeleportGateMoved(Asteroid asteroid){
-        View.getInstance().DrawAll();
+        Controller.getInstance().DrawAll();
     }
 }

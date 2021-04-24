@@ -3,7 +3,7 @@ package characters;
 import interfaces.Item;
 import places.Place;
 import view.RobotView;
-import view.View;
+import view.Controller;
 
 /**
  * A robotokat reprezentáló osztály. A robotokat a Controller irányítja. Csak fúrásra és
@@ -14,7 +14,7 @@ public class Robot extends Character implements Item {
 
     public Robot(){
         this.view = new RobotView(this);
-        View.getInstance().AddDrawableCharacter(this.view);
+        Controller.getInstance().AddDrawableCharacter(this.view);
     }
     /**
      * A robot lépésének végrehajtása

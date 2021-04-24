@@ -4,9 +4,7 @@ import characters.Character;
 import interfaces.Item;
 import interfaces.Steppable;
 import main.Game;
-import view.RobotView;
 import view.TeleportGateView;
-import view.View;
 
 /**
  * Egy teleportkaput reprezentáló osztály. A teleportkapuk segítségével el tudnak jutni a karakterek olyan

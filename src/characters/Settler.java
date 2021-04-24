@@ -8,9 +8,8 @@ import materials.Material;
 import places.Asteroid;
 import places.Place;
 import places.TeleportGate;
-import view.RobotView;
 import view.SettlerView;
-import view.View;
+import view.Controller;
 
 /**
  * A telepeseket reprezentáló osztály. A játékos velük interaktál közvetlenül
@@ -21,6 +20,8 @@ public class Settler extends MiningCharacter {
      */
     private final Inventory inventory;
 
+    private final SettlerView view;
+
     /**
      * Settler konstruktora
      */
@@ -28,7 +29,7 @@ public class Settler extends MiningCharacter {
         inventory = new Inventory();
 
         this.view = new SettlerView(this);
-        View.getInstance().AddDrawableCharacter(this.view);
+        Controller.getInstance().AddDrawableCharacter(this.view);
     }
 
     /**
@@ -184,6 +185,9 @@ public class Settler extends MiningCharacter {
      */
     @Override
     public void Step() {
+
+        //ezen kivul elvileg nem is kell mas, controllerbol meghivodik fv
+        this.view.WaitingForInput();
 
        /* int input = (int)(Math.random()*7);
 

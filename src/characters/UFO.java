@@ -3,11 +3,8 @@ package characters;
 import main.Game;
 import materials.MaterialStorage;
 import places.Place;
-import view.RobotView;
 import view.UFOView;
-import view.View;
-
-import java.util.Random;
+import view.Controller;
 
 public class UFO extends MiningCharacter {
 
@@ -23,7 +20,7 @@ public class UFO extends MiningCharacter {
         this.inventory = new MaterialStorage();
 
         this.view = new UFOView(this);
-        View.getInstance().AddDrawableCharacter(this.view);
+        Controller.getInstance().AddDrawableCharacter(this.view);
     }
 
     /**

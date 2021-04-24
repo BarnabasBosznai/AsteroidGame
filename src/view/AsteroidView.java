@@ -1,21 +1,24 @@
 package view;
 
-import characters.Character;
 import places.Asteroid;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AsteroidView extends Drawable {
+public class AsteroidView extends Drawable implements Clickable {
 
     private final Asteroid asteroid;
-    private final Position pos;
     private final List<DrawableCharacter> drawableCharacterList;
+
+    private final Position pos;
+    private static final double asteroidRadius = 5.0;
+    private boolean clicked;
 
     public AsteroidView(Asteroid a, Position pos, int z){
         this.asteroid = a;
         this.pos = pos;
         this.zIndex = z;
+        this.clicked = false;
         this.drawableCharacterList = new ArrayList<>();
     }
 
@@ -26,7 +29,8 @@ public class AsteroidView extends Drawable {
         //majd a karakterjeit is
         for(DrawableCharacter dc : drawableCharacterList){
             Position p = this.pos; //vmi nagyon kimatekolt hely
-            dc.Draw(p);
+            dc.SetPosition(p);
+            dc.Draw();
         }
     }
 
@@ -43,7 +47,28 @@ public class AsteroidView extends Drawable {
     }
 
     public void AsteroidExploded(){
-        View.getInstance().AsteroidExploded(this);
+        Controller.getInstance().AsteroidExploded(this);
     }
 
+    @Override
+    public void Clicked(Position pos) {
+        this.clicked = true;
+    }
+
+    @Override
+    public void UnClicked() {
+        this.clicked = false;
+    }
+
+    @Override
+    public BoundingCircle GetBoundingCircle() {
+        return new BoundingCircle(this.pos, AsteroidView.asteroidRadius);
+    }
+
+    public List<Clickable> GetClickables(){
+        List<Clickable> list = new ArrayList<>(drawableCharacterList);
+        list.add(this);
+
+        return list;
+    }
 }

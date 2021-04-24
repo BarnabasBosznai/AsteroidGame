@@ -1,33 +1,102 @@
 package view;
 
-import characters.Character;
+import characters.Settler;
+import main.Game;
+import main.GameState;
 import places.Asteroid;
 
 import java.util.*;
 
-public class View {
-    private static View instance;
+public class Controller {
+    private static Controller instance;
 
     /**
      * Amiket onmagukban ki lehet rajzolni
      */
     private final List<Drawable> drawables;
 
+    private final InterfacePanel interfacePanel;
+
     /**
      * asteroid-asteroidview parositasok kereshetoseg miatt
      */
     private final Map<Asteroid, AsteroidView> asteroidViewMap;
 
-    private View(){
+    private Settler currentSettlerWaitingForInput;
+
+    private Controller(){
         this.drawables = new ArrayList<>();
         this.asteroidViewMap = new HashMap<>();
+        this.currentSettlerWaitingForInput = null;
+
+        this.interfacePanel = new InterfacePanel();
+        this.drawables.add(interfacePanel);
+
+        //elinditjuk a jatekot azonnal
+        Game.getInstance().Start();
     }
 
-    public static View getInstance() {
+    public static Controller getInstance() {
         if(instance == null)
-            instance = new View();
+            instance = new Controller();
 
         return instance;
+    }
+
+    /**
+     * Mouseclick re hivodik meg
+     * @param clickPos
+     */
+    private void ClickHandler(Position clickPos){
+
+        List<Clickable> allClickables = new ArrayList<>();
+
+        for(AsteroidView av: asteroidViewMap.values()){
+            allClickables.addAll(av.GetClickables());
+        }
+
+        //mindenesetre ne maradjon semmi se clickelve
+        for(Clickable clickable : allClickables)
+            clickable.UnClicked();
+
+        //eloszor megnezi, hogy az interface en tortent e a kattintas
+        if(!this.interfacePanel.HandleClick(clickPos, currentSettlerWaitingForInput)) {
+            this.currentSettlerWaitingForInput = null;
+            return;
+        }
+
+        //ha nem lehetett interface t lekezelni, megnezi a tobbit is
+
+        //meg azt is le lehet majd kezelni, hogy bizonyos tavolsag felett ne vegye ugy, hogy ranyomtak vkire
+        double minLength = Double.MAX_VALUE;
+        Clickable closestClickable = null;
+
+        for(Clickable clickable : allClickables){
+            double currentLength = clickable.GetBoundingCircle().LengthBetweenClickAndCircle(clickPos);
+
+            if(currentLength < minLength){
+                minLength = currentLength;
+                closestClickable = clickable;
+            }
+        }
+
+        //koordinatarendszerek+origo eltolas meg nincs lekezelve, majd az eltoltat adnam oda
+        if(closestClickable != null) {
+            closestClickable.Clicked(clickPos);
+        }
+    }
+
+    /**
+     *  Idokozonkent hivodik meg
+     */
+    private void TimeHandler(){
+        if(currentSettlerWaitingForInput == null){
+            Game.getInstance().NextStep();
+        }
+    }
+
+    public void CurrentSettlerWaitingForInput(Settler settler){
+        this.currentSettlerWaitingForInput = settler;
     }
 
     /**
@@ -44,8 +113,10 @@ public class View {
      * @param dc
      */
     public void AddDrawableCharacter(DrawableCharacter dc){
-        AsteroidView av = asteroidViewMap.get(dc.GetCharacter().GetAsteroid());
+        AsteroidView av = asteroidViewMap.get(dc.GetAsteroid());
         av.AddDrawableCharacter(dc);
+
+        this.DrawAll();
     }
 
     /**
@@ -59,6 +130,8 @@ public class View {
         this.AddDrawable(av);
         this.asteroidViewMap.put(av.GetAsteroid(), av);
 
+        this.DrawAll();
+
         return av;
     }
 
@@ -69,6 +142,8 @@ public class View {
     public void AddDrawable(Drawable d){
         this.drawables.add(d);
         this.drawables.sort(Comparator.comparingInt(Drawable::GetZIndex));
+
+        this.DrawAll();
     }
 
     /**
@@ -92,7 +167,7 @@ public class View {
      * @param dc
      */
     public void CharacterDied(DrawableCharacter dc){
-        AsteroidView av = this.asteroidViewMap.get(dc.GetCharacter().GetAsteroid());
+        AsteroidView av = this.asteroidViewMap.get(dc.GetAsteroid());
 
         av.RemoveDrawableCharacter(dc);
 
@@ -120,7 +195,12 @@ public class View {
         this.DrawAll();
     }
 
-    /*Hianyzik Controller resz, de swing nelkul nehez meg,
-      de elvileg megoldott oda-vissza kommunikalas
-     */
+    public void GameEnded(GameState gameState){
+        if(gameState == GameState.SETTLERSLOST){
+            //KEKW
+        }
+        else if(gameState == GameState.SETTLERSWON){
+            //woozyface
+        }
+    }
 }

@@ -3,7 +3,7 @@ package places;
 import interfaces.Steppable;
 import main.Game;
 import view.AsteroidBeltView;
-import view.View;
+import view.Controller;
 
 import java.util.*;
 
@@ -18,6 +18,8 @@ public class AsteroidBelt implements Steppable {
      * Az aszteroidamezőben található aszteroidák gyűjteménye.
      */
     private final List<Asteroid> asteroids;
+
+    private final AsteroidBeltView view;
 
     /**
      * Visszatér az AsteroidBelt osztály egyetlen objektumával
@@ -36,7 +38,9 @@ public class AsteroidBelt implements Steppable {
      */
     private AsteroidBelt() {
         this.asteroids = new ArrayList<>();
-        View.getInstance().AddDrawable(new AsteroidBeltView(this, 0));
+
+        this.view = new AsteroidBeltView(this, 0);
+        Controller.getInstance().AddDrawable(this.view);
     }
 
 
@@ -76,6 +80,8 @@ public class AsteroidBelt implements Steppable {
             asteroids.get(idx).NearSun();
             ++i;
         }
+
+        this.view.NearSun();
     }
 
     /**
@@ -92,6 +98,8 @@ public class AsteroidBelt implements Steppable {
             asteroids.get(idx).SolarFlare();
             ++i;
         }
+
+        this.view.SolarFlare();
     }
 
     /**

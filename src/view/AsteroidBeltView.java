@@ -15,4 +15,12 @@ public class AsteroidBeltView extends Drawable {
     public void Draw() {
 
     }
+
+    public void SolarFlare(){
+
+    }
+
+    public void NearSun(){
+
+    }
 }

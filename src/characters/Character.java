@@ -5,7 +5,6 @@ import places.Asteroid;
 import interfaces.Steppable;
 import places.Place;
 import view.DrawableCharacter;
-import view.View;
 
 import java.util.List;
 import java.lang.Math;
