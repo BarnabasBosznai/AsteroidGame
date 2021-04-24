@@ -61,7 +61,6 @@ public class Controller {
 
         //eloszor megnezi, hogy az interface en tortent e a kattintas
         if(!this.interfacePanel.HandleClick(clickPos, currentSettlerWaitingForInput)) {
-            this.currentSettlerWaitingForInput = null;
             return;
         }
 

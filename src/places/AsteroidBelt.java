@@ -51,7 +51,16 @@ public class AsteroidBelt implements Steppable {
      */
     @Override
     public void Step() {
+        Random random = new Random();
+        int rand = random.nextInt(5);
 
+        //kisebb ai
+        if(rand == 0){
+            this.NearSun();
+        }
+        else if(rand == 1){
+            this.SolarFlare();
+        }
     }
 
     /**
@@ -62,15 +71,13 @@ public class AsteroidBelt implements Steppable {
      */
     public void AsteroidExploded(Asteroid asteroid) {
         this.asteroids.remove(asteroid);
-
-        Game.getInstance().RemoveAsteroid(asteroid);
     }
 
     /**
      * Az aszteroidamező napközelbe került, vagyis meghívja az
      * aszteroidamezőben található összes aszteroidának a NearSun metódusát.
      */
-    public void NearSun() {
+    private void NearSun() {
         Random random = new Random();
         int numberOfAsteroidsInvolved = (int) (asteroids.size() * 0.2);
         int i = 0;
@@ -88,7 +95,7 @@ public class AsteroidBelt implements Steppable {
      * Az aszteroidamező néhány aszteroidája napviharba került, vagyis
      * meghívja a napviharba kerület aszterodiáknak a SolarFlare metódusát.
      */
-    public void SolarFlare() {
+    private void SolarFlare() {
         Random random = new Random();
         int numberOfAsteroidsInvolved = (int) (asteroids.size() * 0.2);
         int i = 0;

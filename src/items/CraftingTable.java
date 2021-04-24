@@ -68,7 +68,6 @@ public class CraftingTable {
                 Game.getInstance().AddSteppable(robot);
                 Asteroid asteroid = settler.GetAsteroid();
                 asteroid.Move(robot);
-                Game.getInstance().CraftTeleportGateHelper(robot);
 
                 return true;
             }
@@ -86,7 +85,7 @@ public class CraftingTable {
                 game.AddSteppable(teleportGate1);
                 game.AddSteppable(teleportGate2);
 
-                Controller.getInstance().AddDrawable(new TeleportGateView(teleportGate1, teleportGate1, 1));
+                Controller.getInstance().AddDrawable(new TeleportGateView(teleportGate1, teleportGate2, 1));
 
                 return true;
             }

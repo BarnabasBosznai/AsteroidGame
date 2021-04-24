@@ -71,14 +71,9 @@ public class Game {
             return;
         }
 
-        Steppable currentSteppable = this.steppables.peek();
+        Steppable currentSteppable = this.steppables.poll();
+        this.steppables.add(currentSteppable);
         currentSteppable.Step();
-
-        //le kell kezelni, hogy step kozben torolhette mar magat a sorbol
-        if(currentSteppable.equals(this.steppables.peek())){
-            this.steppables.poll();
-            this.steppables.add(currentSteppable);
-        }
 
         //check
         GameState currentGameState = this.CheckGameStatus();

@@ -8,7 +8,6 @@ public class TeleportGateView extends Drawable {
 
     private final TeleportGate teleportGate1;
     private final TeleportGate teleportGate2;
-    private Settler settler;
 
     public TeleportGateView(TeleportGate tg1, TeleportGate tg2, int z){
         this.teleportGate1 = tg1;
@@ -23,10 +22,5 @@ public class TeleportGateView extends Drawable {
 
     public void TeleportGateDestroyed(){
         Controller.getInstance().TeleportGateDestroyed(this);
-    }
-
-    //majd vmit kell kezdeni azzal is, h kovesse le telepest
-    public void TeleportGateMoved(Asteroid asteroid){
-        Controller.getInstance().DrawAll();
     }
 }
