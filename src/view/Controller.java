@@ -33,16 +33,12 @@ public class Controller {
 
         this.interfacePanel = new InterfacePanel();
         this.drawables.add(interfacePanel);
-
-        //elinditjuk a jatekot azonnal
-        Game.getInstance().Start();
-
-        this.CallNextStep();
     }
 
     public static Controller getInstance() {
-        if(instance == null)
+        if(instance == null) {
             instance = new Controller();
+        }
 
         return instance;
     }

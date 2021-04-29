@@ -42,7 +42,8 @@ public class Frame extends JFrame{
                 }
 
                 try {
-                    System.out.println("asd");
+                    this.repaint();
+                    System.out.println("repainted");
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();

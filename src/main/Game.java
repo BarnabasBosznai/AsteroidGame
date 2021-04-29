@@ -58,6 +58,8 @@ public class Game {
      */
     public void Start() {
         this.Init();
+
+        this.NextStep();
     }
 
     private void Init(){
@@ -81,7 +83,7 @@ public class Game {
             Controller.getInstance().GameEnded(currentGameState);
         }
 
-        //Controller.getInstance().StepEnded();
+        Controller.getInstance().StepEnded();
     }
 
     /**
