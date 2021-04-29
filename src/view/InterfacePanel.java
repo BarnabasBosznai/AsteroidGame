@@ -26,6 +26,12 @@ public class InterfacePanel extends Drawable {
     }
 
     public boolean HandleClick(Position clickPos, Settler currentWaitingSettler){
+
+        if(currentWaitingSettler == null){
+            output = "Ilyen nincs, nem jön semelyik Settler!";
+            return false;
+        }
+
         boolean clickedOnInterface = false;
 
         if (craft){
@@ -106,8 +112,9 @@ public class InterfacePanel extends Drawable {
         //lekezelni, hogy volt e valamelyik gombra/akarmire kattintas clickPos alapjan
 
         if (clickPos.y>455){
+            clickedOnInterface=true;
             if (clickPos.x<110)
-                place=true;
+                craft=true;
             else if (clickPos.x<220) {
                 if (currentWaitingSettler.Drill()){
                     output = "Sikerült fúrni!";
@@ -116,29 +123,19 @@ public class InterfacePanel extends Drawable {
                     output = "Nem sikerült fúrni!";
                 }
             } else if (clickPos.x<580){
-
+                output = "Itt meg mit szeretnél?";
+                clickedOnInterface=false;
             } else if (clickPos.x<690){
-
+                if (currentWaitingSettler.Mine()){
+                    output = "Sikerült bányászni!";
+                    Controller.getInstance().SettlerStepped();
+                } else {
+                    output = "Nem sikerült bányászni!";
+                }
             } else {
-
+                place=true;
             }
-
         }
-
-        //ezt majd lekezeljuk, egyelore false
-
-
-        if(clickedOnInterface){
-            if(currentWaitingSettler != null){
-
-                //megfelelo fv meghivasa
-
-                //kicsit kokler, majd lehet ra kulon fv akar
-                Controller.getInstance().CurrentSettlerWaitingForInput(null);
-            }
-            return true;
-        }
-        else
-            return false;
+        return clickedOnInterface;
     }
 }
