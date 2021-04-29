@@ -40,8 +40,8 @@ public class Frame extends JFrame{
             while(!closed){
                 try {
                     SwingUtilities.invokeLater(this::repaint);
-                    System.out.println("repainted");
-                    Thread.sleep(500);
+                    //System.out.println("repainted");
+                    Thread.sleep(16);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

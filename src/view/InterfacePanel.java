@@ -21,7 +21,7 @@ public class InterfacePanel extends Drawable {
     }
 
     @Override
-    public void Draw(Graphics2D graphics) { // boolean-eket itt nagyban használnám
+    public void Draw(Graphics2D graphics, Position cameraPos) { // boolean-eket itt nagyban használnám
 
     }
 

@@ -14,7 +14,7 @@ public class AsteroidBeltView extends Drawable {
     }
 
     @Override
-    public void Draw(Graphics2D graphics) {
+    public void Draw(Graphics2D graphics, Position cameraPos) {
 
     }
 

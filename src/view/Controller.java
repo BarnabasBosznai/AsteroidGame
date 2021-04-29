@@ -111,9 +111,9 @@ public class Controller {
     /**
      * kirajzol mindent is
      */
-    public void DrawAll(Graphics2D g){
+    public void DrawAll(Graphics2D g, Position cameraPos){
         for(Drawable drawable : drawables){
-            drawable.Draw(g);
+            drawable.Draw(g, cameraPos);
         }
     }
 

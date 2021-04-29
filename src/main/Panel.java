@@ -29,7 +29,7 @@ public class Panel extends JPanel {
         this.setBackground(Color.BLACK);
         Graphics2D graphics = (Graphics2D) g;
 
-        Controller.getInstance().DrawAll(graphics);
+        Controller.getInstance().DrawAll(graphics, cameraPos);
     }
 
     //TODO
@@ -37,21 +37,27 @@ public class Panel extends JPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            lastClickPos = new Position(e.getX(),e.getY());
-            System.out.println("LastClicked: "+lastClickPos.x+" "+lastClickPos.y);
-            Controller.getInstance().ClickHandler(lastClickPos, cameraPos);
+            //System.out.println("cameraPosSaved: "+cameraPosSaved.x+" "+cameraPosSaved.y);
+
+
+            //System.out.println("LastClicked: "+lastClickPos.x+" "+lastClickPos.y);
+
         }
 
         @Override
         public void mousePressed(MouseEvent e) {
-
+            lastClickPos.x = e.getX();
+            lastClickPos.y = e.getY();
+            //System.out.println("KameraPos: "+cameraPos.x+" "+cameraPos.y);
+            //System.out.println("l: "+e.getX()+" "+e.getY());
+            Controller.getInstance().ClickHandler(lastClickPos, cameraPos);
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            System.out.println("ReleasedSaved: "+cameraPosSaved.x+" "+cameraPosSaved.y);
-            System.out.println("Released: "+cameraPos.x+" "+cameraPos.y);
-            cameraPosSaved = cameraPos;
+            cameraPosSaved.x = cameraPos.x;
+            cameraPosSaved.y = cameraPos.y;
+            //System.out.println("cameraPosSaved: "+cameraPosSaved.x+" "+cameraPosSaved.y);
         }
 
         @Override
@@ -72,9 +78,9 @@ public class Panel extends JPanel {
         public void mouseDragged(MouseEvent e) {
             boolean nem_interface=true;
             if (nem_interface){
-                cameraPos.x = cameraPosSaved.x + e.getX() - lastClickPos.x;
-                cameraPos.y = cameraPosSaved.y + e.getY() - lastClickPos.y; // ez valószínűleg negálni kell
-                System.out.println("KameraPos: "+cameraPos.x+" "+cameraPos.y);
+                cameraPos.x = cameraPosSaved.x - e.getX() + lastClickPos.x;
+                cameraPos.y = cameraPosSaved.y - e.getY() + lastClickPos.y; // ez valószínűleg negálni kell
+                //System.out.println("KameraPos: "+cameraPos.x+" "+cameraPosSaved.x+" "+e.getX()+" "+lastClickPos.x);
             }
         }
 

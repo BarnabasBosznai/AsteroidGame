@@ -35,16 +35,16 @@ public class AsteroidView extends Drawable implements Clickable {
     }
 
     @Override
-    public void Draw(Graphics2D graphics) {
+    public void Draw(Graphics2D graphics, Position cameraPos) {
         //aszteroida magat kirajzolja
         //graphics.setColor(Color.RED);
         //graphics.fillOval(pos.x, pos.y,asteroidRadius*2,asteroidRadius*2);
-        graphics.drawImage(img,pos.x, pos.y,asteroidRadius*2,asteroidRadius*2,null);
+        graphics.drawImage(img,pos.x - cameraPos.x , pos.y  - cameraPos.y ,asteroidRadius*2,asteroidRadius*2,null);
         //majd a karakterjeit is
         for(int i = 0; i < drawableCharacterList.size(); i++){
 
             double phi = i * 2 * Math.PI/drawableCharacterList.size();
-            Position p = new Position(this.pos.x  + asteroidRadius + (int) (asteroidRadius * Math.cos(phi))  ,this.pos.y + asteroidRadius +(int) (asteroidRadius * Math.sin(phi)));
+            Position p = new Position(this.pos.x  - cameraPos.x  + asteroidRadius + (int) ((asteroidRadius +12) * Math.cos(phi))  ,this.pos.y  - cameraPos.y  + asteroidRadius +(int) ((asteroidRadius +12) * Math.sin(phi)));
 
             drawableCharacterList.get(i).SetPosition(p);
             drawableCharacterList.get(i).Draw(graphics);
