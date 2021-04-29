@@ -77,11 +77,6 @@ public class AsteroidView extends Drawable implements Clickable {
     }
 
     @Override
-    public BoundingCircle GetBoundingCircle() {
-        return new BoundingCircle(this.pos, AsteroidView.asteroidRadius);
-    }
-
-    @Override
     public boolean ClickedCheck(Position clickPos, Position cameraPos) {
         if (clicked){
 
