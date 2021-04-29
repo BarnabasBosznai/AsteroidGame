@@ -30,7 +30,9 @@ public class SettlerView extends DrawableCharacter {
     @Override
     public void Draw(Graphics2D graphics) {
         graphics.setColor(Color.BLUE);
-        graphics.fillRect((this.pos.x-settlerRadius-1),(this.pos.y-settlerRadius-2),2*(settlerRadius)+2,2*(settlerRadius)+4);
+        graphics.rotate(angle,this.pos.x,this.pos.y);
+        graphics.drawRect((this.pos.x-settlerRadius-1),(this.pos.y-settlerRadius-2),2*(settlerRadius)+2,2*(settlerRadius)+4);
+        graphics.rotate(-angle,this.pos.x,this.pos.y);
         graphics.drawImage(rotate(angle),this.pos.x-settlerRadius,this.pos.y-settlerRadius,2*settlerRadius,2*settlerRadius,null);
     }
 
