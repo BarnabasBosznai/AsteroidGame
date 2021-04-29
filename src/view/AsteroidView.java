@@ -5,10 +5,12 @@ import places.Asteroid;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AsteroidView extends Drawable implements Clickable {
 
@@ -19,12 +21,15 @@ public class AsteroidView extends Drawable implements Clickable {
     private static final int asteroidRadius = 42;
     private boolean clicked;
 
+    private double angle;
+
     public AsteroidView(Asteroid a, Position pos, int z){
         this.asteroid = a;
         this.pos = pos;
         this.zIndex = z;
         this.clicked = false;
         this.drawableCharacterList = new ArrayList<>();
+        this.angle=new Random().nextDouble()*2*Math.PI;
         try{
             //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
             this.img= ImageIO.read(new File("aszteroida.png"));
@@ -39,7 +44,7 @@ public class AsteroidView extends Drawable implements Clickable {
         //aszteroida magat kirajzolja
         //graphics.setColor(Color.RED);
         //graphics.fillOval(pos.x, pos.y,asteroidRadius*2,asteroidRadius*2);
-        graphics.drawImage(img,pos.x - cameraPos.x , pos.y  - cameraPos.y ,asteroidRadius*2,asteroidRadius*2,null);
+        graphics.drawImage(rotate(angle),pos.x - cameraPos.x , pos.y  - cameraPos.y ,asteroidRadius*2,asteroidRadius*2,null);
         //majd a karakterjeit is
         for(int i = 0; i < drawableCharacterList.size(); i++){
 
@@ -99,6 +104,19 @@ public class AsteroidView extends Drawable implements Clickable {
         }
 
         return false;
+    }
+
+    public BufferedImage rotate(double angle) {
+
+        int w = this.img.getWidth();
+        int h = this.img.getHeight();
+
+        BufferedImage rotated = new BufferedImage(w, h, this.img.getType());
+        Graphics2D graphic = rotated.createGraphics();
+        graphic.rotate(angle, w/2, h/2);
+        graphic.drawImage(this.img, null, 0, 0);
+        graphic.dispose();
+        return rotated;
     }
 
 }
