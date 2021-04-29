@@ -3,13 +3,15 @@ package view;
 import characters.Character;
 import places.Asteroid;
 
+import java.awt.*;
+
 public abstract class DrawableCharacter implements Clickable {
 
     protected boolean clicked;
     protected double radius;
     protected Position pos;
 
-    public abstract void Draw();
+    public abstract void Draw(Graphics2D graphics);
 
     public Asteroid GetAsteroid(){
         return this.GetCharacter().GetAsteroid();

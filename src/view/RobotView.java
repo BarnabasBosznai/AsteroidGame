@@ -3,6 +3,8 @@ package view;
 import characters.Character;
 import characters.Robot;
 
+import java.awt.*;
+
 public class RobotView extends DrawableCharacter {
 
     private final Robot robot;
@@ -14,7 +16,7 @@ public class RobotView extends DrawableCharacter {
     }
 
     @Override
-    public void Draw() {
+    public void Draw(Graphics2D graphics) {
 
     }
 

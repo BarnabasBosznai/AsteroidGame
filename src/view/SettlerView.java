@@ -3,6 +3,8 @@ package view;
 import characters.Character;
 import characters.Settler;
 
+import java.awt.*;
+
 public class SettlerView extends DrawableCharacter {
 
     private final Settler settler;
@@ -14,7 +16,7 @@ public class SettlerView extends DrawableCharacter {
     }
 
     @Override
-    public void Draw() {
+    public void Draw(Graphics2D graphics) {
 
     }
 

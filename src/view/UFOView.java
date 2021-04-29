@@ -3,6 +3,8 @@ package view;
 import characters.Character;
 import characters.UFO;
 
+import java.awt.*;
+
 public class UFOView extends DrawableCharacter {
 
     private final UFO ufo;
@@ -14,7 +16,7 @@ public class UFOView extends DrawableCharacter {
     }
 
     @Override
-    public void Draw() {
+    public void Draw(Graphics2D graphics) {
 
     }
 
