@@ -27,6 +27,7 @@ public class Frame extends JFrame{
         this.setSize(800, 800);
         this.setResizable(false);
         this.setLocation(300, 300);
+        this.setVisible(true);
 
         while (true) {
 

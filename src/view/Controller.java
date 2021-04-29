@@ -49,7 +49,12 @@ public class Controller {
      * Mouseclick re hivodik meg
      * @param clickPos
      */
-    private void ClickHandler(Position clickPos){
+    public boolean ClickHandler(Position clickPos){
+
+        //eloszor megnezi, hogy az interface en tortent e a kattintas
+        if(this.interfacePanel.HandleClick(clickPos, currentSettlerWaitingForInput)) {
+            return true;
+        }
 
         List<Clickable> allClickables = new ArrayList<>();
 
@@ -61,11 +66,6 @@ public class Controller {
         for(Clickable clickable : allClickables)
             clickable.UnClicked();
 
-        //eloszor megnezi, hogy az interface en tortent e a kattintas
-        if(!this.interfacePanel.HandleClick(clickPos, currentSettlerWaitingForInput)) {
-            return;
-        }
-
         //ha nem lehetett interface t lekezelni, megnezi a tobbit is
 
         //meg azt is le lehet majd kezelni, hogy bizonyos tavolsag felett ne vegye ugy, hogy ranyomtak vkire
@@ -73,18 +73,23 @@ public class Controller {
         Clickable closestClickable = null;
 
         for(Clickable clickable : allClickables){
-            double currentLength = clickable.GetBoundingCircle().LengthBetweenClickAndCircle(clickPos);
+            //double currentLength = clickable.GetBoundingCircle().LengthBetweenClickAndCircle(clickPos);
+            /*clickable.ClickedCheck();
 
             if(currentLength < minLength){
                 minLength = currentLength;
                 closestClickable = clickable;
-            }
+            }*/
         }
 
         //koordinatarendszerek+origo eltolas meg nincs lekezelve, majd az eltoltat adnam oda
         if(closestClickable != null) {
             closestClickable.Clicked(clickPos);
+            return true;
         }
+        else
+            return false;
+
     }
 
     /**

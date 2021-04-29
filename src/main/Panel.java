@@ -1,6 +1,7 @@
 package main;
 
 import view.Controller;
+import view.Position;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class Panel extends JPanel {
+
+    Position cameraPos, cameraPosSaved;
+    Position lastClickPos;
+
 
     @Override
     protected void paintComponent(Graphics g){
@@ -24,7 +29,8 @@ public class Panel extends JPanel {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-
+            lastClickPos = new Position(e.getX(),e.getY());
+            //Controller.getInstance().ClickHandler(lastClickPos, cameraPos);
         }
 
         @Override
@@ -53,7 +59,11 @@ public class Panel extends JPanel {
 
         @Override
         public void mouseDragged(MouseEvent e) {
-
+            boolean nem_interface=true;
+            if (nem_interface){
+                cameraPos.x = cameraPosSaved.x + e.getX() - lastClickPos.x;
+                cameraPos.y = cameraPosSaved.y + e.getY() - lastClickPos.y; // ez valószínűleg negálni kell
+            }
         }
 
         @Override
