@@ -63,7 +63,7 @@ public class CraftingTable {
         }
         else{
             if(itemType.equals(Robot.class)){
-                Robot robot = new Robot();
+                Robot robot = new Robot(settler.GetAsteroid());
 
                 Game.getInstance().AddSteppable(robot);
                 Asteroid asteroid = settler.GetAsteroid();

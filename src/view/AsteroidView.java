@@ -3,7 +3,10 @@ package view;
 import characters.Settler;
 import places.Asteroid;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +16,7 @@ public class AsteroidView extends Drawable implements Clickable {
     private final List<DrawableCharacter> drawableCharacterList;
 
     private final Position pos;
-    private static final double asteroidRadius = 5.0;
+    private static final int asteroidRadius = 50;
     private boolean clicked;
 
     public AsteroidView(Asteroid a, Position pos, int z){
@@ -22,12 +25,14 @@ public class AsteroidView extends Drawable implements Clickable {
         this.zIndex = z;
         this.clicked = false;
         this.drawableCharacterList = new ArrayList<>();
+
     }
 
     @Override
     public void Draw(Graphics2D graphics) {
         //aszteroida magat kirajzolja
-
+        graphics.setColor(Color.RED);
+        graphics.fillOval(pos.x, pos.y,asteroidRadius,asteroidRadius);
         //majd a karakterjeit is
         for(DrawableCharacter dc : drawableCharacterList){
             Position p = this.pos; //vmi nagyon kimatekolt hely

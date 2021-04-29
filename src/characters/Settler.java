@@ -25,9 +25,9 @@ public class Settler extends MiningCharacter {
     /**
      * Settler konstruktora
      */
-    public Settler() {
+    public Settler(Asteroid ast) {
         inventory = new Inventory();
-
+        this.asteroid = ast;
         this.view = new SettlerView(this);
         Controller.getInstance().AddDrawableCharacter(this.view);
     }

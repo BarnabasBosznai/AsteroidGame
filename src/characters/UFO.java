@@ -2,6 +2,7 @@ package characters;
 
 import main.Game;
 import materials.MaterialStorage;
+import places.Asteroid;
 import places.Place;
 import view.UFOView;
 import view.Controller;
@@ -16,9 +17,9 @@ public class UFO extends MiningCharacter {
     /**
      * Az UFO osztály konstruktora
      */
-    public UFO(){
+    public UFO(Asteroid ast){
         this.inventory = new MaterialStorage();
-
+        this.asteroid = ast;
         this.view = new UFOView(this);
         Controller.getInstance().AddDrawableCharacter(this.view);
     }

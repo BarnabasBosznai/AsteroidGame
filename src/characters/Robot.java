@@ -1,6 +1,7 @@
 package characters;
 
 import interfaces.Item;
+import places.Asteroid;
 import places.Place;
 import view.RobotView;
 import view.Controller;
@@ -12,7 +13,8 @@ import view.Controller;
  */
 public class Robot extends Character implements Item {
 
-    public Robot(){
+    public Robot(Asteroid ast){
+        this.asteroid = ast;
         this.view = new RobotView(this);
         Controller.getInstance().AddDrawableCharacter(this.view);
     }

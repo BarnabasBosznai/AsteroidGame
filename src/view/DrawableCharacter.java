@@ -4,11 +4,13 @@ import characters.Character;
 import places.Asteroid;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public abstract class DrawableCharacter {
 
+    protected BufferedImage img;
     protected boolean clicked;
-    protected double radius;
+    protected int radius;
     protected Position pos;
 
     public abstract void Draw(Graphics2D graphics);
