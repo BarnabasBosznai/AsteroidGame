@@ -30,7 +30,7 @@ public class Frame extends JFrame{
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setTitle("AsteroidGame");
         this.setSize(800, 500);
-        this.setResizable(false);
+        this.setResizable(true);
         this.setLocation(300, 300);
         this.setVisible(true);
 

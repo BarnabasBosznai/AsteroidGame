@@ -26,6 +26,8 @@ public class Controller {
 
     private Settler currentSettlerWaitingForInput;
 
+    private Random rand = new Random();
+
     private Controller(){
         this.drawables = new ArrayList<>();
         this.asteroidViewMap = new HashMap<>();
@@ -131,7 +133,7 @@ public class Controller {
      * @param asteroid
      */
     public AsteroidView AddAsteroidView(Asteroid asteroid){
-        Position pos = new Position(300,300); //ide majd vmi okos
+        Position pos = new Position(rand.nextInt(1000), rand.nextInt(1000)); //ide majd vmi okos
         AsteroidView av = new AsteroidView(asteroid, pos, 2);
 
         this.AddDrawable(av);
