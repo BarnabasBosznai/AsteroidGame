@@ -10,11 +10,12 @@ import java.io.IOException;
 
 public class UFOView extends DrawableCharacter {
 
-
     private final UFO ufo;
     private static final int ufoRadius = 2;
 
     public UFOView(UFO u){
+        super();
+
         this.ufo = u;
         this.radius = ufoRadius;
         try{

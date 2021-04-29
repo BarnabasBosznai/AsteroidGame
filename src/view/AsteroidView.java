@@ -27,7 +27,7 @@ public class AsteroidView extends Drawable implements Clickable {
         this.drawableCharacterList = new ArrayList<>();
         try{
             //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
-            this.img= ImageIO.read(new File("aszteroida.png"));
+            this.img= ImageIO.read(new File("robot.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();
