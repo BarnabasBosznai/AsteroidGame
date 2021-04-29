@@ -1,5 +1,0 @@
-load SettlerCraftTeleportGates_Init.txt
-step craft teleportgates set0 tel1 tel2
-listsettlers
-exit 
- 

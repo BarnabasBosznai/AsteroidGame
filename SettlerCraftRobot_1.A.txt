@@ -1,5 +1,0 @@
-load SettlerCraftRobot_Init.txt
-step craft robot set0 rob0
-listsettlers
-listrobots
-exit 

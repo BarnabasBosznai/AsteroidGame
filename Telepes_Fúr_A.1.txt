@@ -1,8 +1,0 @@
-create
-add asteroid ast0
-set ast0 layer 2
-add settler set0
-land ast0 set0
-step drill set0
-listasteroids
-exit 

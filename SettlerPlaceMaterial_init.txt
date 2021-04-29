@@ -1,5 +1,0 @@
-create
-add asteroid ast0
-add settler set0
-addmaterial set0 uranium0
-land ast0 set0

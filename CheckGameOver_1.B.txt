@@ -1,9 +1,0 @@
-load checkgameover2.txt
-gamestatus
-exit 
-
-
-
-
-
-
