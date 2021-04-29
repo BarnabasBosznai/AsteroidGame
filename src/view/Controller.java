@@ -36,6 +36,8 @@ public class Controller {
 
         //elinditjuk a jatekot azonnal
         Game.getInstance().Start();
+
+        this.CallNextStep();
     }
 
     public static Controller getInstance() {
@@ -88,17 +90,22 @@ public class Controller {
 
     }
 
-    /**
-     *  Idokozonkent hivodik meg
-     */
-    private void TimeHandler(){
-        if(currentSettlerWaitingForInput == null){
-            Game.getInstance().NextStep();
-        }
+    public void StepEnded(){
+        if(this.currentSettlerWaitingForInput == null)
+            this.CallNextStep();
+    }
+
+    private void CallNextStep(){
+        Game.getInstance().NextStep();
     }
 
     public void CurrentSettlerWaitingForInput(Settler settler){
         this.currentSettlerWaitingForInput = settler;
+    }
+
+    public void SettlerStepped(){
+        this.currentSettlerWaitingForInput = null;
+        this.CallNextStep();
     }
 
     public Settler GetCurrentSettlerWaitingForInput(){

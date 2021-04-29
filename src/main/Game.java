@@ -80,6 +80,8 @@ public class Game {
         if(currentGameState != GameState.NOTENDED){
             Controller.getInstance().GameEnded(currentGameState);
         }
+
+        //Controller.getInstance().StepEnded();
     }
 
     /**
