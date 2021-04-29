@@ -14,6 +14,8 @@ public class RobotView extends DrawableCharacter {
     private static final int robotRadius = 2;
 
     public RobotView(Robot r){
+        super();
+
         this.robot = r;
         this.radius = robotRadius;
         try{

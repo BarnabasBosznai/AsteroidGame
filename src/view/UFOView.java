@@ -12,7 +12,7 @@ public class UFOView extends DrawableCharacter {
 
 
     private final UFO ufo;
-    private static final int ufoRadius = 30;
+    private static final int ufoRadius = 2;
 
     public UFOView(UFO u){
         this.ufo = u;

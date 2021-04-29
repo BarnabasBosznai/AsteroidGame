@@ -42,8 +42,7 @@ public class AsteroidView extends Drawable implements Clickable {
         graphics.drawImage(img,this.pos.x,this.pos.y,asteroidRadius,asteroidRadius,null);
         //majd a karakterjeit is
         for(DrawableCharacter dc : drawableCharacterList){
-            Position p = this.pos; //vmi nagyon kimatekolt hely
-            dc.SetPosition(p);
+            dc.SetPosition(this.pos);
             dc.Draw(graphics);
         }
     }

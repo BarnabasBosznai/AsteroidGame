@@ -13,7 +13,8 @@ public class Frame extends JFrame{
 
     private boolean closed;
 
-    Thread guiThread;
+    Thread thread;
+
     /**
      * Létrehozza az ablakot.
      * Rábízza a mneüre a játék vezérlését.
@@ -35,14 +36,10 @@ public class Frame extends JFrame{
 
         this.addWindowListener(new FrameClosedListener());
 
-        this.guiThread = new Thread(() -> {
-            while(true){
-                if(closed) {
-                    break;
-                }
-
+        thread = new Thread(() -> {
+            while(!closed){
                 try {
-                    this.repaint();
+                    SwingUtilities.invokeLater(this::repaint);
                     System.out.println("repainted");
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
@@ -50,9 +47,10 @@ public class Frame extends JFrame{
                 }
             }
         });
+    }
 
-        this.guiThread.start();
-
+    public void StartThread(){
+        this.thread.start();
     }
 
     private class FrameClosedListener implements WindowListener{
@@ -65,12 +63,6 @@ public class Frame extends JFrame{
         @Override
         public void windowClosing(WindowEvent e) {
             closed = true;
-
-            try {
-                guiThread.join();
-            } catch (InterruptedException interruptedException) {
-                interruptedException.printStackTrace();
-            }
         }
 
         @Override

@@ -14,6 +14,8 @@ public class SettlerView extends DrawableCharacter {
     private static final int settlerRadius = 2;
 
     public SettlerView(Settler s){
+        super();
+
         this.settler = s;
         this.radius = settlerRadius;
         try{

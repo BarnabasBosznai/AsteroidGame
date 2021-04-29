@@ -13,6 +13,10 @@ public abstract class DrawableCharacter {
     protected int radius;
     protected Position pos;
 
+    public DrawableCharacter(){
+        this.pos = new Position(0,0);
+    }
+
     public abstract void Draw(Graphics2D graphics);
 
     public Asteroid GetAsteroid(){
@@ -30,7 +34,7 @@ public abstract class DrawableCharacter {
     }
 
     public void SetPosition(Position pos){
-        this.pos = pos;
+        this.pos.x = pos.x;
+        this.pos.y = pos.y;
     }
-
 }

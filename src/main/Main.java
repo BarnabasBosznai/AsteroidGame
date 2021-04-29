@@ -10,5 +10,7 @@ public class Main {
         Frame frame = new Frame();
         Asteroid ast=new Asteroid();
         UFO ufo = new UFO(ast);
+
+        frame.StartThread();
     }
 }
