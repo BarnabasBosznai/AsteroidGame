@@ -12,7 +12,7 @@ public class UFOView extends DrawableCharacter {
 
 
     private final UFO ufo;
-    private static final int ufoRadius = 2;
+    private static final int ufoRadius = 30;
 
     public UFOView(UFO u){
         this.ufo = u;
@@ -28,7 +28,7 @@ public class UFOView extends DrawableCharacter {
 
     @Override
     public void Draw(Graphics2D graphics) {
-        graphics.drawImage(img,this.pos.x,this.pos.y,ufoRadius,ufoRadius,null);
+        graphics.drawImage(img,this.pos.x,this.pos.y+55,ufoRadius,ufoRadius,null);
     }
 
     @Override

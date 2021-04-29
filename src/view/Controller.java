@@ -131,7 +131,7 @@ public class Controller {
      * @param asteroid
      */
     public AsteroidView AddAsteroidView(Asteroid asteroid){
-        Position pos = new Position(0,0); //ide majd vmi okos
+        Position pos = new Position(300,300); //ide majd vmi okos
         AsteroidView av = new AsteroidView(asteroid, pos, 2);
 
         this.AddDrawable(av);

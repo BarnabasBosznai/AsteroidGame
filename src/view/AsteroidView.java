@@ -16,7 +16,7 @@ public class AsteroidView extends Drawable implements Clickable {
     private final List<DrawableCharacter> drawableCharacterList;
 
     private final Position pos;
-    private static final int asteroidRadius = 50;
+    private static final int asteroidRadius = 85;
     private boolean clicked;
 
     public AsteroidView(Asteroid a, Position pos, int z){
