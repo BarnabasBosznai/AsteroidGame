@@ -1,5 +1,7 @@
 package main;
 
+import characters.Robot;
+import characters.Settler;
 import characters.UFO;
 import places.Asteroid;
 import view.AsteroidView;
@@ -15,6 +17,8 @@ public class Main {
         UFO ufo3 = new UFO(ast);
         UFO ufo4 = new UFO(ast);
         UFO ufo5 = new UFO(ast);
+        Settler set = new Settler(ast);
+        Robot rob = new Robot(ast);
         frame.StartThread();
     }
 }

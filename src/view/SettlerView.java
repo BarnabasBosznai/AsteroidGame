@@ -11,7 +11,7 @@ import java.io.IOException;
 public class SettlerView extends DrawableCharacter {
 
     private final Settler settler;
-    private static final int settlerRadius = 2;
+    private static final int settlerRadius = 10;
 
     public SettlerView(Settler s){
         super();
@@ -29,7 +29,7 @@ public class SettlerView extends DrawableCharacter {
 
     @Override
     public void Draw(Graphics2D graphics) {
-
+        graphics.drawImage(img,this.pos.x-settlerRadius,this.pos.y-settlerRadius,2*settlerRadius,2*settlerRadius,null);
     }
 
     @Override
