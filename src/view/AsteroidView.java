@@ -16,7 +16,7 @@ public class AsteroidView extends Drawable implements Clickable {
     private final List<DrawableCharacter> drawableCharacterList;
 
     private final Position pos;
-    private static final int asteroidRadius = 85;
+    private static final int asteroidRadius = 42;
     private boolean clicked;
 
     public AsteroidView(Asteroid a, Position pos, int z){
@@ -25,25 +25,22 @@ public class AsteroidView extends Drawable implements Clickable {
         this.zIndex = z;
         this.clicked = false;
         this.drawableCharacterList = new ArrayList<>();
-        try{
-            //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
-            this.img= ImageIO.read(new File("aszteroida.png"));
-        }
-        catch (IOException ex){
-            ex.printStackTrace();
-        }
+
     }
 
     @Override
     public void Draw(Graphics2D graphics) {
         //aszteroida magat kirajzolja
-        //graphics.setColor(Color.RED);
-        //graphics.fillOval(pos.x, pos.y,asteroidRadius,asteroidRadius);
-        graphics.drawImage(img,this.pos.x,this.pos.y,asteroidRadius,asteroidRadius,null);
+        graphics.setColor(Color.RED);
+        graphics.fillOval(pos.x, pos.y,asteroidRadius*2,asteroidRadius*2);
         //majd a karakterjeit is
-        for(DrawableCharacter dc : drawableCharacterList){
-            dc.SetPosition(this.pos);
-            dc.Draw(graphics);
+        for(int i = 0; i < drawableCharacterList.size(); i++){
+
+            double phi = i * 2 * Math.PI/drawableCharacterList.size();
+            Position p = new Position(this.pos.x  + asteroidRadius + (asteroidRadius) * (int) Math.cos(phi)  ,this.pos.y + asteroidRadius + (asteroidRadius) * (int) Math.sin(phi));
+
+            drawableCharacterList.get(i).SetPosition(p);
+            drawableCharacterList.get(i).Draw(graphics);
         }
     }
 
