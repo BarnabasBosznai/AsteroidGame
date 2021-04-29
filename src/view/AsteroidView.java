@@ -37,7 +37,7 @@ public class AsteroidView extends Drawable implements Clickable {
         for(int i = 0; i < drawableCharacterList.size(); i++){
 
             double phi = i * 2 * Math.PI/drawableCharacterList.size();
-            Position p = new Position(this.pos.x  + asteroidRadius + (asteroidRadius) * (int) Math.cos(phi)  ,this.pos.y + asteroidRadius + (asteroidRadius) * (int) Math.sin(phi));
+            Position p = new Position(this.pos.x  + asteroidRadius + (int) (asteroidRadius * Math.cos(phi))  ,this.pos.y + asteroidRadius +(int) (asteroidRadius * Math.sin(phi)));
 
             drawableCharacterList.get(i).SetPosition(p);
             drawableCharacterList.get(i).Draw(graphics);
