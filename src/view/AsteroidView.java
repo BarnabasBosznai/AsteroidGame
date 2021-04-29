@@ -25,14 +25,21 @@ public class AsteroidView extends Drawable implements Clickable {
         this.zIndex = z;
         this.clicked = false;
         this.drawableCharacterList = new ArrayList<>();
-
+        try{
+            //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
+            this.img= ImageIO.read(new File("aszteroida.png"));
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void Draw(Graphics2D graphics) {
         //aszteroida magat kirajzolja
-        graphics.setColor(Color.RED);
-        graphics.fillOval(pos.x, pos.y,asteroidRadius,asteroidRadius);
+        //graphics.setColor(Color.RED);
+        //graphics.fillOval(pos.x, pos.y,asteroidRadius,asteroidRadius);
+        graphics.drawImage(img,this.pos.x,this.pos.y,asteroidRadius,asteroidRadius,null);
         //majd a karakterjeit is
         for(DrawableCharacter dc : drawableCharacterList){
             Position p = this.pos; //vmi nagyon kimatekolt hely
