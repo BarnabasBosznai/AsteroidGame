@@ -1,6 +1,11 @@
 package main;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
  * Létrehozza az ablakot.
@@ -9,8 +14,9 @@ import javax.swing.*;
  */
 public class Frame extends JFrame{
 
-    Panel panel;
+    private boolean closed;
 
+    Thread guiThread;
     /**
      * Létrehozza az ablakot.
      * Rábízza a mneüre a játék vezérlését.
@@ -22,23 +28,76 @@ public class Frame extends JFrame{
 
         this.add(panel);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.closed = false;
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setTitle("AsteroidGame");
         this.setSize(800, 500);
         this.setResizable(false);
         this.setLocation(300, 300);
         this.setVisible(true);
 
-        while (true) {
+        this.addWindowListener(new FrameClosedListener());
 
-            this.repaint();
+        this.guiThread = new Thread(() -> {
+            while(true){
+                if(closed) {
+                    break;
+                }
+
+                try {
+                    System.out.println("asd");
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        this.guiThread.start();
+
+    }
+
+    private class FrameClosedListener implements WindowListener{
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            closed = true;
 
             try {
-                Thread.sleep(16);
-            } catch (InterruptedException e) {
-                System.err.println("Ütközés történt!");
-                System.exit(-3);
+                guiThread.join();
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
             }
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+
         }
     }
 }
