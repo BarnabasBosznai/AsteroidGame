@@ -7,7 +7,9 @@ import javax.swing.*;
  * Rábízza a mneüre a játék vezérlését.
  * Frissíti a képernyőt 1/60 másodpercenként.
  */
-public class UnblockMeFrame{
+public class Frame extends JFrame{
+
+    Panel panel;
 
     /**
      * Létrehozza az ablakot.
@@ -15,22 +17,21 @@ public class UnblockMeFrame{
      * Ha mósodul a menü állapota, akkor új ablakot készít az új menühöz.
      * Frissíti a képernyőt 1/60 másodpercenként.
      */
-    public UnblockMeFrame() {
-        Panel menu = new Panel();
-        int current_menu = -1;
-        JFrame f = new JFrame("AsteroidGame");
-        while (true) {
-            if (current_menu != menu.getState()) {
-                f.dispose();
-                f = new JFrame("AsteroidGame");
-                menu.draw_Menu(f);
-                if (f.getTitle().equals("AsteroidGame"))
-                    System.exit(0);
-                current_menu = menu.getState();
-                f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public Frame() {
+        Panel panel = new Panel();
 
-            }
-            f.repaint();
+        this.add(panel);
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setTitle("AsteroidGame");
+        this.setSize(800, 800);
+        this.setResizable(false);
+        this.setLocation(300, 300);
+
+        while (true) {
+
+            this.repaint();
+
             try {
                 Thread.sleep(16);
             } catch (InterruptedException e) {

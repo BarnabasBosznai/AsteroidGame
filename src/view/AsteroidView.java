@@ -1,7 +1,9 @@
 package view;
 
+import characters.Settler;
 import places.Asteroid;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +25,7 @@ public class AsteroidView extends Drawable implements Clickable {
     }
 
     @Override
-    public void Draw() {
+    public void Draw(Graphics2D graphics) {
         //aszteroida magat kirajzolja
 
         //majd a karakterjeit is
@@ -53,6 +55,15 @@ public class AsteroidView extends Drawable implements Clickable {
     @Override
     public void Clicked(Position pos) {
         this.clicked = true;
+
+        //ha a gombra kattintottak
+        /*Settler settler = Controller.getInstance().GetCurrentSettlerWaitingForInput();
+        Asteroid settlerAsteroid = settler.GetAsteroid();
+
+        if(settlerAsteroid.GetNeighboringAsteroids().contains(this.asteroid)){
+            settler.Move(this.asteroid);
+            Controller.getInstance().CurrentSettlerWaitingForInput(null);
+        }*/
     }
 
     @Override

@@ -4,6 +4,8 @@ import characters.Settler;
 import places.Asteroid;
 import places.TeleportGate;
 
+import java.awt.*;
+
 public class TeleportGateView extends Drawable {
 
     private final TeleportGate teleportGate1;
@@ -16,7 +18,7 @@ public class TeleportGateView extends Drawable {
     }
 
     @Override
-    public void Draw() {
+    public void Draw(Graphics2D graphics) {
 
     }
 

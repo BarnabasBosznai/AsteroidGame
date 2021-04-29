@@ -2,6 +2,8 @@ package view;
 
 import characters.Settler;
 
+import java.awt.*;
+
 public class InterfacePanel extends Drawable {
 
     public InterfacePanel(){
@@ -9,7 +11,7 @@ public class InterfacePanel extends Drawable {
     }
 
     @Override
-    public void Draw() {
+    public void Draw(Graphics2D graphics) {
 
     }
 

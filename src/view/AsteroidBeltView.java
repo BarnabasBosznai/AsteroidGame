@@ -2,6 +2,8 @@ package view;
 
 import places.AsteroidBelt;
 
+import java.awt.*;
+
 public class AsteroidBeltView extends Drawable {
 
     private final AsteroidBelt asteroidBelt;
@@ -12,7 +14,7 @@ public class AsteroidBeltView extends Drawable {
     }
 
     @Override
-    public void Draw() {
+    public void Draw(Graphics2D graphics) {
 
     }
 

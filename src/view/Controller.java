@@ -5,7 +5,9 @@ import main.Game;
 import main.GameState;
 import places.Asteroid;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class Controller {
     private static Controller instance;
@@ -98,12 +100,16 @@ public class Controller {
         this.currentSettlerWaitingForInput = settler;
     }
 
+    public Settler GetCurrentSettlerWaitingForInput(){
+        return this.currentSettlerWaitingForInput;
+    }
+
     /**
      * kirajzol mindent is
      */
-    public void DrawAll(){
+    public void DrawAll(Graphics2D g){
         for(Drawable drawable : drawables){
-            drawable.Draw();
+            drawable.Draw(g);
         }
     }
 
@@ -114,8 +120,6 @@ public class Controller {
     public void AddDrawableCharacter(DrawableCharacter dc){
         AsteroidView av = asteroidViewMap.get(dc.GetAsteroid());
         av.AddDrawableCharacter(dc);
-
-        this.DrawAll();
     }
 
     /**
@@ -129,8 +133,6 @@ public class Controller {
         this.AddDrawable(av);
         this.asteroidViewMap.put(av.GetAsteroid(), av);
 
-        this.DrawAll();
-
         return av;
     }
 
@@ -141,8 +143,6 @@ public class Controller {
     public void AddDrawable(Drawable d){
         this.drawables.add(d);
         this.drawables.sort(Comparator.comparingInt(Drawable::GetZIndex));
-
-        this.DrawAll();
     }
 
     /**
@@ -157,8 +157,6 @@ public class Controller {
 
         av1.RemoveDrawableCharacter(dc);
         av2.AddDrawableCharacter(dc);
-
-        this.DrawAll();
     }
 
     /**
@@ -169,8 +167,6 @@ public class Controller {
         AsteroidView av = this.asteroidViewMap.get(dc.GetAsteroid());
 
         av.RemoveDrawableCharacter(dc);
-
-        this.DrawAll();
     }
 
     /**
@@ -179,8 +175,6 @@ public class Controller {
      */
     public void TeleportGateDestroyed(TeleportGateView tv){
         this.drawables.remove(tv);
-
-        this.DrawAll();
     }
 
     /**
@@ -190,8 +184,6 @@ public class Controller {
     public void AsteroidExploded(AsteroidView av){
         this.drawables.remove(av);
         this.asteroidViewMap.values().remove(av);
-
-        this.DrawAll();
     }
 
     public void GameEnded(GameState gameState){
