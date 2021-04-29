@@ -28,4 +28,5 @@ public class SettlerView extends DrawableCharacter {
     public void WaitingForInput(){
         Controller.getInstance().CurrentSettlerWaitingForInput(this.settler);
     }
+
 }

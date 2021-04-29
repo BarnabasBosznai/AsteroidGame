@@ -5,7 +5,7 @@ import places.Asteroid;
 
 import java.awt.*;
 
-public abstract class DrawableCharacter implements Clickable {
+public abstract class DrawableCharacter {
 
     protected boolean clicked;
     protected double radius;
@@ -31,18 +31,4 @@ public abstract class DrawableCharacter implements Clickable {
         this.pos = pos;
     }
 
-    @Override
-    public void Clicked(Position pos) {
-        this.clicked = true;
-    }
-
-    @Override
-    public void UnClicked() {
-        this.clicked = false;
-    }
-
-    @Override
-    public BoundingCircle GetBoundingCircle() {
-        return new BoundingCircle(this.pos, this.radius);
-    }
 }

@@ -25,10 +25,4 @@ public class UFOView extends DrawableCharacter {
         return this.ufo;
     }
 
-    @Override
-    public void Clicked(Position pos){
-        super.Clicked(pos);
-
-        //TODO
-    }
 }

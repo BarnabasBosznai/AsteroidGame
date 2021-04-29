@@ -6,12 +6,17 @@ import java.awt.*;
 
 public class InterfacePanel extends Drawable {
 
+    boolean craft, place, allMaterial;
+
     public InterfacePanel(){
         this.zIndex = 100;
+        craft = false;
+        place = false;
+        allMaterial = false;
     }
 
     @Override
-    public void Draw(Graphics2D graphics) {
+    public void Draw(Graphics2D graphics) { // boolean-eket itt nagyban használnám
 
     }
 

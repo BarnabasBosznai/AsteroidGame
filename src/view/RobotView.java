@@ -25,10 +25,5 @@ public class RobotView extends DrawableCharacter {
         return this.robot;
     }
 
-    @Override
-    public void Clicked(Position pos){
-        super.Clicked(pos);
 
-        //TODO
-    }
 }

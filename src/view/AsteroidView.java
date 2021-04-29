@@ -76,16 +76,19 @@ public class AsteroidView extends Drawable implements Clickable {
         return new BoundingCircle(this.pos, AsteroidView.asteroidRadius);
     }
 
-    /*@Override
-    public boolean ClickedCheck() {
+    @Override
+    public boolean ClickedCheck(Position clickPos, Position cameraPos) {
+        if (clicked){
+
+        } else {
+            double tes = Math.sqrt(Math.pow((clickPos.x - (pos.x - cameraPos.x)),2) + Math.pow(clickPos.y - (pos.y - cameraPos.y),2));
+            if (tes<=30){
+                return true;
+            }
+            return false;
+        }
 
         return false;
-    }*/
-
-    public List<Clickable> GetClickables(){
-        List<Clickable> list = new ArrayList<>(drawableCharacterList);
-        list.add(this);
-
-        return list;
     }
+
 }

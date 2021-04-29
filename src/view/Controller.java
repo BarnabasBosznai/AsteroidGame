@@ -49,17 +49,17 @@ public class Controller {
      * Mouseclick re hivodik meg
      * @param clickPos
      */
-    public boolean ClickHandler(Position clickPos){
+    public boolean ClickHandler(Position clickPos, Position cameraPos){
 
         //eloszor megnezi, hogy az interface en tortent e a kattintas
         if(this.interfacePanel.HandleClick(clickPos, currentSettlerWaitingForInput)) {
             return true;
         }
 
-        List<Clickable> allClickables = new ArrayList<>();
+        ArrayList<AsteroidView> allClickables = new ArrayList<>();
 
         for(AsteroidView av: asteroidViewMap.values()){
-            allClickables.addAll(av.GetClickables());
+            allClickables.add(av);
         }
 
         //mindenesetre ne maradjon semmi se clickelve
@@ -73,13 +73,9 @@ public class Controller {
         Clickable closestClickable = null;
 
         for(Clickable clickable : allClickables){
-            //double currentLength = clickable.GetBoundingCircle().LengthBetweenClickAndCircle(clickPos);
-            /*clickable.ClickedCheck();
-
-            if(currentLength < minLength){
-                minLength = currentLength;
+            if(clickable.ClickedCheck(clickPos, cameraPos)) {
                 closestClickable = clickable;
-            }*/
+            }
         }
 
         //koordinatarendszerek+origo eltolas meg nincs lekezelve, majd az eltoltat adnam oda

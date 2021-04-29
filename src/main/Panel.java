@@ -30,7 +30,7 @@ public class Panel extends JPanel {
         @Override
         public void mouseClicked(MouseEvent e) {
             lastClickPos = new Position(e.getX(),e.getY());
-            //Controller.getInstance().ClickHandler(lastClickPos, cameraPos);
+            Controller.getInstance().ClickHandler(lastClickPos, cameraPos);
         }
 
         @Override
