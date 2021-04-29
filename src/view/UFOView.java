@@ -11,13 +11,13 @@ import java.io.IOException;
 public class UFOView extends DrawableCharacter {
 
     private final UFO ufo;
-    private static final int ufoRadius = 20;
+    private static final int ufoRadius = 10;
 
     public UFOView(UFO u){
         super();
 
         this.ufo = u;
-        this.radius = ufoRadius;
+        this.radius = ufoRadius*2;
         try{
             //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
             this.img= ImageIO.read(new File("ufo.png"));
@@ -29,7 +29,7 @@ public class UFOView extends DrawableCharacter {
 
     @Override
     public void Draw(Graphics2D graphics) {
-        graphics.drawImage(img,this.pos.x,this.pos.y,ufoRadius,ufoRadius,null);
+        graphics.drawImage(img,this.pos.x-ufoRadius,this.pos.y-ufoRadius,2*ufoRadius,2*ufoRadius,null);
     }
 
     @Override
