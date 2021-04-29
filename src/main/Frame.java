@@ -63,6 +63,12 @@ public class Frame extends JFrame{
         @Override
         public void windowClosing(WindowEvent e) {
             closed = true;
+
+            try {
+                thread.join();
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
         }
 
         @Override
