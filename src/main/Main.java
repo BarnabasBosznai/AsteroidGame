@@ -18,6 +18,7 @@ public class Main {
         UFO ufo4 = new UFO(ast);
         UFO ufo5 = new UFO(ast);
         Settler set = new Settler(ast);
+        Settler set2 = new Settler(ast);
         Robot rob = new Robot(ast);
         frame.StartThread();
     }

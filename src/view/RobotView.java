@@ -29,7 +29,7 @@ public class RobotView extends DrawableCharacter {
 
     @Override
     public void Draw(Graphics2D graphics) {
-        graphics.drawImage(img,this.pos.x-robotRadius,this.pos.y-robotRadius,2*robotRadius,2*robotRadius,null);
+        graphics.drawImage(rotate(this.angle),this.pos.x-robotRadius,this.pos.y-robotRadius,2*robotRadius,2*robotRadius,null);
     }
 
     @Override

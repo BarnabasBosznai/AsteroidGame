@@ -20,7 +20,7 @@ public class UFOView extends DrawableCharacter {
         this.radius = ufoRadius*2;
         try{
             //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
-            this.img= ImageIO.read(new File("ufo.png"));
+            this.img = ImageIO.read(new File("ufo.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();
@@ -29,7 +29,8 @@ public class UFOView extends DrawableCharacter {
 
     @Override
     public void Draw(Graphics2D graphics) {
-        graphics.drawImage(img,this.pos.x-ufoRadius,this.pos.y-ufoRadius,2*ufoRadius,2*ufoRadius,null);
+
+        graphics.drawImage(rotate(angle),this.pos.x-ufoRadius,this.pos.y-ufoRadius,2*ufoRadius,2*ufoRadius,null);
     }
 
     @Override
