@@ -58,7 +58,7 @@ public class Controller {
     public boolean ClickHandler(Position clickPos, Position cameraPos){
 
         //eloszor megnezi, hogy az interface en tortent e a kattintas
-        if(this.interfacePanel.HandleClick(clickPos, currentSettlerWaitingForInput)) {
+        if(this.interfacePanel.HandleClick(clickPos)) {
             return true;
         }
 
@@ -97,6 +97,7 @@ public class Controller {
     public void TimerTicked(){
         if(canCallNextStep)
             Game.getInstance().NextStep();
+        interfacePanel.SetCurrentWaitingSettler(currentSettlerWaitingForInput);
     }
 
     public void StepEnded(){

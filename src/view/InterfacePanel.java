@@ -14,6 +14,8 @@ public class InterfacePanel extends Drawable {
     String output;
     Settler waitingSettler;
     Image CoalImg, IronImg, WaterIceImg, UraniumImg;
+    Color textbox;
+    Color brown = new Color(128,64,0);
 
     public InterfacePanel(){
         this.zIndex = 100;
@@ -21,6 +23,7 @@ public class InterfacePanel extends Drawable {
         place = false;
         allMaterial = false;
         output = new String("");
+        textbox = brown;
 
         try{
             //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
@@ -145,7 +148,7 @@ public class InterfacePanel extends Drawable {
         }
 
         // Nyersanyagok kijelzése
-        Color brown = new Color(128,64,0);
+
         graphics.setColor(brown);
         graphics.fillRect(240,0,520,43);
         graphics.setColor(Color.LIGHT_GRAY);
@@ -190,7 +193,7 @@ public class InterfacePanel extends Drawable {
         // Ast_Infobox?
 
         // Szöveges visszacsatolás
-        graphics.setColor(brown);
+        graphics.setColor(textbox);
         graphics.fillRect(240,520,520,43);
         graphics.setColor(Color.LIGHT_GRAY);
         graphics.fillRect(245,525,510,33);
@@ -218,12 +221,10 @@ public class InterfacePanel extends Drawable {
     }
 
 
+    public void SetCurrentWaitingSettler(Settler currentWaitingSettler) { waitingSettler=currentWaitingSettler;}
 
+    public boolean HandleClick(Position clickPos){
 
-    public boolean HandleClick(Position clickPos, Settler currentWaitingSettler){
-        if (waitingSettler!=currentWaitingSettler) {
-            waitingSettler = currentWaitingSettler;
-        }
         if(waitingSettler == null){
             output = "Ilyen nincs, nem jön semelyik Settler!";
             return false;
@@ -235,7 +236,7 @@ public class InterfacePanel extends Drawable {
             if (clickPos.x<120 && clickPos.y>434){
                 clickedOnInterface = true;
                 if (clickPos.y>434 && clickPos.y<477) {
-                    if (currentWaitingSettler.CraftRobot()) {
+                    if (waitingSettler.CraftRobot()) {
                         output = "Sikerült a Robot craftolása!";
                         Controller.getInstance().SettlerStepped();
                     } else {
@@ -243,7 +244,7 @@ public class InterfacePanel extends Drawable {
                     }
                 }
                 else if (clickPos.y>477 && clickPos.y<520) {
-                    if (currentWaitingSettler.CraftTeleportGates()) {
+                    if (waitingSettler.CraftTeleportGates()) {
                         output = "Sikerült a Teleport craftolása!";
                         Controller.getInstance().SettlerStepped();
                     } else {
@@ -260,7 +261,7 @@ public class InterfacePanel extends Drawable {
             if (clickPos.x>880 && clickPos.y>305){
                 clickedOnInterface = true;
                 if (clickPos.y>305 && clickPos.y<348) {
-                    if (currentWaitingSettler.PlaceTeleportGate()) {
+                    if (waitingSettler.PlaceTeleportGate()) {
                         output = "Sikerült letenni a Teleportkaput!";
                         Controller.getInstance().SettlerStepped();
                     } else {
@@ -268,7 +269,7 @@ public class InterfacePanel extends Drawable {
                     }
                 }
                 else if (clickPos.y>348 && clickPos.y<391) {
-                    if (currentWaitingSettler.PlaceMaterial(new Coal())) {
+                    if (waitingSettler.PlaceMaterial(new Coal())) {
                         output = "Sikerült letenni a Szenet!";
                         Controller.getInstance().SettlerStepped();
                     } else {
@@ -276,7 +277,7 @@ public class InterfacePanel extends Drawable {
                     }
                 }
                 else if (clickPos.y>391 && clickPos.y<434) {
-                    if (currentWaitingSettler.PlaceMaterial(new Iron())) {
+                    if (waitingSettler.PlaceMaterial(new Iron())) {
                         output = "Sikerült letenni a Vasat!";
                         Controller.getInstance().SettlerStepped();
                     } else {
@@ -284,7 +285,7 @@ public class InterfacePanel extends Drawable {
                     }
                 }
                 else if (clickPos.y>434 && clickPos.y<477) {
-                    if (currentWaitingSettler.PlaceMaterial(new WaterIce())) {
+                    if (waitingSettler.PlaceMaterial(new WaterIce())) {
                         output = "Sikerült letenni a Vízjeget!";
                         Controller.getInstance().SettlerStepped();
                     } else {
@@ -292,7 +293,7 @@ public class InterfacePanel extends Drawable {
                     }
                 }
                 else if (clickPos.y>477 && clickPos.y<520) {
-                    if (currentWaitingSettler.PlaceMaterial(new Uranium())) {
+                    if (waitingSettler.PlaceMaterial(new Uranium())) {
                         output = "Sikerült letenni az Uránt!";
                         Controller.getInstance().SettlerStepped();
                     } else {
@@ -313,7 +314,7 @@ public class InterfacePanel extends Drawable {
             if (clickPos.x<120)
                 craft=true;
             else if (clickPos.x<240) {
-                if (currentWaitingSettler.Drill()){
+                if (waitingSettler.Drill()){
                     output = "Sikerült fúrni!";
                     Controller.getInstance().SettlerStepped();
                 } else {
@@ -323,7 +324,7 @@ public class InterfacePanel extends Drawable {
                 output = "Itt meg mit szeretnél?";
                 clickedOnInterface=false;
             } else if (clickPos.x<880){
-                if (currentWaitingSettler.Mine()){
+                if (waitingSettler.Mine()){
                     output = "Sikerült bányászni!";
                     Controller.getInstance().SettlerStepped();
                 } else {
