@@ -64,6 +64,27 @@ public class Asteroid extends Place {
         this.view = Controller.getInstance().AddAsteroidView(this);
     }
 
+    public Asteroid(int pos_x, int pos_y){
+        neighbors = new ArrayList<>();
+        teleportGates = new ArrayList<>();
+        characters = new ArrayList<>();
+
+        Random random = new Random();
+        material = null;    /// temporális
+        /*switch (random.nextInt(4)) {
+            case 0 -> material = new Coal();
+            case 1 -> material = new Iron();
+            case 2 -> material = new Uranium();
+            case 3 -> material = new WaterIce();
+        }*/
+
+        thickness = 0;      /// temporális
+        //thickness = random.ints(2,6).findFirst().getAsInt();
+
+        this.view = Controller.getInstance().AddAsteroidView(this);
+        this.view.SetPos(pos_x, pos_y);
+    }
+
     /**
      * Csökkenti az aszteroida vastagságát.
      * @return True-val tér vissza, ha a fúrás sikerrel járt(nem volt még teljesen lefúrva az aszteroida),
