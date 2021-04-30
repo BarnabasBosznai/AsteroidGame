@@ -1,23 +1,37 @@
 package view;
 
 import characters.Settler;
-import materials.Coal;
-import materials.Iron;
-import materials.Uranium;
-import materials.WaterIce;
+import materials.*;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class InterfacePanel extends Drawable {
 
     boolean craft, place, allMaterial;
     String output;
+    Settler waitingSettler;
+    Image CoalImg, IronImg, WaterIceImg, UraniumImg;
 
     public InterfacePanel(){
         this.zIndex = 100;
         craft = false;
         place = false;
         allMaterial = false;
+        output = new String("");
+
+        try{
+            //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
+            CoalImg = ImageIO.read(new File("szén.png"));
+            IronImg = ImageIO.read(new File("vas.png"));
+            WaterIceImg = ImageIO.read(new File("vízjég.png"));
+            UraniumImg = ImageIO.read(new File("urán.png"));
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
     }
 
     @Override
@@ -64,7 +78,16 @@ public class InterfacePanel extends Drawable {
 
         if (place){ // mágikus számok hada 3.
 
-            // Vízjeget letevő gomb
+            /// Teleportkaput letevő gomb
+            graphics.setColor(Color.GRAY);
+            graphics.fillRect(880,305,120,43);
+            graphics.setColor(Color.LIGHT_GRAY);
+            graphics.fillRect(885,310,110,33);
+            graphics.setColor(Color.BLACK);
+            graphics.setFont(new Font("Dialog",Font.PLAIN,26));
+            graphics.drawString("Teleport",893,337);
+
+            // Szenet letevő gomb
             graphics.setColor(Color.GRAY);
             graphics.fillRect(880,348,120,43);
             graphics.setColor(Color.LIGHT_GRAY);
@@ -73,7 +96,7 @@ public class InterfacePanel extends Drawable {
             graphics.setFont(new Font("Dialog",Font.PLAIN,26));
             graphics.drawString("Coal",914,380);
 
-            // Vízjeget letevő gomb
+            // Vasat letevő gomb
             graphics.setColor(Color.GRAY);
             graphics.fillRect(880,391,120,43);
             graphics.setColor(Color.LIGHT_GRAY);
@@ -120,17 +143,89 @@ public class InterfacePanel extends Drawable {
             graphics.setColor(Color.BLACK);
             graphics.drawString("Place",905,552);
         }
+
+        // Nyersanyagok kijelzése
+        Color brown = new Color(128,64,0);
+        graphics.setColor(brown);
+        graphics.fillRect(240,0,520,43);
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.fillRect(245,5,510,33);
+        graphics.setFont(new Font("Dialog",Font.PLAIN,29));
+        graphics.setColor(Color.BLACK);
+        graphics.drawImage(CoalImg,245,2,40,40,null,null);
+        graphics.drawImage(IronImg,340,2,40,40,null,null);
+        graphics.drawImage(WaterIceImg,435,2,40,40,null,null);
+        graphics.drawImage(UraniumImg,530,2,40,40,null,null);
+
+        if (waitingSettler!=null) {
+
+            int coal = 0;
+            int iron = 0;
+            int waterice = 0;
+            int uranium = 0;
+            var materials = waitingSettler.GetInventory().GetMaterials();
+            for ( var material: materials
+                 ) {
+                if (material.getClass()== Coal.class)
+                    coal++;
+                else if (material.getClass()== Iron.class)
+                    iron++;
+                else if (material.getClass()== WaterIce.class)
+                    waterice++;
+                else
+                    uranium++;
+            }
+
+
+            graphics.drawString(coal+"",295,32);
+            graphics.drawString(iron+"",390,32);
+            graphics.drawString(waterice+"",485,32);
+            graphics.drawString(uranium+"",580,32);
+        } else {
+            graphics.drawString("0",295,32);
+            graphics.drawString("0",390,32);
+            graphics.drawString("0",485,32);
+            graphics.drawString("0",580,32);
+        }
+        // Ast_Infobox?
+
+        // Szöveges visszacsatolás
+        graphics.setColor(brown);
+        graphics.fillRect(240,520,520,43);
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.fillRect(245,525,510,33);
+        graphics.setFont(new Font("Dialog",Font.PLAIN,29));
+        graphics.setColor(Color.BLACK);
+        graphics.drawString(output,250,552);
+
+        // Drill gomb
+        graphics.setColor(Color.GRAY);
+        graphics.fillRect(120,520,120,43);
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.fillRect(125,525,110,33);
+        graphics.setFont(new Font("Dialog",Font.PLAIN,29));
+        graphics.setColor(Color.BLACK);
+        graphics.drawString("Drill",155,552);
+
+        // Mine gomb
+        graphics.setColor(Color.GRAY);
+        graphics.fillRect(760,520,120,43);
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.fillRect(765,525,110,33);
+        graphics.setFont(new Font("Dialog",Font.PLAIN,29));
+        graphics.setColor(Color.BLACK);
+        graphics.drawString("Mine",790,552);
     }
 
 
 
 
     public boolean HandleClick(Position clickPos, Settler currentWaitingSettler){
-
-        /*if(currentWaitingSettler == null){
+        waitingSettler=currentWaitingSettler;
+        if(waitingSettler == null){
             output = "Ilyen nincs, nem jön semelyik Settler!";
             return false;
-        }*/
+        }
 
         boolean clickedOnInterface = false;
 
@@ -160,7 +255,7 @@ public class InterfacePanel extends Drawable {
         }
 
         if (place){
-            if (clickPos.x>880 && clickPos.y>348){
+            if (clickPos.x>880 && clickPos.y>305){
                 clickedOnInterface = true;
                 if (clickPos.y>305 && clickPos.y<348) {
                     if (currentWaitingSettler.PlaceTeleportGate()) {
@@ -215,17 +310,17 @@ public class InterfacePanel extends Drawable {
             clickedOnInterface=true;
             if (clickPos.x<120)
                 craft=true;
-            else if (clickPos.x<220) {
+            else if (clickPos.x<240) {
                 if (currentWaitingSettler.Drill()){
                     output = "Sikerült fúrni!";
                     Controller.getInstance().SettlerStepped();
                 } else {
                     output = "Nem sikerült fúrni!";
                 }
-            } else if (clickPos.x<580){
+            } else if (clickPos.x<760){
                 output = "Itt meg mit szeretnél?";
                 clickedOnInterface=false;
-            } else if (clickPos.x<690){
+            } else if (clickPos.x<880){
                 if (currentWaitingSettler.Mine()){
                     output = "Sikerült bányászni!";
                     Controller.getInstance().SettlerStepped();
