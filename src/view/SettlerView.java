@@ -47,6 +47,11 @@ public class SettlerView extends DrawableCharacter {
         return this.settler;
     }
 
+    @Override
+    public void CharacterDied(){
+        Controller.getInstance().SettlerDied(this);
+    }
+
     public void WaitingForInput(){
         Controller.getInstance().CurrentSettlerWaitingForInput(this.settler);
     }

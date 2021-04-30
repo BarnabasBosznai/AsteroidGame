@@ -85,7 +85,7 @@ public class CraftingTable {
                 game.AddSteppable(teleportGate1);
                 game.AddSteppable(teleportGate2);
 
-                Controller.getInstance().AddDrawable(new TeleportGateView(teleportGate1, teleportGate2, 1));
+                Controller.getInstance().AddTeleportGateView(teleportGate1, teleportGate2);
 
                 return true;
             }

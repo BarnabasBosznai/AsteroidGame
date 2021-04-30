@@ -1,9 +1,13 @@
 package view;
 
+import characters.Character;
+import characters.Robot;
 import characters.Settler;
+import characters.UFO;
 import main.Game;
 import main.GameState;
 import places.Asteroid;
+import places.TeleportGate;
 
 import java.awt.*;
 import java.util.*;
@@ -23,6 +27,7 @@ public class Controller {
      * asteroid-asteroidview parositasok kereshetoseg miatt
      */
     private final Map<Asteroid, AsteroidView> asteroidViewMap;
+    private final Map<Settler, SettlerView> settlerViewMap;
 
     private Settler currentSettlerWaitingForInput;
 
@@ -33,6 +38,7 @@ public class Controller {
     private Controller(){
         this.drawables = new ArrayList<>();
         this.asteroidViewMap = new HashMap<>();
+        this.settlerViewMap = new HashMap<>();
         this.currentSettlerWaitingForInput = null;
 
         this.interfacePanel = new InterfacePanel();
@@ -75,7 +81,6 @@ public class Controller {
         //ha nem lehetett interface t lekezelni, megnezi a tobbit is
 
         //meg azt is le lehet majd kezelni, hogy bizonyos tavolsag felett ne vegye ugy, hogy ranyomtak vkire
-        double minLength = Double.MAX_VALUE;
         Clickable closestClickable = null;
 
         for(Clickable clickable : allClickables){
@@ -133,27 +138,51 @@ public class Controller {
         g.drawString("Y: "+cameraPos.y,0,28);
     }
 
-    /**
-     * Megfelelo asteroidView hoz hozzaadja a drawableCharactert
-     * @param dc
-     */
-    public void AddDrawableCharacter(DrawableCharacter dc){
+    private void AddDrawableCharacter(DrawableCharacter dc){
         AsteroidView av = asteroidViewMap.get(dc.GetAsteroid());
         av.AddDrawableCharacter(dc);
+    }
+    /**
+     * Megfelelo asteroidView hoz hozzaadja a drawableCharactert
+     * @param ufo
+     */
+    public UFOView AddUFOView(UFO ufo){
+        UFOView uv = new UFOView(ufo);
+        this.AddDrawableCharacter(uv);
+
+        return uv;
+    }
+
+    public RobotView AddRobotView(Robot robot){
+        RobotView rv = new RobotView(robot);
+        this.AddDrawableCharacter(rv);
+
+        return rv;
+    }
+
+    public SettlerView AddSettlerView(Settler settler){
+        SettlerView sv = new SettlerView(settler);
+        this.AddDrawableCharacter(sv);
+        this.settlerViewMap.put(settler, sv);
+
+        return sv;
     }
 
     /**
      * View hoz hozzaad egy asteroidview t, itt tortenik init is a koordinatak miatt
      * @param asteroid
      */
-    public AsteroidView AddAsteroidView(Asteroid asteroid, Position position){
+    public void AddAsteroidView(Asteroid asteroid, Position position){
         AsteroidView av = new AsteroidView(asteroid, position, 2);
         asteroid.setView(av);
 
         this.AddDrawable(av);
         this.asteroidViewMap.put(av.GetAsteroid(), av);
+    }
 
-        return av;
+    public void AddTeleportGateView(TeleportGate teleportGate1, TeleportGate teleportGate2){
+        TeleportGateView tv = new TeleportGateView(teleportGate1, teleportGate2, 1);
+        this.AddDrawable(tv);
     }
 
     public AsteroidView GetAsteroidView(Asteroid asteroid){
@@ -193,6 +222,12 @@ public class Controller {
         AsteroidView av = this.asteroidViewMap.get(dc.GetAsteroid());
 
         av.RemoveDrawableCharacter(dc);
+    }
+
+    public void SettlerDied(SettlerView sv){
+        this.CharacterDied(sv);
+
+        this.settlerViewMap.values().remove(sv);
     }
 
     /**

@@ -4,6 +4,7 @@ import main.Game;
 import places.Asteroid;
 import interfaces.Steppable;
 import places.Place;
+import view.Controller;
 import view.DrawableCharacter;
 
 import java.util.List;

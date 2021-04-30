@@ -136,6 +136,8 @@ public class Game {
             this.AddSteppable(settler);
             this.AddSettler(settler);
         }
+
+        this.AddSteppable(AsteroidBelt.getInstance());
     }
 
     public void NextStep(){
