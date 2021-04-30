@@ -83,7 +83,7 @@ public class Game {
         List<Asteroid> asteroids = new ArrayList<>();
 
         int[] p = new int[2];
-        for(int i = 0; i < 50; i++) {
+        for(int i = 0; i < 200; i++) {
             do {
                 p[0] = random.nextInt(2000 + 2000) - 2000;
                 p[1] = random.nextInt(2000 + 2000) - 2000;

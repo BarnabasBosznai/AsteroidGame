@@ -155,6 +155,10 @@ public class Controller {
         return av;
     }
 
+    public AsteroidView GetAsteroidView(Asteroid asteroid){
+        return this.asteroidViewMap.get(asteroid);
+    }
+
     /**
      * listahoz hozzaad, ezt hivja meg a teleportgate siman, asteroid pluszban meg
      * @param d
