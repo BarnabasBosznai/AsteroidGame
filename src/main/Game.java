@@ -1,7 +1,11 @@
 package main;
 
+import characters.Robot;
 import characters.Settler;
+import characters.UFO;
 import interfaces.Steppable;
+import items.CraftingTable;
+import items.Recipe;
 import materials.Coal;
 import materials.Iron;
 import materials.Material;
@@ -9,11 +13,13 @@ import materials.Uranium;
 import materials.WaterIce;
 import places.Asteroid;
 import places.AsteroidBelt;
+import places.TeleportGate;
 import view.Controller;
 import view.Position;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *A Game osztály felelős a játék működéséért, ő tárolja kollektíven a játékban résztvevő
@@ -66,6 +72,12 @@ public class Game {
     }
 
     private void Init(){
+        CraftingTable craftingTable = CraftingTable.getInstance();
+        craftingTable.AddRecipe(new Recipe(Robot.class,
+                Stream.of(new Coal(), new Iron(), new Uranium()).collect(Collectors.toList())));
+        craftingTable.AddRecipe(new Recipe(TeleportGate.class,
+                Stream.of(new Iron(), new Iron(), new WaterIce(), new Uranium()).collect(Collectors.toList())));
+
         Random random = new Random();
         List<Position> positions = new ArrayList<>();
         List<Asteroid> asteroids = new ArrayList<>();
@@ -105,33 +117,17 @@ public class Game {
             }
         }
 
+        int numOfUFOs = random.nextInt(20 - 5) + 5;
+        for(int i = 0; i < numOfUFOs; i++) {
+            UFO ufo = new UFO(asteroids.get(random.nextInt(50)));
+            this.AddSteppable(ufo);
+        }
 
-       // UFO ufo = new UFO(ast2);
-       // UFO ufo1 = new UFO(ast3);
-       // UFO ufo2 = new UFO(ast);
-        //UFO ufo3 = new UFO(ast);
-        //UFO ufo4 = new UFO(ast3);
-        //UFO ufo5 = new UFO(ast2);
-
-        //this.AddSteppable(ufo);
-        //this.AddSteppable(ufo1);
-        //this.AddSteppable(ufo2);
-        //this.AddSteppable(ufo3);
-        //this.AddSteppable(ufo4);
-        //this.AddSteppable(ufo5);
-
-        /*Settler set = new Settler(ast5);
-        Settler set2 = new Settler(ast4);
-        Settler set3 = new Settler(ast5);
-        Settler set4 = new Settler(ast2);
-        Settler set5 = new Settler(ast5);
-        Settler set6 = new Settler(ast2);
-        Settler set7 = new Settler(ast5);
-        Settler set8 = new Settler(ast3);*/
-
-
-        //Robot rob = new Robot(ast);
-        //this.AddSteppable(rob);
+        for(int i = 0; i < 5; i++) {
+            Settler settler = new Settler(asteroids.get(random.nextInt(50)));
+            this.AddSteppable(settler);
+            this.AddSettler(settler);
+        }
     }
 
     public void NextStep(){
