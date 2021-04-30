@@ -40,7 +40,9 @@ public class Game {
     /**
      * A játékban található lépésre képes (steppable) entitások.
      */
-    private final Queue<Steppable> steppables;
+    private final Queue<Steppable> steppablesLeftinRound;
+
+    private final List<Steppable> allSteppables;
 
     /**
      * Visszatér a tesztelhető Game osztály egyetlen objetumával
@@ -59,7 +61,8 @@ public class Game {
      */
     public Game(){
         this.settlers = new ArrayList<>();
-        this.steppables = new PriorityQueue<>(30, Comparator.comparingInt(Steppable::GetSteppablePriority));
+        this.allSteppables = new ArrayList<>();
+        this.steppablesLeftinRound = new PriorityQueue<>(30, Comparator.comparingInt(Steppable::GetSteppablePriority));
     }
 
     /**
@@ -137,14 +140,19 @@ public class Game {
 
     public void NextStep(){
         //lehet felesleges, elfer
-        if(steppables.size() == 0) {
+        if(allSteppables.size() == 0) {
             Controller.getInstance().GameEnded(GameState.SETTLERSLOST);
             return;
         }
 
-        Steppable currentSteppable = this.steppables.poll();
-        this.steppables.add(currentSteppable);
+        if(steppablesLeftinRound.size() == 0){
+            steppablesLeftinRound.addAll(allSteppables);
+        }
+
+        Steppable currentSteppable = this.steppablesLeftinRound.poll();
         currentSteppable.Step();
+
+        System.out.println("prioritas: " + currentSteppable.GetSteppablePriority());
 
         //check
         GameState currentGameState = this.CheckGameStatus();
@@ -232,7 +240,8 @@ public class Game {
      * @param steppable: a hozzáadandó steppable
      */
     public void AddSteppable(Steppable steppable) {
-        this.steppables.add(steppable);
+        this.allSteppables.add(steppable);
+        this.steppablesLeftinRound.add(steppable);
     }
 
     /**
@@ -241,7 +250,8 @@ public class Game {
      * @param steppable: az eltávolítandó steppable
      */
     public void RemoveSteppable(Steppable steppable) {
-        this.steppables.remove(steppable);
+        this.allSteppables.remove(steppable);
+        this.steppablesLeftinRound.remove(steppable);
     }
 
     /**
