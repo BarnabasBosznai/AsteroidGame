@@ -54,9 +54,8 @@ public class AsteroidView extends Drawable implements Clickable {
             asteroidviews.add(Controller.getInstance().GetAsteroidView(ast));
         }
         graphics.setColor(Color.LIGHT_GRAY);
-        graphics.setStroke(new BasicStroke(10));
-        for (var asteroidv: asteroidviews
-             ) {
+        graphics.setStroke(new BasicStroke(3));
+        for (var asteroidv: asteroidviews) {
             graphics.drawLine(pos.x- cameraPos.x + 50, pos.y -cameraPos.y + 50, asteroidv.pos.x - cameraPos.x + 50,  asteroidv.pos.y - cameraPos.y + 50);
         }
 

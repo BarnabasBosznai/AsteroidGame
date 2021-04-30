@@ -104,15 +104,20 @@ public class Game {
         for(Asteroid ast : asteroids) {
             List<Double> distances = asteroids.stream()
                     .map(asteroid ->
-                            Math.sqrt(Math.pow(positions.get(asteroids.indexOf(ast)).x + positions.get(asteroids.indexOf(asteroid)).x, 2) + Math.pow(positions.get(asteroids.indexOf(ast)).y + positions.get(asteroids.indexOf(asteroid)).y, 2))).collect(Collectors.toList());
+                            Math.sqrt(Math.pow(positions.get(asteroids.indexOf(ast)).x - positions.get(asteroids.indexOf(asteroid)).x, 2) +
+                                      Math.pow(positions.get(asteroids.indexOf(ast)).y - positions.get(asteroids.indexOf(asteroid)).y, 2)))
+                    .collect(Collectors.toList());
+
+            final List<Double> distancesCopy = new ArrayList<>(distances);
+            distances.remove(distances.stream().mapToDouble(d -> d).min().getAsDouble());
 
             for(int i = 0; i < 5; i++) {
                 Double min = distances.stream().mapToDouble(d -> d).min().getAsDouble();
-                    Asteroid neighbor = asteroids.get(distances.indexOf(min));
-                    if(ast.GetNeighboringAsteroids().size() < 5 && neighbor.GetNeighboringAsteroids().size() < 5) {
-                        ast.AddNeighbor(neighbor);
-                        neighbor.AddNeighbor(ast);
-                    }
+                Asteroid neighbor = asteroids.get(distancesCopy.indexOf(min));
+                if (ast.GetNeighboringAsteroids().size() < 5 && neighbor.GetNeighboringAsteroids().size() < 5) {
+                    ast.AddNeighbor(neighbor);
+                    neighbor.AddNeighbor(ast);
+                }
                 distances.remove(min);
             }
         }
