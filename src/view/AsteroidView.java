@@ -48,6 +48,19 @@ public class AsteroidView extends Drawable implements Clickable {
 
         //graphics.setColor(Color.RED);
         //graphics.fillOval(pos.x, pos.y,asteroidRadius*2,asteroidRadius*2);
+        var asteroidviews = new ArrayList<AsteroidView>();
+        var asteroids = this.GetAsteroid().GetNeighboringAsteroids();
+        for (Asteroid ast: asteroids
+             ) {
+            asteroidviews.add(ast.GetView());
+        }
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.setStroke(new BasicStroke(10));
+        for (var asteroidv: asteroidviews
+             ) {
+            graphics.drawLine(pos.x- cameraPos.x + 50, pos.y -cameraPos.y + 50, asteroidv.pos.x - cameraPos.x + 50,  asteroidv.pos.y - cameraPos.y + 50);
+        }
+
         graphics.drawImage(rotate(angle),pos.x - cameraPos.x , pos.y  - cameraPos.y ,asteroidRadius*2,asteroidRadius*2,null);
         //majd a karakterjeit is
         for(int i = 0; i < drawableCharacterList.size(); i++){

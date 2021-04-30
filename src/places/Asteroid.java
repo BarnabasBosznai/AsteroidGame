@@ -274,6 +274,8 @@ public class Asteroid extends Place {
         return teleportGates;
     }
 
+    public AsteroidView GetView() { return this.view; }
+
     public void setView(AsteroidView view) {
         this.view = view;
     }

@@ -221,7 +221,9 @@ public class InterfacePanel extends Drawable {
 
 
     public boolean HandleClick(Position clickPos, Settler currentWaitingSettler){
-        waitingSettler=currentWaitingSettler;
+        if (waitingSettler!=currentWaitingSettler) {
+            waitingSettler = currentWaitingSettler;
+        }
         if(waitingSettler == null){
             output = "Ilyen nincs, nem jön semelyik Settler!";
             return false;
