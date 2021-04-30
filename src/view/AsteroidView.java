@@ -22,7 +22,6 @@ public class AsteroidView extends Drawable implements Clickable {
     private boolean clicked;
 
     private double angle;
-
     public AsteroidView(Asteroid a, Position pos, int z){
         this.asteroid = a;
         this.pos = pos;
@@ -37,10 +36,6 @@ public class AsteroidView extends Drawable implements Clickable {
         catch (IOException ex){
             ex.printStackTrace();
         }
-    }
-
-    public void SetPos(int x, int y){
-        pos.x = x; pos.y = y;
     }
 
     @Override

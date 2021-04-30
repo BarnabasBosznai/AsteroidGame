@@ -4,6 +4,7 @@ import characters.Character;
 import materials.*;
 import view.AsteroidView;
 import view.Controller;
+import view.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class Asteroid extends Place {
      */
     private final List<Character> characters;
 
-    private final AsteroidView view;
+    private AsteroidView view;
 
     /**
      * Konstruktor
@@ -60,29 +61,6 @@ public class Asteroid extends Place {
 
         thickness = 0;      /// temporális
         //thickness = random.ints(2,6).findFirst().getAsInt();
-
-        this.view = Controller.getInstance().AddAsteroidView(this);
-    }
-
-    public Asteroid(int pos_x, int pos_y){
-        neighbors = new ArrayList<>();
-        teleportGates = new ArrayList<>();
-        characters = new ArrayList<>();
-
-        Random random = new Random();
-        material = null;    /// temporális
-        /*switch (random.nextInt(4)) {
-            case 0 -> material = new Coal();
-            case 1 -> material = new Iron();
-            case 2 -> material = new Uranium();
-            case 3 -> material = new WaterIce();
-        }*/
-
-        thickness = 0;      /// temporális
-        //thickness = random.ints(2,6).findFirst().getAsInt();
-
-        this.view = Controller.getInstance().AddAsteroidView(this);
-        this.view.SetPos(pos_x, pos_y);
     }
 
     /**
@@ -294,5 +272,9 @@ public class Asteroid extends Place {
      */
     public List<TeleportGate> GetTeleportGates() {
         return teleportGates;
+    }
+
+    public void setView(AsteroidView view) {
+        this.view = view;
     }
 }

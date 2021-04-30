@@ -138,9 +138,9 @@ public class Controller {
      * View hoz hozzaad egy asteroidview t, itt tortenik init is a koordinatak miatt
      * @param asteroid
      */
-    public AsteroidView AddAsteroidView(Asteroid asteroid){
-        Position pos = new Position(rand.nextInt(1000), rand.nextInt(1000)); //ide majd vmi okos
-        AsteroidView av = new AsteroidView(asteroid, pos, 2);
+    public AsteroidView AddAsteroidView(Asteroid asteroid, Position position){
+        AsteroidView av = new AsteroidView(asteroid, position, 2);
+        asteroid.setView(av);
 
         this.AddDrawable(av);
         this.asteroidViewMap.put(av.GetAsteroid(), av);

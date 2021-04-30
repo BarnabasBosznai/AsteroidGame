@@ -1,8 +1,6 @@
 package main;
 
-import characters.Robot;
 import characters.Settler;
-import characters.UFO;
 import interfaces.Steppable;
 import materials.Coal;
 import materials.Iron;
@@ -10,9 +8,12 @@ import materials.Material;
 import materials.Uranium;
 import materials.WaterIce;
 import places.Asteroid;
+import places.AsteroidBelt;
 import view.Controller;
+import view.Position;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  *A Game osztály felelős a játék működéséért, ő tárolja kollektíven a játékban résztvevő
@@ -65,28 +66,59 @@ public class Game {
     }
 
     private void Init(){
-        //TODO
+        Random random = new Random();
+        List<Position> positions = new ArrayList<>();
+        List<Asteroid> asteroids = new ArrayList<>();
 
-        Asteroid ast=new Asteroid();
-        Asteroid ast2 = new Asteroid();
-        Asteroid ast3=new Asteroid();
+        int[] p = new int[2];
+        for(int i = 0; i < 50; i++) {
+            do {
+                p[0] = random.nextInt(2000 + 2000) - 2000;
+                p[1] = random.nextInt(2000 + 2000) - 2000;
 
-        ast.AddNeighbor(ast2);
-        ast2.AddNeighbor(ast3);
-        ast3.AddNeighbor(ast);
-        UFO ufo = new UFO(ast2);
-        UFO ufo1 = new UFO(ast3);
-        UFO ufo2 = new UFO(ast);
-        UFO ufo3 = new UFO(ast);
-        UFO ufo4 = new UFO(ast3);
-        UFO ufo5 = new UFO(ast2);
+                // Magic constant a sugarhoz, azert nem 42 + 42 hogy kicsit tavolabb legyenek egymastol
+            } while (positions.stream().anyMatch(position -> Math.pow(p[0] - position.x, 2) + Math.pow(p[1] - position.y, 2) <= Math.pow(42 + 50, 2)));
 
-        this.AddSteppable(ufo);
-        this.AddSteppable(ufo1);
-        this.AddSteppable(ufo2);
-        this.AddSteppable(ufo3);
-        this.AddSteppable(ufo4);
-        this.AddSteppable(ufo5);
+            Position pos = new Position(p[0], p[1]);
+            Asteroid ast = new Asteroid();
+
+            positions.add(pos);
+            asteroids.add(ast);
+            AsteroidBelt.getInstance().AddAsteroid(ast);
+
+            Controller.getInstance().AddAsteroidView(ast, pos);
+        }
+
+        for(Asteroid ast : asteroids) {
+            List<Double> distances = asteroids.stream()
+                    .map(asteroid ->
+                            Math.sqrt(Math.pow(positions.get(asteroids.indexOf(ast)).x + positions.get(asteroids.indexOf(asteroid)).x, 2) + Math.pow(positions.get(asteroids.indexOf(ast)).y + positions.get(asteroids.indexOf(asteroid)).y, 2))).collect(Collectors.toList());
+
+            for(int i = 0; i < 5; i++) {
+                Double min = distances.stream().mapToDouble(d -> d).min().getAsDouble();
+                    Asteroid neighbor = asteroids.get(distances.indexOf(min));
+                    if(ast.GetNeighboringAsteroids().size() < 5 && neighbor.GetNeighboringAsteroids().size() < 5) {
+                        ast.AddNeighbor(neighbor);
+                        neighbor.AddNeighbor(ast);
+                    }
+                distances.remove(min);
+            }
+        }
+
+
+       // UFO ufo = new UFO(ast2);
+       // UFO ufo1 = new UFO(ast3);
+       // UFO ufo2 = new UFO(ast);
+        //UFO ufo3 = new UFO(ast);
+        //UFO ufo4 = new UFO(ast3);
+        //UFO ufo5 = new UFO(ast2);
+
+        //this.AddSteppable(ufo);
+        //this.AddSteppable(ufo1);
+        //this.AddSteppable(ufo2);
+        //this.AddSteppable(ufo3);
+        //this.AddSteppable(ufo4);
+        //this.AddSteppable(ufo5);
 
         /*Settler set = new Settler(ast5);
         Settler set2 = new Settler(ast4);
@@ -96,9 +128,41 @@ public class Game {
         Settler set6 = new Settler(ast2);
         Settler set7 = new Settler(ast5);
         Settler set8 = new Settler(ast3);*/
-        Robot rob = new Robot(ast);
 
-        this.AddSteppable(rob);
+
+        //Robot rob = new Robot(ast);
+        //this.AddSteppable(rob);
+    }
+
+    public double findTheNthSmallestElement(double[] arr, int nThSmallest, int low, int high) {
+        if (low < high) {
+            int pivot = lomutoPartition(low, high, arr);
+            if (pivot == nThSmallest) {
+                return arr[pivot];
+            }
+            if (nThSmallest > pivot) {
+                return findTheNthSmallestElement(arr, nThSmallest, pivot + 1, high);
+            }
+            return findTheNthSmallestElement(arr, nThSmallest, low, pivot - 1);
+        }
+        return -1;
+    }
+
+    public int lomutoPartition(int low, int high, double[] arr) {
+        double pivot = arr[high];
+        int j = low;
+        for (int i = low; i < high; i++) {
+            if (arr[i] < pivot) {
+                double temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                ++j;
+            }
+        }
+        double temp = arr[high];
+        arr[high] = arr[j];
+        arr[j] = temp;
+        return j;
     }
 
     public void NextStep(){
