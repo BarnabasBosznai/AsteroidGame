@@ -26,6 +26,8 @@ public class Controller {
 
     private Settler currentSettlerWaitingForInput;
 
+    private boolean canCallNextStep = false;
+
     private Random rand = new Random();
 
     private Controller(){
@@ -43,6 +45,10 @@ public class Controller {
         }
 
         return instance;
+    }
+
+    public static void StartGame(){
+        Game.getInstance().Start();
     }
 
     /**
@@ -88,13 +94,13 @@ public class Controller {
 
     }
 
-    public void StepEnded(){
-        if(this.currentSettlerWaitingForInput == null)
-            this.CallNextStep();
+    public void TimerTicked(){
+        if(canCallNextStep)
+            Game.getInstance().NextStep();
     }
 
-    private void CallNextStep(){
-        Game.getInstance().NextStep();
+    public void StepEnded(){
+        this.canCallNextStep = this.currentSettlerWaitingForInput == null;
     }
 
     public void CurrentSettlerWaitingForInput(Settler settler){
@@ -103,7 +109,7 @@ public class Controller {
 
     public void SettlerStepped(){
         this.currentSettlerWaitingForInput = null;
-        this.CallNextStep();
+        this.canCallNextStep = true;
     }
 
     public Settler GetCurrentSettlerWaitingForInput(){

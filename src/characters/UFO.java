@@ -43,8 +43,9 @@ public class UFO extends MiningCharacter {
     public void Step() {
         if (!this.Mine(inventory)){
             for(Place place : asteroid.GetNeighbors()){
-                if(Move(place))
+                if(Move(place)) {
                     return;
+                }
             }
         }
     }

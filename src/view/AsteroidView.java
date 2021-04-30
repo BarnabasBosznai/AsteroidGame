@@ -42,6 +42,7 @@ public class AsteroidView extends Drawable implements Clickable {
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
         //aszteroida magat kirajzolja
+
         //graphics.setColor(Color.RED);
         //graphics.fillOval(pos.x, pos.y,asteroidRadius*2,asteroidRadius*2);
         graphics.drawImage(rotate(angle),pos.x - cameraPos.x , pos.y  - cameraPos.y ,asteroidRadius*2,asteroidRadius*2,null);

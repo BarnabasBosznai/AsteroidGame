@@ -48,7 +48,7 @@ public abstract class DrawableCharacter {
 
         BufferedImage rotated = new BufferedImage(w, h, this.img.getType());
         Graphics2D graphic = rotated.createGraphics();
-        graphic.rotate(angle, w/2, h/2);
+        graphic.rotate(angle, (double)w/(double)2, (double)h/(double)2);
         graphic.drawImage(this.img, null, 0, 0);
         graphic.dispose();
         return rotated;

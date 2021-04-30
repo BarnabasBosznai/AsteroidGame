@@ -1,6 +1,8 @@
 package main;
 
+import characters.Robot;
 import characters.Settler;
+import characters.UFO;
 import interfaces.Steppable;
 import materials.Coal;
 import materials.Iron;
@@ -64,6 +66,39 @@ public class Game {
 
     private void Init(){
         //TODO
+
+        Asteroid ast=new Asteroid();
+        Asteroid ast2 = new Asteroid();
+        Asteroid ast3=new Asteroid();
+
+        ast.AddNeighbor(ast2);
+        ast2.AddNeighbor(ast3);
+        ast3.AddNeighbor(ast);
+        UFO ufo = new UFO(ast2);
+        UFO ufo1 = new UFO(ast3);
+        UFO ufo2 = new UFO(ast);
+        UFO ufo3 = new UFO(ast);
+        UFO ufo4 = new UFO(ast3);
+        UFO ufo5 = new UFO(ast2);
+
+        this.AddSteppable(ufo);
+        this.AddSteppable(ufo1);
+        this.AddSteppable(ufo2);
+        this.AddSteppable(ufo3);
+        this.AddSteppable(ufo4);
+        this.AddSteppable(ufo5);
+
+        /*Settler set = new Settler(ast5);
+        Settler set2 = new Settler(ast4);
+        Settler set3 = new Settler(ast5);
+        Settler set4 = new Settler(ast2);
+        Settler set5 = new Settler(ast5);
+        Settler set6 = new Settler(ast2);
+        Settler set7 = new Settler(ast5);
+        Settler set8 = new Settler(ast3);*/
+        Robot rob = new Robot(ast);
+
+        this.AddSteppable(rob);
     }
 
     public void NextStep(){

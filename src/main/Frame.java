@@ -1,5 +1,7 @@
 package main;
 
+import view.Controller;
+
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -13,7 +15,8 @@ public class Frame extends JFrame{
 
     private boolean closed;
 
-    Thread thread;
+    Thread threadGui;
+    Thread threadStep;
 
     /**
      * Létrehozza az ablakot.
@@ -36,21 +39,35 @@ public class Frame extends JFrame{
 
         this.addWindowListener(new FrameClosedListener());
 
-        thread = new Thread(() -> {
+        threadGui = new Thread(() -> {
             while(!closed){
                 try {
                     SwingUtilities.invokeLater(this::repaint);
-                    //System.out.println("repainted");
+
                     Thread.sleep(16);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         });
+
+        threadStep = new Thread(() -> {
+            while(!closed){
+                try {
+                    Controller.getInstance().TimerTicked();
+
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
-    public void StartThread(){
-        this.thread.start();
+    public void StartGame(){
+        this.threadGui.start();
+        this.threadStep.start();
     }
 
     private class FrameClosedListener implements WindowListener{
@@ -65,7 +82,8 @@ public class Frame extends JFrame{
             closed = true;
 
             try {
-                thread.join();
+                threadGui.join();
+                threadStep.join();
             } catch (InterruptedException interruptedException) {
                 interruptedException.printStackTrace();
             }
