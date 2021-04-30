@@ -134,37 +134,6 @@ public class Game {
         //this.AddSteppable(rob);
     }
 
-    public double findTheNthSmallestElement(double[] arr, int nThSmallest, int low, int high) {
-        if (low < high) {
-            int pivot = lomutoPartition(low, high, arr);
-            if (pivot == nThSmallest) {
-                return arr[pivot];
-            }
-            if (nThSmallest > pivot) {
-                return findTheNthSmallestElement(arr, nThSmallest, pivot + 1, high);
-            }
-            return findTheNthSmallestElement(arr, nThSmallest, low, pivot - 1);
-        }
-        return -1;
-    }
-
-    public int lomutoPartition(int low, int high, double[] arr) {
-        double pivot = arr[high];
-        int j = low;
-        for (int i = low; i < high; i++) {
-            if (arr[i] < pivot) {
-                double temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-                ++j;
-            }
-        }
-        double temp = arr[high];
-        arr[high] = arr[j];
-        arr[j] = temp;
-        return j;
-    }
-
     public void NextStep(){
         //lehet felesleges, elfer
         if(steppables.size() == 0) {
