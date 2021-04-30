@@ -286,7 +286,7 @@ public class InterfacePanel extends Drawable {
                         output = "Sikerült letenni a Vízjeget!";
                         Controller.getInstance().SettlerStepped();
                     } else {
-                        output = "Nem sikerült letenni aa Vízjeget!";
+                        output = "Nem sikerült letenni a Vízjeget!";
                     }
                 }
                 else if (clickPos.y>477 && clickPos.y<520) {
