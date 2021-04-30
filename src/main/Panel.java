@@ -80,6 +80,10 @@ public class Panel extends JPanel {
             if (nem_interface){
                 cameraPos.x = cameraPosSaved.x - e.getX() + lastClickPos.x;
                 cameraPos.y = cameraPosSaved.y - e.getY() + lastClickPos.y; // ez valószínűleg negálni kell
+                if (cameraPos.x<0) cameraPos.x=0;
+                if (cameraPos.x>10000) cameraPos.x=10000;
+                if (cameraPos.y<0) cameraPos.y=0;
+                if (cameraPos.y>5630) cameraPos.y=5630;
                 //System.out.println("KameraPos: "+cameraPos.x+" "+cameraPosSaved.x+" "+e.getX()+" "+lastClickPos.x);
             }
         }

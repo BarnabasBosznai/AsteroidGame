@@ -123,6 +123,11 @@ public class Controller {
         for(Drawable drawable : drawables){
             drawable.Draw(g, cameraPos);
         }
+
+        g.setColor(Color.GRAY); // Tesztelésre csak talán
+        g.setFont(new Font("Dialog",Font.PLAIN,14));
+        g.drawString("X: "+cameraPos.x,0,12);
+        g.drawString("Y: "+cameraPos.y,0,28);
     }
 
     /**
