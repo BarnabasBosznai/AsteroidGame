@@ -49,4 +49,9 @@ public class UFO extends MiningCharacter {
             }
         }
     }
+
+    @Override
+    public int GetSteppablePriority() {
+        return 2;
+    }
 }

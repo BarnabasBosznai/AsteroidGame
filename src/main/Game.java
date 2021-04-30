@@ -59,7 +59,7 @@ public class Game {
      */
     public Game(){
         this.settlers = new ArrayList<>();
-        this.steppables = new ArrayDeque<>();
+        this.steppables = new PriorityQueue<>(30, Comparator.comparingInt(Steppable::GetSteppablePriority));
     }
 
     /**

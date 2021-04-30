@@ -222,4 +222,9 @@ public class Settler extends MiningCharacter {
             }
         }*/
     }
+
+    @Override
+    public int GetSteppablePriority() {
+        return 0;
+    }
 }

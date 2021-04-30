@@ -49,6 +49,10 @@ public class TeleportGate extends Place implements Item, Steppable {
         }
     }
 
+    @Override
+    public int GetSteppablePriority() {
+        return 3;
+    }
 
     /**
      * Beállítja a paraméterként kapott aszteroidát a sajét aszteroidájaként.

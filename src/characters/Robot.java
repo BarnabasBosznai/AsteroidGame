@@ -26,6 +26,11 @@ public class Robot extends Character implements Item {
         ControlRobot();
     }
 
+    @Override
+    public int GetSteppablePriority() {
+        return 1;
+    }
+
     /**
      *  Az aszteroida, amin a robot éppen tartózkodik felrobbant,
      * ezáltal a robot átrobban egy szomszédos aszteroidára

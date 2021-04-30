@@ -63,6 +63,11 @@ public class AsteroidBelt implements Steppable {
         }
     }
 
+    @Override
+    public int GetSteppablePriority() {
+        return 4;
+    }
+
     /**
      * Eltávolítja a paraméterül kapott
      * aszteroidát az aszteroidamezőből, vagyis törli a nyilvántartásból az aszteroidát, illetve
