@@ -193,6 +193,8 @@ public class InterfacePanel extends Drawable {
         // Ast_Infobox?
 
         // Szöveges visszacsatolás
+        if (waitingSettler!=null)
+            textbox = Controller.getInstance().GetSettlerView(waitingSettler).GetColor();
         graphics.setColor(textbox);
         graphics.fillRect(240,520,520,43);
         graphics.setColor(Color.LIGHT_GRAY);
@@ -221,7 +223,16 @@ public class InterfacePanel extends Drawable {
     }
 
 
-    public void SetCurrentWaitingSettler(Settler currentWaitingSettler) { waitingSettler=currentWaitingSettler;}
+    public void SetCurrentWaitingSettler(Settler currentWaitingSettler) {
+        /*try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
+        waitingSettler=currentWaitingSettler;
+
+        output = "Te következel!";
+    }
 
     public boolean HandleClick(Position clickPos){
 
@@ -322,7 +333,6 @@ public class InterfacePanel extends Drawable {
                 }
             } else if (clickPos.x<760){
                 output = "Itt meg mit szeretnél?";
-                clickedOnInterface=false;
             } else if (clickPos.x<880){
                 if (waitingSettler.Mine()){
                     output = "Sikerült bányászni!";
@@ -334,6 +344,12 @@ public class InterfacePanel extends Drawable {
                 place=true;
             }
         }
-        return clickedOnInterface;
+
+        if (clickPos.y<43){
+            if (clickPos.x>240 && clickPos.y<760)
+                clickedOnInterface=true;
+        }
+
+        return !clickedOnInterface;
     }
 }

@@ -16,6 +16,10 @@ public class SettlerView extends DrawableCharacter {
     private Random rand = new Random();
     private Color color;
 
+    public Color GetColor(){return this.color;}
+
+    public Position GetPosition(){return this.pos;}
+
     public SettlerView(Settler s){
         super();
 

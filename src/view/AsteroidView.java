@@ -38,6 +38,10 @@ public class AsteroidView extends Drawable implements Clickable {
         }
     }
 
+    public Position GetPos(){
+        return pos;
+    }
+
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
         if (!(pos.x >cameraPos.x-100 && pos.x < cameraPos.x+1000))

@@ -3,17 +3,17 @@ package main;
 import view.Controller;
 import view.Position;
 
+import javax.sound.sampled.Control;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
 public class Panel extends JPanel {
 
 
     Position cameraPos, cameraPosSaved;
     Position lastClickPos;
+    boolean nem_interface=true;
 
     public Panel(){
         cameraPos = new Position(0,0);
@@ -21,6 +21,8 @@ public class Panel extends JPanel {
         lastClickPos = new Position(0,0);
         this.addMouseListener(new MouseClickedListener());
         this.addMouseMotionListener(new MouseMovedListener());
+        this.addKeyListener(new KeyListenerHM());
+        setFocusable(true);
     }
 
     @Override
@@ -30,6 +32,34 @@ public class Panel extends JPanel {
         Graphics2D graphics = (Graphics2D) g;
 
         Controller.getInstance().DrawAll(graphics, cameraPos);
+    }
+
+
+    private class KeyListenerHM implements KeyListener {
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (e.getKeyCode()==KeyEvent.VK_SPACE) {
+
+                if (Controller.getInstance().GetCurrentSettlerWaitingForInput()!=null) {
+                    Position pos = Controller.getInstance().GetAsteroidView(Controller.getInstance().GetSettlerView(Controller.getInstance().GetCurrentSettlerWaitingForInput()).GetAsteroid()).GetPos();
+
+                    cameraPos.x = pos.x - 500;
+                    cameraPos.y = pos.y - 281;
+                    cameraPosSaved.x = pos.x - 500;
+                    cameraPosSaved.y = pos.y - 281;
+                }
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+
+        }
     }
 
     //TODO
@@ -46,11 +76,12 @@ public class Panel extends JPanel {
 
         @Override
         public void mousePressed(MouseEvent e) {
+
             lastClickPos.x = e.getX();
             lastClickPos.y = e.getY();
             //System.out.println("KameraPos: "+cameraPos.x+" "+cameraPos.y);
             //System.out.println("l: "+e.getX()+" "+e.getY());
-            Controller.getInstance().ClickHandler(lastClickPos, cameraPos);
+            nem_interface = Controller.getInstance().ClickHandler(lastClickPos, cameraPos);
         }
 
         @Override
@@ -76,7 +107,7 @@ public class Panel extends JPanel {
 
         @Override
         public void mouseDragged(MouseEvent e) {
-            boolean nem_interface=true;
+
             if (nem_interface){
                 cameraPos.x = cameraPosSaved.x - e.getX() + lastClickPos.x;
                 cameraPos.y = cameraPosSaved.y - e.getY() + lastClickPos.y; // ez valószínűleg negálni kell

@@ -102,7 +102,7 @@ public class Controller {
     public void TimerTicked(){
         if(canCallNextStep)
             Game.getInstance().NextStep();
-        interfacePanel.SetCurrentWaitingSettler(currentSettlerWaitingForInput);
+
     }
 
     public void StepEnded(){
@@ -111,6 +111,7 @@ public class Controller {
 
     public void CurrentSettlerWaitingForInput(Settler settler){
         this.currentSettlerWaitingForInput = settler;
+        interfacePanel.SetCurrentWaitingSettler(currentSettlerWaitingForInput);
     }
 
     public void SettlerStepped(){
@@ -189,6 +190,10 @@ public class Controller {
         return this.asteroidViewMap.get(asteroid);
     }
 
+    public SettlerView GetSettlerView(Settler settler){
+        return this.settlerViewMap.get(settler);
+    }
+
     /**
      * listahoz hozzaad, ezt hivja meg a teleportgate siman, asteroid pluszban meg
      * @param d
@@ -199,6 +204,7 @@ public class Controller {
             this.drawables.sort(Comparator.comparingInt(Drawable::GetZIndex));
         }
     }
+
 
     /**
      * DrawableCharacter jelzett, h a modellben elmozgott a karakter, itt is valtoztatjuk
