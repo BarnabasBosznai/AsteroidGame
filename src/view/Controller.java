@@ -120,8 +120,10 @@ public class Controller {
      * kirajzol mindent is
      */
     public void DrawAll(Graphics2D g, Position cameraPos){
-        for(Drawable drawable : drawables){
-            drawable.Draw(g, cameraPos);
+        synchronized (drawables) {
+            for (Drawable drawable : drawables) {
+                drawable.Draw(g, cameraPos);
+            }
         }
 
         g.setColor(Color.GRAY); // Tesztelésre csak talán
@@ -158,8 +160,10 @@ public class Controller {
      * @param d
      */
     public void AddDrawable(Drawable d){
-        this.drawables.add(d);
-        this.drawables.sort(Comparator.comparingInt(Drawable::GetZIndex));
+        synchronized (drawables) {
+            this.drawables.add(d);
+            this.drawables.sort(Comparator.comparingInt(Drawable::GetZIndex));
+        }
     }
 
     /**
