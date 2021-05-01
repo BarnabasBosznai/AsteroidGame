@@ -46,7 +46,7 @@ public class Panel extends JPanel {
             if (e.getKeyCode()==KeyEvent.VK_SPACE) {
 
                 if (Controller.getInstance().GetCurrentSettlerWaitingForInput()!=null) {
-                    Position pos = Controller.getInstance().GetAsteroidView(Controller.getInstance().GetSettlerView(Controller.getInstance().GetCurrentSettlerWaitingForInput()).GetAsteroid()).GetPos();
+                    Position pos = Controller.getInstance().GetAsteroidView(Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid()).GetPos();
 
                     cameraPos.x = pos.x - 500;
                     cameraPos.y = pos.y - 281;
