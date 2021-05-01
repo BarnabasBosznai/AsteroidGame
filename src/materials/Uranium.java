@@ -66,4 +66,6 @@ public class Uranium extends RadioactiveMaterial {
     public int getNearSuns() {
         return nearSuns;
     }
+
+    // public void setNearSuns(int c) { nearSuns = c; } // NAPKÖZEL TESZTHEZ
 }

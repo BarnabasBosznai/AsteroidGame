@@ -42,6 +42,34 @@ public class AsteroidView extends Drawable implements Clickable {
         return pos;
     }
 
+
+    public void Draw_Neighbours_and_Teleports(Graphics2D graphics, Position cameraPos){
+        var asteroidviews = new ArrayList<AsteroidView>();
+        var asteroids = this.GetAsteroid().GetNeighboringAsteroids();
+        for (Asteroid ast: asteroids) {
+            asteroidviews.add(Controller.getInstance().GetAsteroidView(ast));
+        }
+        graphics.setColor(Color.LIGHT_GRAY);
+        graphics.setStroke(new BasicStroke(3));
+        if (asteroidviews==null)
+            System.out.println("A1");
+        if (asteroidviews.isEmpty())
+            System.out.println("A2");
+        for (var asteroidv: asteroidviews) {
+            if (pos==null)
+                System.out.println("A3");
+            if (cameraPos==null)
+                System.out.println("A4");
+            if (asteroidv==null) {
+                System.out.println("A5"+pos.x+" "+pos.y);
+            }
+            if (asteroidv.pos==null)
+                System.out.println("A6");
+            if (asteroidv!=null)
+                graphics.drawLine(pos.x- cameraPos.x + 50, pos.y -cameraPos.y + 50, asteroidv.pos.x - cameraPos.x + 50,  asteroidv.pos.y - cameraPos.y + 50);
+        }
+    }
+
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
         if (!(pos.x >cameraPos.x-100 && pos.x < cameraPos.x+1000))
@@ -52,16 +80,7 @@ public class AsteroidView extends Drawable implements Clickable {
 
         //graphics.setColor(Color.RED);
         //graphics.fillOval(pos.x, pos.y,asteroidRadius*2,asteroidRadius*2);
-        var asteroidviews = new ArrayList<AsteroidView>();
-        var asteroids = this.GetAsteroid().GetNeighboringAsteroids();
-        for (Asteroid ast: asteroids) {
-            asteroidviews.add(Controller.getInstance().GetAsteroidView(ast));
-        }
-        graphics.setColor(Color.LIGHT_GRAY);
-        graphics.setStroke(new BasicStroke(3));
-        for (var asteroidv: asteroidviews) {
-            graphics.drawLine(pos.x- cameraPos.x + 50, pos.y -cameraPos.y + 50, asteroidv.pos.x - cameraPos.x + 50,  asteroidv.pos.y - cameraPos.y + 50);
-        }
+
 
         graphics.drawImage(rotate(angle),pos.x - cameraPos.x , pos.y  - cameraPos.y ,asteroidRadius*2,asteroidRadius*2,null);
         //majd a karakterjeit is
@@ -73,6 +92,39 @@ public class AsteroidView extends Drawable implements Clickable {
 
             drawableCharacterList.get(i).SetPosition(p,phi + Math.PI/2);
             drawableCharacterList.get(i).Draw(graphics);
+        }
+
+        if (clicked){
+            Color faded = new Color(255,255,255,220);
+            graphics.setColor(faded);
+            graphics.fillRect(pos.x-cameraPos.x-70, pos.y-cameraPos.y, 70,65);
+            graphics.setColor(Color.WHITE);
+            graphics.drawRect(pos.x-cameraPos.x-70, pos.y-cameraPos.y, 70,65);
+
+            graphics.setColor(Color.BLACK);
+
+            graphics.drawString("Layers: "+asteroid.GetThickness(),pos.x-cameraPos.x-64,pos.y-cameraPos.y+18);
+
+            graphics.drawString("Material:",pos.x-cameraPos.x-64,pos.y-cameraPos.y+38);
+            if (asteroid.GetThickness()==0) {
+                if (asteroid.GetMaterial() != null)
+                    graphics.drawString(asteroid.GetMaterial().getClass().getSimpleName(), pos.x - cameraPos.x - 64, pos.y - cameraPos.y + 58);
+                else
+                    graphics.drawString("hollow", pos.x - cameraPos.x - 64, pos.y - cameraPos.y + 58);
+            } else {
+                graphics.drawString("???", pos.x - cameraPos.x - 64, pos.y - cameraPos.y + 58);
+            }
+
+            if (Controller.getInstance().GetCurrentSettlerWaitingForInput()!=null &&
+                    Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetNeighboringAsteroids().contains(this.asteroid)) {
+                graphics.setColor(faded);
+                graphics.fillRect(pos.x - cameraPos.x - 70, pos.y - cameraPos.y + 65, 70, 30);
+                graphics.setColor(Color.GRAY);
+                graphics.drawRect(pos.x - cameraPos.x - 70, pos.y - cameraPos.y + 65, 70, 30);
+                graphics.setColor(Color.BLACK);
+                graphics.setFont(new Font("Dialog", Font.PLAIN, 29));
+                graphics.drawString("Move", pos.x - cameraPos.x - 68, pos.y - cameraPos.y + 92);
+            }
         }
     }
 
@@ -93,9 +145,16 @@ public class AsteroidView extends Drawable implements Clickable {
     }
 
     @Override
-    public void Clicked(Position pos) {
-        this.clicked = true;
+    public void Clicked(Position clickPos, Position cameraPos) {
+        if (clicked) {
+            if ((clickPos.x > pos.x-cameraPos.x-70) && (clickPos.x < pos.x-cameraPos.x-70 + 70) &&
+                    (clickPos.y > pos.y-cameraPos.y + 65) && (clickPos.y < pos.y-cameraPos.y + 65 + 30)){
 
+                Controller.getInstance().GetCurrentSettlerWaitingForInput().Move(this.asteroid);
+                Controller.getInstance().SettlerStepped();
+            }
+        }
+        this.clicked = true;
         //ha a gombra kattintottak
         /*Settler settler = Controller.getInstance().GetCurrentSettlerWaitingForInput();
         Asteroid settlerAsteroid = settler.GetAsteroid();
@@ -104,6 +163,7 @@ public class AsteroidView extends Drawable implements Clickable {
             settler.Move(this.asteroid);
             Controller.getInstance().CurrentSettlerWaitingForInput(null);
         }*/
+
     }
 
     @Override
@@ -113,14 +173,20 @@ public class AsteroidView extends Drawable implements Clickable {
 
     @Override
     public boolean ClickedCheck(Position clickPos, Position cameraPos) {
+        double tes = Math.sqrt(Math.pow((clickPos.x - (pos.x + 45 - cameraPos.x)), 2) + Math.pow(clickPos.y - (pos.y + 40 - cameraPos.y), 2));
+        if (tes <= 35) {
+            return true;
+        }
         if (clicked){
-
-        } else {
-            double tes = Math.sqrt(Math.pow((clickPos.x - (pos.x - cameraPos.x)),2) + Math.pow(clickPos.y - (pos.y - cameraPos.y),2));
-            if (tes<=30){
+            if (clickPos.x > pos.x-cameraPos.x-70 && clickPos.x < pos.x-cameraPos.x-70 + 70 &&
+                    clickPos.y > pos.y-cameraPos.y && clickPos.y < pos.y-cameraPos.y + 65 + 30){
+                if (Controller.getInstance().GetCurrentSettlerWaitingForInput()!=null &&
+                        clickPos.y > pos.y-cameraPos.y + 65 &&
+                        !Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetNeighboringAsteroids().contains(this.asteroid)) {
+                    return false;
+                }
                 return true;
             }
-            return false;
         }
 
         return false;

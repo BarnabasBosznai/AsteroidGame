@@ -59,7 +59,7 @@ public class Frame extends JFrame{
                 try {
                     Controller.getInstance().TimerTicked();
 
-                    Thread.sleep(500);
+                    Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -28,12 +28,11 @@ public class Controller {
      */
     private final Map<Asteroid, AsteroidView> asteroidViewMap;
     private final Map<Settler, SettlerView> settlerViewMap;
+    private Clickable currentClickedAsteroid;
 
     private Settler currentSettlerWaitingForInput;
 
     private boolean canCallNextStep = false;
-
-    private Random rand = new Random();
 
     private Controller(){
         this.drawables = new ArrayList<>();
@@ -64,10 +63,17 @@ public class Controller {
     public boolean ClickHandler(Position clickPos, Position cameraPos){
 
         //eloszor megnezi, hogy az interface en tortent e a kattintas
-        if(this.interfacePanel.HandleClick(clickPos)) {
+        if(!this.interfacePanel.HandleClick(clickPos)) {
+            return true;
+        }
+        //ha nem lehetett interface t lekezelni, megnezi a tobbit is
+        // megnézi az esetleg már kattintott aszteroidát
+        if (currentClickedAsteroid!=null && currentClickedAsteroid.ClickedCheck(clickPos,cameraPos)){
+            currentClickedAsteroid.Clicked(clickPos, cameraPos);
             return true;
         }
 
+        // ha ez sem, megnézi mindet
         ArrayList<AsteroidView> allClickables = new ArrayList<>();
 
         for(AsteroidView av: asteroidViewMap.values()){
@@ -78,20 +84,17 @@ public class Controller {
         for(Clickable clickable : allClickables)
             clickable.UnClicked();
 
-        //ha nem lehetett interface t lekezelni, megnezi a tobbit is
 
-        //meg azt is le lehet majd kezelni, hogy bizonyos tavolsag felett ne vegye ugy, hogy ranyomtak vkire
-        Clickable closestClickable = null;
-
+        currentClickedAsteroid=null;
         for(Clickable clickable : allClickables){
             if(clickable.ClickedCheck(clickPos, cameraPos)) {
-                closestClickable = clickable;
+                currentClickedAsteroid = clickable;
             }
         }
 
         //koordinatarendszerek+origo eltolas meg nincs lekezelve, majd az eltoltat adnam oda
-        if(closestClickable != null) {
-            closestClickable.Clicked(clickPos);
+        if(currentClickedAsteroid != null) {
+            currentClickedAsteroid.Clicked(clickPos, cameraPos);
             return true;
         }
         else
@@ -128,6 +131,9 @@ public class Controller {
      */
     public void DrawAll(Graphics2D g, Position cameraPos){
         synchronized (drawables) {
+            for (AsteroidView astview : asteroidViewMap.values()) {
+                astview.Draw_Neighbours_and_Teleports(g, cameraPos);
+            }
             for (Drawable drawable : drawables) {
                 drawable.Draw(g, cameraPos);
             }

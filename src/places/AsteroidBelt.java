@@ -56,9 +56,11 @@ public class AsteroidBelt implements Steppable {
 
         //kisebb ai
         if(rand == 0){
+            System.out.println("napközel"); // debug
             this.NearSun();
         }
         else if(rand == 1){
+            System.out.println("napvihar"); // debug
             this.SolarFlare();
         }
     }

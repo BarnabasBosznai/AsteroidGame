@@ -52,12 +52,16 @@ public class Asteroid extends Place {
 
         Random random = new Random();
         //material = null;    /// temporális
-        switch (random.nextInt(4)) {
+        switch (random.nextInt(5)) {
             case 0 -> material = new Coal();
             case 1 -> material = new Iron();
             case 2 -> material = new Uranium();
             case 3 -> material = new WaterIce();
+            case 4 -> material = null;
         }
+        /*Uranium urn = new Uranium();
+        urn.setNearSuns(1); NAPKÖZEL TESZT
+        material = urn;*/
 
         //thickness = 0;      /// temporális
         thickness = random.ints(2,6).findFirst().getAsInt();

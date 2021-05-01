@@ -108,7 +108,7 @@ public class Panel extends JPanel {
         @Override
         public void mouseDragged(MouseEvent e) {
 
-            if (nem_interface){
+            if (!nem_interface){
                 cameraPos.x = cameraPosSaved.x - e.getX() + lastClickPos.x;
                 cameraPos.y = cameraPosSaved.y - e.getY() + lastClickPos.y; // ez valószínűleg negálni kell
                 if (cameraPos.x<-2000) cameraPos.x=-2000;
