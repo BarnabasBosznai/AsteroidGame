@@ -15,7 +15,7 @@ public class Robot extends Character implements Item {
 
     public Robot(Asteroid ast){
         this.asteroid = ast;
-        this.view = Controller.getInstance().AddRobotView(this);
+        this.viewC = Controller.getInstance().AddRobotView(this);
     }
     /**
      * A robot lépésének végrehajtása

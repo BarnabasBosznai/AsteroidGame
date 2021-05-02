@@ -29,6 +29,7 @@ public class Settler extends MiningCharacter {
         inventory = new Inventory();
         this.asteroid = ast;
         this.view = Controller.getInstance().AddSettlerView(this);
+        this.viewC = this.view;
     }
 
     /**
@@ -41,9 +42,8 @@ public class Settler extends MiningCharacter {
             tg.RemoveFromAsteroid();
         Game.getInstance().RemoveSteppable(this);
         Game.getInstance().RemoveSettler(this);
-        asteroid.TakeOff(this);
-
         this.DiedAlert();
+        asteroid.TakeOff(this);
     }
 
     /**

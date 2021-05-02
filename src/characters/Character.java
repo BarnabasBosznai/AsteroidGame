@@ -19,7 +19,7 @@ public abstract class Character implements Steppable {
      */
     protected Asteroid asteroid;
 
-    protected DrawableCharacter view;
+    protected DrawableCharacter viewC;
 
     /**
      * Lereagálja, hogy felrobbant az aszteroida, amin éppen
@@ -54,7 +54,7 @@ public abstract class Character implements Steppable {
         if(choosenDestination.Move(this)){
             currentAsteroid.TakeOff(this);
 
-            this.view.CharacterMoved(currentAsteroid, this.asteroid);
+            this.viewC.CharacterMoved(currentAsteroid, this.asteroid);
 
             return true;
         }
@@ -79,6 +79,6 @@ public abstract class Character implements Steppable {
     }
 
     protected void DiedAlert(){
-        this.view.CharacterDied();
+        this.viewC.CharacterDied();
     }
 }

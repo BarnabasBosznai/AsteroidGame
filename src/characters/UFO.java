@@ -20,7 +20,7 @@ public class UFO extends MiningCharacter {
     public UFO(Asteroid ast){
         this.inventory = new MaterialStorage();
         this.asteroid = ast;
-        this.view = Controller.getInstance().AddUFOView(this);
+        this.viewC = Controller.getInstance().AddUFOView(this);
     }
 
     /**
