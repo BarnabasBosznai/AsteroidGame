@@ -85,8 +85,10 @@ public class Game {
         List<Position> positions = new ArrayList<>();
         List<Asteroid> asteroids = new ArrayList<>();
 
+        int asteroidNumber = 50;
+
         int[] p = new int[2];
-        for(int i = 0; i < 50; i++) {
+        for(int i = 0; i < asteroidNumber; i++) {
             do {
                 p[0] = random.nextInt(2000 + 2000) - 2000;
                 p[1] = random.nextInt(2000 + 2000) - 2000;
@@ -136,19 +138,22 @@ public class Game {
             }
         }
 
-        if(AsteroidBelt.getInstance().BFS())
+        /*if(AsteroidBelt.getInstance().BFS())
             System.out.println("Osszefuggo");
         else
-            System.out.println("Nem Osszefuggo");
+            System.out.println("Nem Osszefuggo");*/
+
+        //kisebb
+        AsteroidBelt.getInstance().MakeItConnected();
 
         int numOfUFOs = random.nextInt(20 - 5) + 5;
         for(int i = 0; i < numOfUFOs; i++) {
-            UFO ufo = new UFO(asteroids.get(random.nextInt(50)));
+            UFO ufo = new UFO(asteroids.get(random.nextInt(asteroids.size())));
             this.AddSteppable(ufo);
         }
 
         for(int i = 0; i < 5; i++) {
-            Settler settler = new Settler(asteroids.get(random.nextInt(50)));
+            Settler settler = new Settler(asteroids.get(random.nextInt(asteroids.size())));
             settler.GetInventory().AddMaterial(new Coal());
             settler.GetInventory().AddMaterial(new Iron());
             settler.GetInventory().AddMaterial(new Iron());
@@ -183,6 +188,8 @@ public class Game {
         if(currentGameState != GameState.NOTENDED){
             Controller.getInstance().GameEnded(currentGameState);
         }
+
+        AsteroidBelt.getInstance().MakeItConnected();
 
         Controller.getInstance().StepEnded();
     }

@@ -104,6 +104,12 @@ public class Panel extends JPanel {
         }
     }
 
+    public void WindowResized(Position winSize){
+        if (cameraPos.x>1138*1000/winSize.x) cameraPos.x=1138*1000/winSize.x;
+        if (cameraPos.y>2080*563/winSize.y) cameraPos.y=2080*563/winSize.y;
+
+    }
+
     //TODO
     private class MouseMovedListener implements MouseMotionListener{
 
@@ -111,12 +117,13 @@ public class Panel extends JPanel {
         public void mouseDragged(MouseEvent e) {
 
             if (!nem_interface){
+                Position winSize = Controller.getInstance().windowSize;
                 cameraPos.x = cameraPosSaved.x - e.getX() + lastClickPos.x;
                 cameraPos.y = cameraPosSaved.y - e.getY() + lastClickPos.y; // ez valószínűleg negálni kell
                 if (cameraPos.x<-2500) cameraPos.x=-2500;
-                if (cameraPos.x>2500) cameraPos.x=2500;
+                if (cameraPos.x>1138*1000/winSize.x) cameraPos.x=1138*1000/winSize.x;
                 if (cameraPos.y<-2500) cameraPos.y=-2500;
-                if (cameraPos.y>2500) cameraPos.y=2500;
+                if (cameraPos.y>2080*563/winSize.y) cameraPos.y=2080*563/winSize.y;
                 //System.out.println("KameraPos: "+cameraPos.x+" "+cameraPosSaved.x+" "+e.getX()+" "+lastClickPos.x);
 
                 cursorPos.x = e.getX();

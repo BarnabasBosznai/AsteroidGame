@@ -30,6 +30,7 @@ public class Controller {
     private final Map<Settler, SettlerView> settlerViewMap;
     private Clickable currentClickedAsteroid;
     private AsteroidView lastClickedAsteroid;
+    public Position windowSize;
 
     private Settler currentSettlerWaitingForInput;
 
@@ -47,6 +48,7 @@ public class Controller {
         this.drawables.add(interfacePanel);
 
         lastMovedCharacter = null;
+        this.windowSize = new Position(1000,563); // lehetne paraméterként kapni
     }
 
     public static Controller getInstance() {
@@ -66,6 +68,10 @@ public class Controller {
         Game.getInstance().Start();
     }
 
+    public void FrameResized(Position DownRight){
+        this.windowSize.x = DownRight.x;
+        this.windowSize.y = DownRight.y;
+    }
     /**
      * Mouseclick re hivodik meg
      * @param clickPos
@@ -112,7 +118,6 @@ public class Controller {
     public void TimerTicked(){
         if(canCallNextStep)
             Game.getInstance().NextStep();
-
     }
 
     public void StepEnded(){

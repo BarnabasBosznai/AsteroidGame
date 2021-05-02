@@ -52,30 +52,17 @@ public class AsteroidView extends Drawable implements Clickable {
         //graphics.setColor(Color.LIGHT_GRAY);
         graphics.setColor(color);
         graphics.setStroke(new BasicStroke(3));
-        if (asteroidviews==null)
-            System.out.println("A1");
-        if (asteroidviews.isEmpty())
-            System.out.println("A2");
+
         for (var asteroidv: asteroidviews) {
-            if (pos==null)
-                System.out.println("A3");
-            if (cameraPos==null)
-                System.out.println("A4");
-            if (asteroidv==null) {
-                System.out.println("A5"+pos.x+" "+pos.y);
-            }
-            if (asteroidv.pos==null)
-                System.out.println("A6");
-            if (asteroidv!=null)
-                graphics.drawLine(pos.x- cameraPos.x + 50, pos.y -cameraPos.y + 50, asteroidv.pos.x - cameraPos.x + 50,  asteroidv.pos.y - cameraPos.y + 50);
+            graphics.drawLine(pos.x- cameraPos.x + 50, pos.y -cameraPos.y + 50, asteroidv.pos.x - cameraPos.x + 50,  asteroidv.pos.y - cameraPos.y + 50);
         }
     }
 
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
-        if (!(pos.x >cameraPos.x-100 && pos.x < cameraPos.x+1000))
+        if (!(pos.x >cameraPos.x-100 && pos.x < cameraPos.x+1000*Controller.getInstance().windowSize.x/1000))
             return;
-        if (!(pos.y >cameraPos.y-100 && pos.y < cameraPos.y+600))
+        if (!(pos.y >cameraPos.y-100 && pos.y < cameraPos.y+600*Controller.getInstance().windowSize.y/563))
             return;
         //aszteroida magat kirajzolja
 
