@@ -45,8 +45,13 @@ public class Controller {
     }
 
     public static Controller getInstance() {
-        if(instance == null) {
-            instance = new Controller();
+        if (instance == null) {
+            synchronized (Controller.class) {
+                if (instance == null) {
+                    instance = new Controller();
+                }
+            }
+
         }
 
         return instance;
@@ -183,8 +188,15 @@ public class Controller {
         AsteroidView av = new AsteroidView(asteroid, position, 2);
         asteroid.setView(av);
 
+        //System.out.println("AddAsteroidView called with: " + asteroid.toString() + " - " + av.toString());
+
         this.AddDrawable(av);
-        this.asteroidViewMap.put(av.GetAsteroid(), av);
+        var x = this.asteroidViewMap.put(av.GetAsteroid(), av);
+        //asteroidViewMap.forEach((key, value) -> System.out.println(key + ":" + value));
+        //System.out.println();
+
+        //System.out.println("\tPut in map.");
+
     }
 
     public void AddTeleportGateView(TeleportGate teleportGate1, TeleportGate teleportGate2){
