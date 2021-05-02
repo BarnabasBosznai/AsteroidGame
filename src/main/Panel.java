@@ -14,6 +14,7 @@ public class Panel extends JPanel {
     Position cameraPos, cameraPosSaved;
     Position lastClickPos;
     boolean nem_interface=true;
+    Position cursorPos;
 
     public Panel(){
         cameraPos = new Position(0,0);
@@ -23,6 +24,7 @@ public class Panel extends JPanel {
         this.addMouseMotionListener(new MouseMovedListener());
         this.addKeyListener(new KeyListenerHM());
         setFocusable(true);
+        cursorPos = new Position(0, 0);
     }
 
     @Override
@@ -31,7 +33,7 @@ public class Panel extends JPanel {
         this.setBackground(Color.BLACK);
         Graphics2D graphics = (Graphics2D) g;
 
-        Controller.getInstance().DrawAll(graphics, cameraPos);
+        Controller.getInstance().DrawAll(graphics, cameraPos, cursorPos);
     }
 
 
@@ -121,7 +123,8 @@ public class Panel extends JPanel {
 
         @Override
         public void mouseMoved(MouseEvent e) {
-
+            cursorPos.x = e.getX();
+            cursorPos.y = e.getY();
         }
     }
 }
