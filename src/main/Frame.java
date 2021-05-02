@@ -1,10 +1,13 @@
 package main;
 
 import view.Controller;
+import view.Position;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
@@ -54,6 +57,14 @@ public class Frame extends JFrame{
         this.setVisible(true);
 
         this.addWindowListener(new FrameClosedListener());
+
+        this.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent e) {
+                Dimension dim = e.getComponent().getSize();
+                panel.WindowResized(new Position(dim.width-16,dim.height-39));
+                Controller.getInstance().FrameResized(new Position(dim.width-16,dim.height-39)); // mágikus számok
+            }
+        });
 
         threadGui = new Thread(() -> {
             while(!closed){
