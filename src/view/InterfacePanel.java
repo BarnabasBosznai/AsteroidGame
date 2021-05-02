@@ -7,6 +7,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InterfacePanel extends Drawable {
 
@@ -18,13 +20,28 @@ public class InterfacePanel extends Drawable {
     Color brown = new Color(128,64,0);
     boolean stepped = false;
 
+    private final Map<String, Button> buttonMap;
+
     public InterfacePanel(){
         this.zIndex = 100;
         craft = false;
         place = false;
         allMaterial = false;
-        output = new String("");
+        output = "";
         textbox = brown;
+
+        this.buttonMap = new HashMap<>();
+        this.buttonMap.put("Robot", new Button(0,434,120,43,5,439,110,33,"Robot",26,466,26));
+        this.buttonMap.put("Teleport", new Button(0,477,120,43,5,482,110,33,"Teleport",12,508,26));
+        this.buttonMap.put("Craft", new Button(0,520,120,43,5,525,110,33,"Craft",29,552,26));
+        this.buttonMap.put("Drill", new Button(120,520,120,43,125,525,110,33,"Drill",155,552,26));
+        this.buttonMap.put("Mine", new Button(760,520,120,43,765,525,110,33,"Mine",790,552,26));
+        this.buttonMap.put("Place", new Button(880,520,120,43,885,525,110,33,"Place",905,552,26));
+        this.buttonMap.put("Iron", new Button(880,391,120,43,885,396,110,33,"Iron",919,423,26));
+        this.buttonMap.put("Coal", new Button(880,348,120,43,885,353,110,33,"Coal",914,380,26));
+        this.buttonMap.put("Waterice", new Button(880,434,120,43,885,439,110,33,"Waterice",889,466,26));
+        this.buttonMap.put("Uranium", new Button(880,477,120,43,885,482,110,33,"Uranium",892,508,26));
+        this.buttonMap.put("Output", new Button(240,520,520,43,245,525,510,33,output,250,552,29));
 
         try{
             //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
@@ -43,109 +60,44 @@ public class InterfacePanel extends Drawable {
         if (craft){ // mágikus számok hada 1.
 
             // Robot craftoló gomb
-            graphics.setColor(Color.GRAY);
-            graphics.fillRect(0,434,120,43);
-            graphics.setColor(Color.LIGHT_GRAY);
-            graphics.fillRect(5,439,110,33);
-            graphics.setColor(Color.BLACK);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,26));
-            graphics.drawString("Robot",26,466);
+            this.buttonMap.get("Robot").Draw(graphics);
 
             // Teleport craftoló gomb
-            graphics.setColor(Color.GRAY);
-            graphics.fillRect(0,477,120,43);
-            graphics.setColor(Color.LIGHT_GRAY);
-            graphics.fillRect(5,482,110,33);
-            graphics.setColor(Color.BLACK);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,26));
-            graphics.drawString("Teleport",12,508);
+            this.buttonMap.get("Teleport").Draw(graphics);
 
             //Craft gomb meg van nyomva
-            graphics.setColor(Color.LIGHT_GRAY);
-            graphics.fillRect(0,520,120,43);
-            graphics.setColor(Color.cyan);
-            graphics.fillRect(5,525,110,33);
-            graphics.setColor(Color.BLACK);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,29));
-            graphics.drawString("Craft",29,552);
+            this.buttonMap.get("Craft").Draw(graphics);
+
         } else {  // mágikus számok hada 2.
 
             //Craft gomb nincs megnyomva
-            graphics.setColor(Color.GRAY);
-            graphics.fillRect(0,520,120,43);
-            graphics.setColor(Color.LIGHT_GRAY);
-            graphics.fillRect(5,525,110,33);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,29));
-            graphics.setColor(Color.BLACK);
-            graphics.drawString("Craft",29,552);
+            this.buttonMap.get("Craft").Draw(graphics);
         }
 
         if (place){ // mágikus számok hada 3.
 
             /// Teleportkaput letevő gomb
-            graphics.setColor(Color.GRAY);
-            graphics.fillRect(880,305,120,43);
-            graphics.setColor(Color.LIGHT_GRAY);
-            graphics.fillRect(885,310,110,33);
-            graphics.setColor(Color.BLACK);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,26));
-            graphics.drawString("Teleport",893,337);
+            this.buttonMap.get("Teleport").Draw(graphics);
 
             // Szenet letevő gomb
-            graphics.setColor(Color.GRAY);
-            graphics.fillRect(880,348,120,43);
-            graphics.setColor(Color.LIGHT_GRAY);
-            graphics.fillRect(885,353,110,33);
-            graphics.setColor(Color.BLACK);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,26));
-            graphics.drawString("Coal",914,380);
+            this.buttonMap.get("Coal").Draw(graphics);
 
             // Vasat letevő gomb
-            graphics.setColor(Color.GRAY);
-            graphics.fillRect(880,391,120,43);
-            graphics.setColor(Color.LIGHT_GRAY);
-            graphics.fillRect(885,396,110,33);
-            graphics.setColor(Color.BLACK);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,26));
-            graphics.drawString("Iron",919,423);
+            this.buttonMap.get("Iron").Draw(graphics);
 
             // Vízjeget letevő gomb // emiatt lett 120 a szélessége minden gombnak
-            graphics.setColor(Color.GRAY);
-            graphics.fillRect(880,434,120,43);
-            graphics.setColor(Color.LIGHT_GRAY);
-            graphics.fillRect(885,439,110,33);
-            graphics.setColor(Color.BLACK);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,26));
-            graphics.drawString("Waterice",889,466);
+            this.buttonMap.get("Waterice").Draw(graphics);
 
             // Uránt letevő gomb
-            graphics.setColor(Color.GRAY);
-            graphics.fillRect(880,477,120,43);
-            graphics.setColor(Color.LIGHT_GRAY);
-            graphics.fillRect(885,482,110,33);
-            graphics.setColor(Color.BLACK);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,26));
-            graphics.drawString("Uranium",892,508);
+            this.buttonMap.get("Uranium").Draw(graphics);
 
             //Place gomb meg van nyomva
-            graphics.setColor(Color.LIGHT_GRAY);
-            graphics.fillRect(880,520,120,43);
-            graphics.setColor(Color.cyan);
-            graphics.fillRect(885,525,110,33);
-            graphics.setColor(Color.BLACK);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,29));
-            graphics.drawString("Place",905,552);
+            this.buttonMap.get("Place").Draw(graphics);
 
         } else {    // mágikus számok hada 4.
 
             //Place gomb nincs megnyomva
-            graphics.setColor(Color.GRAY);
-            graphics.fillRect(880,520,120,43);
-            graphics.setColor(Color.LIGHT_GRAY);
-            graphics.fillRect(885,525,110,33);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,29));
-            graphics.setColor(Color.BLACK);
-            graphics.drawString("Place",905,552);
+            this.buttonMap.get("Place").Draw(graphics);
         }
 
         // Nyersanyagok kijelzése
@@ -170,11 +122,11 @@ public class InterfacePanel extends Drawable {
             var materials = waitingSettler.GetInventory().GetMaterials();
             for ( var material: materials
                  ) {
-                if (material.getClass()== Coal.class)
+                if (material.CompatibleWith(new Coal()))
                     coal++;
-                else if (material.getClass()== Iron.class)
+                else if (material.CompatibleWith(new Iron()))
                     iron++;
-                else if (material.getClass()== WaterIce.class)
+                else if (material.CompatibleWith(new WaterIce()))
                     waterice++;
                 else
                     uranium++;
@@ -196,31 +148,17 @@ public class InterfacePanel extends Drawable {
         // Szöveges visszacsatolás
         if (waitingSettler!=null)
             textbox = Controller.getInstance().GetSettlerView(waitingSettler).GetColor();
-        graphics.setColor(textbox);
-        graphics.fillRect(240,520,520,43);
-        graphics.setColor(Color.LIGHT_GRAY);
-        graphics.fillRect(245,525,510,33);
-        graphics.setFont(new Font("Dialog",Font.PLAIN,29));
-        graphics.setColor(Color.BLACK);
-        graphics.drawString(output,250,552);
+
+        Button outputButton = this.buttonMap.get("Output");
+        outputButton.SetBackGroundColor(this.textbox);
+        outputButton.SetString(this.output);
+        outputButton.Draw(graphics);
 
         // Drill gomb
-        graphics.setColor(Color.GRAY);
-        graphics.fillRect(120,520,120,43);
-        graphics.setColor(Color.LIGHT_GRAY);
-        graphics.fillRect(125,525,110,33);
-        graphics.setFont(new Font("Dialog",Font.PLAIN,29));
-        graphics.setColor(Color.BLACK);
-        graphics.drawString("Drill",155,552);
+        this.buttonMap.get("Drill").Draw(graphics);
 
         // Mine gomb
-        graphics.setColor(Color.GRAY);
-        graphics.fillRect(760,520,120,43);
-        graphics.setColor(Color.LIGHT_GRAY);
-        graphics.fillRect(765,525,110,33);
-        graphics.setFont(new Font("Dialog",Font.PLAIN,29));
-        graphics.setColor(Color.BLACK);
-        graphics.drawString("Mine",790,552);
+        this.buttonMap.get("Mine").Draw(graphics);
     }
 
 
