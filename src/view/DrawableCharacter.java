@@ -15,14 +15,22 @@ public abstract class DrawableCharacter {
     protected Position pos;
     protected double angle;
 
+    private Asteroid from;
+    private int animationTime;
+
     public DrawableCharacter(){
         this.pos = new Position(0,0);
+        animationTime = 1;
     }
 
     public abstract void Draw(Graphics2D graphics);
 
     public Asteroid GetAsteroid(){
         return this.GetCharacter().GetAsteroid();
+    }
+
+    public Asteroid GetLastAsteroid() {
+        return from;
     }
 
     public abstract Character GetCharacter();
@@ -33,6 +41,33 @@ public abstract class DrawableCharacter {
 
     public void CharacterMoved(Asteroid oldAsteroid, Asteroid newAsteroid){
         Controller.getInstance().CharacterMoved(this, oldAsteroid, newAsteroid);
+        from = oldAsteroid;
+    }
+
+    public boolean PlayMoveAnimation(Graphics2D g, Position cameraPos, AsteroidView lastPos, AsteroidView newPos) {
+        if(animationTime < 120) {
+            Position last = new Position(lastPos.GetPos().x, lastPos.GetPos().y);
+            Position next = new Position(newPos.GetPos().x, newPos.GetPos().y);
+
+            Position temp = new Position(0, 0);
+            temp.x = next.x - last.x;
+            temp.y = next.y - last.y;
+
+            float tempX = temp.x;
+            float tempY = temp.y;
+
+            temp.x = Math.round(tempX * ((float)animationTime / (float)120));
+            temp.y = Math.round(tempY * ((float)animationTime / (float)120));
+
+            temp.x = temp.x + last.x - cameraPos.x;
+            temp.y = temp.y + last.y - cameraPos.y;
+
+            animationTime++;
+            g.drawImage(img, temp.x, temp.y, 15,15,null);
+            return true;
+        }
+        animationTime = 1;
+        return false;
     }
 
     public void SetPosition(Position pos, double ang){
