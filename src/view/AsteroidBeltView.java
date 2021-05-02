@@ -32,7 +32,7 @@ public class AsteroidBeltView extends Drawable {
 
         Random random = new Random();
         for(int i = 0; i < 2000; ++i){
-            stars.add(new Position(random.nextInt(2000*2)-2000, random.nextInt(2000*2)-2000));
+            stars.add(new Position(random.nextInt(2500*2)-2500, random.nextInt(2500*2)-2500));
         }
     }
 
