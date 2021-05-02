@@ -2,10 +2,14 @@ package main;
 
 import view.Controller;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Létrehozza az ablakot.
@@ -19,6 +23,8 @@ public class Frame extends JFrame{
     Thread threadGui;
     Thread threadStep;
 
+    BufferedImage img;
+
     /**
      * Létrehozza az ablakot.
      * Rábízza a mneüre a játék vezérlését.
@@ -29,6 +35,13 @@ public class Frame extends JFrame{
         Panel panel = new Panel();
 
         this.add(panel);
+
+        try {
+            img = ImageIO.read(new File("icon.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.setIconImage(img);
 
         this.closed = false;
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
