@@ -43,13 +43,14 @@ public class AsteroidView extends Drawable implements Clickable {
     }
 
 
-    public void Draw_Neighbours_and_Teleports(Graphics2D graphics, Position cameraPos){
+    public void Draw_Neighbours_and_Teleports(Graphics2D graphics, Position cameraPos, Color color){
         var asteroidviews = new ArrayList<AsteroidView>();
         var asteroids = this.GetAsteroid().GetNeighboringAsteroids();
         for (Asteroid ast: asteroids) {
             asteroidviews.add(Controller.getInstance().GetAsteroidView(ast));
         }
-        graphics.setColor(Color.LIGHT_GRAY);
+        //graphics.setColor(Color.LIGHT_GRAY);
+        graphics.setColor(color);
         graphics.setStroke(new BasicStroke(3));
         if (asteroidviews==null)
             System.out.println("A1");
