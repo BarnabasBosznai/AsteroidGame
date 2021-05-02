@@ -16,6 +16,7 @@ public class InterfacePanel extends Drawable {
     Image CoalImg, IronImg, WaterIceImg, UraniumImg;
     Color textbox;
     Color brown = new Color(128,64,0);
+    boolean stepped = false;
 
     public InterfacePanel(){
         this.zIndex = 100;
@@ -224,23 +225,26 @@ public class InterfacePanel extends Drawable {
 
 
     public void SetCurrentWaitingSettler(Settler currentWaitingSettler) {
-        /*try {
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }*/
+        }
         waitingSettler=currentWaitingSettler;
+        stepped=false;
 
         output = "Te következel!";
     }
 
     public boolean HandleClick(Position clickPos){
-
         if(waitingSettler == null){
             output = "Ilyen nincs, nem jön semelyik Settler!";
-            return false;
+            return true;
         }
-
+        if (stepped){
+            output = "Már jöttél, ne siess!";
+            return true;
+        }
         boolean clickedOnInterface = false;
 
         if (craft){
@@ -249,6 +253,7 @@ public class InterfacePanel extends Drawable {
                 if (clickPos.y>434 && clickPos.y<477) {
                     if (waitingSettler.CraftRobot()) {
                         output = "Sikerült a Robot craftolása!";
+                        stepped=true;
                         Controller.getInstance().SettlerStepped();
                     } else {
                         output = "Nem sikerült a Robot Craftolása!";
@@ -257,6 +262,7 @@ public class InterfacePanel extends Drawable {
                 else if (clickPos.y>477 && clickPos.y<520) {
                     if (waitingSettler.CraftTeleportGates()) {
                         output = "Sikerült a Teleport craftolása!";
+                        stepped=true;
                         Controller.getInstance().SettlerStepped();
                     } else {
                         output = "Nem sikerült a Teleport Craftolása!";
@@ -274,6 +280,7 @@ public class InterfacePanel extends Drawable {
                 if (clickPos.y>305 && clickPos.y<348) {
                     if (waitingSettler.PlaceTeleportGate()) {
                         output = "Sikerült letenni a Teleportkaput!";
+                        stepped=true;
                         Controller.getInstance().SettlerStepped();
                     } else {
                         output = "Nem sikerült letenni a Teleportkaput!";
@@ -282,6 +289,7 @@ public class InterfacePanel extends Drawable {
                 else if (clickPos.y>348 && clickPos.y<391) {
                     if (waitingSettler.PlaceMaterial(new Coal())) {
                         output = "Sikerült letenni a Szenet!";
+                        stepped=true;
                         Controller.getInstance().SettlerStepped();
                     } else {
                         output = "Nem sikerült letenni a Szenet!";
@@ -290,6 +298,7 @@ public class InterfacePanel extends Drawable {
                 else if (clickPos.y>391 && clickPos.y<434) {
                     if (waitingSettler.PlaceMaterial(new Iron())) {
                         output = "Sikerült letenni a Vasat!";
+                        stepped=true;
                         Controller.getInstance().SettlerStepped();
                     } else {
                         output = "Nem sikerült letenni a Vasat!";
@@ -298,6 +307,7 @@ public class InterfacePanel extends Drawable {
                 else if (clickPos.y>434 && clickPos.y<477) {
                     if (waitingSettler.PlaceMaterial(new WaterIce())) {
                         output = "Sikerült letenni a Vízjeget!";
+                        stepped=true;
                         Controller.getInstance().SettlerStepped();
                     } else {
                         output = "Nem sikerült letenni a Vízjeget!";
@@ -306,6 +316,7 @@ public class InterfacePanel extends Drawable {
                 else if (clickPos.y>477 && clickPos.y<520) {
                     if (waitingSettler.PlaceMaterial(new Uranium())) {
                         output = "Sikerült letenni az Uránt!";
+                        stepped=true;
                         Controller.getInstance().SettlerStepped();
                     } else {
                         output = "Nem sikerült letenni az Uránt!";
@@ -327,6 +338,7 @@ public class InterfacePanel extends Drawable {
             else if (clickPos.x<240) {
                 if (waitingSettler.Drill()){
                     output = "Sikerült fúrni!";
+                    stepped=true;
                     Controller.getInstance().SettlerStepped();
                 } else {
                     output = "Nem sikerült fúrni!";
@@ -336,6 +348,7 @@ public class InterfacePanel extends Drawable {
             } else if (clickPos.x<880){
                 if (waitingSettler.Mine()){
                     output = "Sikerült bányászni!";
+                    stepped=true;
                     Controller.getInstance().SettlerStepped();
                 } else {
                     output = "Nem sikerült bányászni!";
@@ -349,7 +362,6 @@ public class InterfacePanel extends Drawable {
             if (clickPos.x>240 && clickPos.y<760)
                 clickedOnInterface=true;
         }
-
         return !clickedOnInterface;
     }
 }
