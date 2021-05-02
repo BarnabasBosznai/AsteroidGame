@@ -125,6 +125,9 @@ public class Panel extends JPanel {
                 if (cameraPos.y<-2500) cameraPos.y=-2500;
                 if (cameraPos.y>2080*563/winSize.y) cameraPos.y=2080*563/winSize.y;
                 //System.out.println("KameraPos: "+cameraPos.x+" "+cameraPosSaved.x+" "+e.getX()+" "+lastClickPos.x);
+
+                cursorPos.x = e.getX();
+                cursorPos.y = e.getY();
             }
         }
 

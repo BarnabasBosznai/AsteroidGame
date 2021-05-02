@@ -143,16 +143,15 @@ public class Controller {
             /* (AsteroidView astview : asteroidViewMap.values()) {
                 astview.Draw_Neighbours_and_Teleports(g, cameraPos);
             }*/
-
             if(currentSettlerWaitingForInput != null)
-                asteroidViewMap.get(currentSettlerWaitingForInput.GetAsteroid()).Draw_Neighbours_and_Teleports(g, cameraPos);
+                asteroidViewMap.get(currentSettlerWaitingForInput.GetAsteroid()).Draw_Neighbours_and_Teleports(g, cameraPos, Color.WHITE);
             asteroidViewMap.forEach((asteroid, asteroidView) ->  {
                 if(Math.sqrt((asteroidView.GetPos().x + 30 - cameraPos.x - cursorPos.x) * (asteroidView.GetPos().x + 30 - cameraPos.x - cursorPos.x) +
                         (asteroidView.GetPos().y + 30 - cameraPos.y - cursorPos.y) * (asteroidView.GetPos().y + 30 - cameraPos.y  - cursorPos.y)) < AsteroidView.asteroidRadius)
-                    asteroidView.Draw_Neighbours_and_Teleports(g, cameraPos);
+                    asteroidView.Draw_Neighbours_and_Teleports(g, cameraPos, Color.CYAN);
             });
             if(lastClickedAsteroid != null)
-                lastClickedAsteroid.Draw_Neighbours_and_Teleports(g, cameraPos);
+                lastClickedAsteroid.Draw_Neighbours_and_Teleports(g, cameraPos, Color.CYAN);
 
             for (Drawable drawable : drawables) {
                 drawable.Draw(g, cameraPos);
