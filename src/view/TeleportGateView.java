@@ -19,7 +19,12 @@ public class TeleportGateView extends Drawable {
 
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
-
+        if (teleportGate1.GetAsteroid() != null && teleportGate2.GetAsteroid()!=null){
+            graphics.setColor(Color.BLUE);
+            AsteroidView ast1 = Controller.getInstance().GetAsteroidView(teleportGate1.GetAsteroid());
+            AsteroidView ast2 = Controller.getInstance().GetAsteroidView(teleportGate2.GetAsteroid());
+            graphics.drawLine(ast1.GetPos().x - cameraPos.x + 50,ast1.GetPos().y - cameraPos.y + 50,ast2.GetPos().x - cameraPos.x + 50,ast2.GetPos().y - cameraPos.y + 50);
+        }
     }
 
     public void TeleportGateDestroyed(){

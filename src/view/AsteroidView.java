@@ -114,9 +114,19 @@ public class AsteroidView extends Drawable implements Clickable {
             } else {
                 graphics.drawString("???", pos.x - cameraPos.x - 64, pos.y - cameraPos.y + 58);
             }
+            boolean teleportabel = false;
+            if (Controller.getInstance().GetCurrentSettlerWaitingForInput()!=null) {
+                var teleportGates = Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetTeleportGates();
 
+                for (var teleport : teleportGates
+                ) {
+                    if (teleport.GetPair().GetAsteroid() == this.asteroid)
+                        teleportabel = true;
+                }
+            }
             if (Controller.getInstance().GetCurrentSettlerWaitingForInput()!=null &&
-                    Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetNeighboringAsteroids().contains(this.asteroid)) {
+                    (Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetNeighboringAsteroids().contains(this.asteroid)
+                    || teleportabel)) {
                 graphics.setColor(faded);
                 graphics.fillRect(pos.x - cameraPos.x - 70, pos.y - cameraPos.y + 65, 70, 30);
                 graphics.setColor(Color.GRAY);
@@ -180,9 +190,18 @@ public class AsteroidView extends Drawable implements Clickable {
         if (clicked){
             if (clickPos.x > pos.x-cameraPos.x-70 && clickPos.x < pos.x-cameraPos.x-70 + 70 &&
                     clickPos.y > pos.y-cameraPos.y && clickPos.y < pos.y-cameraPos.y + 65 + 30){
+                var teleportGates = Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetTeleportGates();
+                boolean teleportabel = false;
+                for (var teleport: teleportGates
+                     ) {
+                    if (teleport.GetPair().GetAsteroid()==this.asteroid)
+                        teleportabel=true;
+                }
+
                 if (Controller.getInstance().GetCurrentSettlerWaitingForInput()!=null &&
                         clickPos.y > pos.y-cameraPos.y + 65 &&
-                        !Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetNeighboringAsteroids().contains(this.asteroid)) {
+                        (!Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetNeighboringAsteroids().contains(this.asteroid)
+                                && !teleportabel)) {
                     return false;
                 }
                 return true;
