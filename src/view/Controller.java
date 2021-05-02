@@ -35,6 +35,8 @@ public class Controller {
 
     private boolean canCallNextStep = false;
 
+    DrawableCharacter lastMovedCharacter;
+
     private Controller(){
         this.drawables = new ArrayList<>();
         this.asteroidViewMap = new HashMap<>();
@@ -43,6 +45,8 @@ public class Controller {
         this.lastClickedAsteroid = null;
         this.interfacePanel = new InterfacePanel();
         this.drawables.add(interfacePanel);
+
+        lastMovedCharacter = null;
     }
 
     public static Controller getInstance() {
@@ -134,6 +138,12 @@ public class Controller {
      */
     public void DrawAll(Graphics2D g, Position cameraPos, Position cursorPos){
         synchronized (drawables) {
+            if(lastMovedCharacter != null) {
+                if (!lastMovedCharacter.PlayMoveAnimation(g, cameraPos, asteroidViewMap.get(lastMovedCharacter.GetLastAsteroid()), asteroidViewMap.get(lastMovedCharacter.GetAsteroid()))) {
+                    asteroidViewMap.get(lastMovedCharacter.GetAsteroid()).AddDrawableCharacter(lastMovedCharacter);
+                    lastMovedCharacter = null;
+                }
+            }
             /* (AsteroidView astview : asteroidViewMap.values()) {
                 astview.Draw_Neighbours_and_Teleports(g, cameraPos);
             }*/
@@ -242,8 +252,9 @@ public class Controller {
         AsteroidView av1 = this.asteroidViewMap.get(oldAsteroid);
         AsteroidView av2 = this.asteroidViewMap.get(newAsteroid);
 
+        lastMovedCharacter = dc;
         av1.RemoveDrawableCharacter(dc);
-        av2.AddDrawableCharacter(dc);
+        //av2.AddDrawableCharacter(dc);
     }
 
     /**
