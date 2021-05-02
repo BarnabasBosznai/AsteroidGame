@@ -20,7 +20,7 @@ public class UFOView extends DrawableCharacter {
         this.radius = ufoRadius*2;
         try{
             //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
-            this.img = ImageIO.read(new File("ufo.png"));
+            this.img = ImageIO.read(new File("Textures/ufo.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();
