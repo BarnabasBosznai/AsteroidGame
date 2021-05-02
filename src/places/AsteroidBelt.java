@@ -124,34 +124,87 @@ public class AsteroidBelt implements Steppable {
         asteroids.add(asteroid);
     }
 
-    public boolean BFS() {
-        boolean[] visited = new boolean[asteroids.size()];
+    public void MakeItConnected(){
+        List<List<Asteroid>> components = new ArrayList<>();
+
+        List<Asteroid> visited;
+        List<Asteroid> original;
+        List<Asteroid> notVisited = this.asteroids;
+
+        do{
+            original = notVisited;
+            notVisited = BFS(notVisited);
+
+            visited = new ArrayList<>();
+            for(Asteroid ast : original){
+                if(!notVisited.contains(ast))
+                    visited.add(ast);
+            }
+
+            components.add(visited);
+
+        } while(notVisited.size() > 0);
+
+        if(components.size() <= 1)
+            return;
+
+        Random random = new Random();
+
+        for(int i = 0; i < components.size(); ++i){
+            int componentIdx1, componentIdx2;
+            int randomIdx1, randomIdx2;
+            if(i == components.size() - 1){
+                componentIdx1 = i;
+                componentIdx2 = 0;
+            }
+            else{
+                componentIdx1 = i;
+                componentIdx2 = i+1;
+            }
+            randomIdx1 = random.nextInt(components.get(componentIdx1).size());
+            randomIdx2 = random.nextInt(components.get(componentIdx2).size());
+
+            Asteroid a1 = components.get(componentIdx1).get(randomIdx1);
+            Asteroid a2 = components.get(componentIdx2).get(randomIdx2);
+
+            a1.AddNeighbor(a2);
+            a2.AddNeighbor(a1);
+        }
+    }
+
+    private List<Asteroid> BFS(List<Asteroid> remainingAsteroids) {
+        Map<Asteroid, Boolean> visitedAsteroidMap = new HashMap<>();
+        for(Asteroid a: remainingAsteroids){
+            visitedAsteroidMap.put(a, false);
+        }
+
         Queue<Asteroid> queue = new LinkedList<>();
 
         Random random = new Random();
-        Asteroid s = asteroids.get(random.nextInt(asteroids.size()));
+        Asteroid s = remainingAsteroids.get(random.nextInt(remainingAsteroids.size()));
 
-        visited[asteroids.indexOf(s)] = true;
+        visitedAsteroidMap.put(s, true);
+
         queue.add(s);
 
         while(queue.size() != 0) {
             s = queue.poll();
 
-            Iterator<Asteroid> i = s.GetNeighboringAsteroids().listIterator();
-            while (i.hasNext()) {
-                Asteroid n = i.next();
-                if (!visited[asteroids.indexOf(n)]) {
-                    visited[asteroids.indexOf(n)] = true;
+            for (Asteroid n : s.GetNeighboringAsteroids()) {
+                if (!visitedAsteroidMap.get(n)) {
+                    visitedAsteroidMap.put(n, true);
                     queue.add(n);
                 }
             }
         }
 
-        for(boolean b : visited) {
-            if (!b) {
-                return false;
-            }
+        List<Asteroid> notVisitedAsteroids = new ArrayList<>();
+
+        for(Asteroid a : visitedAsteroidMap.keySet()) {
+            if (!visitedAsteroidMap.get(a))
+                notVisitedAsteroids.add(a);
         }
-        return true;
+
+        return notVisitedAsteroids;
     }
 }
