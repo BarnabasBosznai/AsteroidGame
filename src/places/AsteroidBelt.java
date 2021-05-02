@@ -52,7 +52,7 @@ public class AsteroidBelt implements Steppable {
     @Override
     public void Step() {
         Random random = new Random();
-        int rand = random.nextInt(5);
+        int rand = random.nextInt(1);
 
         //kisebb ai
         if(rand == 0){

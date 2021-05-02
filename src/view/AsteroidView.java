@@ -132,8 +132,8 @@ public class AsteroidView extends Drawable implements Clickable {
                 graphics.setColor(Color.GRAY);
                 graphics.drawRect(pos.x - cameraPos.x - 70, pos.y - cameraPos.y + 65, 70, 30);
                 graphics.setColor(Color.BLACK);
-                graphics.setFont(new Font("Dialog", Font.PLAIN, 29));
-                graphics.drawString("Move", pos.x - cameraPos.x - 68, pos.y - cameraPos.y + 92);
+                graphics.setFont(new Font("Dialog", Font.PLAIN, 22));
+                graphics.drawString("Move", pos.x - cameraPos.x - 63, pos.y - cameraPos.y + 90);
             }
         }
     }
