@@ -204,15 +204,16 @@ public class InterfacePanel extends Drawable {
         // Nyersanyagok kijelzése
 
         graphics.setColor(brown);
-        graphics.fillRect(240,0,520,43);
+        Position winSize = Controller.getInstance().windowSize;
+        graphics.fillRect(240*winSize.x/1000,0*winSize.y/563,520*winSize.x/1000,43*winSize.y/563);
         graphics.setColor(Color.LIGHT_GRAY);
-        graphics.fillRect(245,5,510,33);
+        graphics.fillRect(245*winSize.x/1000,5*winSize.y/563,510*winSize.x/1000,33*winSize.y/563);
         graphics.setFont(new Font("Dialog",Font.PLAIN,29));
         graphics.setColor(Color.BLACK);
-        graphics.drawImage(CoalImg,245,2,40,40,null,null);
-        graphics.drawImage(IronImg,340,2,40,40,null,null);
-        graphics.drawImage(WaterIceImg,435,2,40,40,null,null);
-        graphics.drawImage(UraniumImg,530,2,40,40,null,null);
+        graphics.drawImage(CoalImg,245*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
+        graphics.drawImage(IronImg,340*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
+        graphics.drawImage(WaterIceImg,435*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
+        graphics.drawImage(UraniumImg,530*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
 
         if (waitingSettler!=null) {
 
@@ -234,15 +235,15 @@ public class InterfacePanel extends Drawable {
             }
 
 
-            graphics.drawString(coal+"",295,32);
-            graphics.drawString(iron+"",390,32);
-            graphics.drawString(waterice+"",485,32);
-            graphics.drawString(uranium+"",580,32);
+            graphics.drawString(coal+"",295*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString(iron+"",390*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString(waterice+"",485*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString(uranium+"",580*winSize.x/1000,32*winSize.y/563);
         } else {
-            graphics.drawString("0",295,32);
-            graphics.drawString("0",390,32);
-            graphics.drawString("0",485,32);
-            graphics.drawString("0",580,32);
+            graphics.drawString("0",295*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString("0",390*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString("0",485*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString("0",580*winSize.x/1000,32*winSize.y/563);
         }
         // Ast_Infobox?
 
@@ -261,7 +262,6 @@ public class InterfacePanel extends Drawable {
         // Mine gomb
         this.buttonMap.get("Mine").Draw(graphics);
     }
-
 
     public void SetCurrentWaitingSettler(Settler currentWaitingSettler) {
         try {
