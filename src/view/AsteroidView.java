@@ -31,7 +31,7 @@ public class AsteroidView extends Drawable implements Clickable {
         this.angle=new Random().nextDouble()*2*Math.PI;
         try{
             //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
-            this.img= ImageIO.read(new File("aszteroida.png"));
+            this.img= ImageIO.read(new File("Textures/aszteroida.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();

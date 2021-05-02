@@ -160,10 +160,10 @@ public class InterfacePanel extends Drawable {
 
         try{
             //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
-            CoalImg = ImageIO.read(new File("szén.png"));
-            IronImg = ImageIO.read(new File("vas.png"));
-            WaterIceImg = ImageIO.read(new File("vízjég.png"));
-            UraniumImg = ImageIO.read(new File("urán.png"));
+            CoalImg = ImageIO.read(new File("Textures/szén.png"));
+            IronImg = ImageIO.read(new File("Textures/vas.png"));
+            WaterIceImg = ImageIO.read(new File("Textures/vízjég.png"));
+            UraniumImg = ImageIO.read(new File("Textures/urán.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();

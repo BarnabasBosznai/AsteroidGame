@@ -35,7 +35,7 @@ public class SettlerView extends DrawableCharacter {
         this.radius = settlerRadius;
         try{
             //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
-            this.img= ImageIO.read(new File("settler.png"));
+            this.img= ImageIO.read(new File("Textures/settler.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();
