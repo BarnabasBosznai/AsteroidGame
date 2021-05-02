@@ -29,6 +29,7 @@ public class Controller {
     private final Map<Asteroid, AsteroidView> asteroidViewMap;
     private final Map<Settler, SettlerView> settlerViewMap;
     private Clickable currentClickedAsteroid;
+    private AsteroidView lastClickedAsteroid;
 
     private Settler currentSettlerWaitingForInput;
 
@@ -39,7 +40,7 @@ public class Controller {
         this.asteroidViewMap = new HashMap<>();
         this.settlerViewMap = new HashMap<>();
         this.currentSettlerWaitingForInput = null;
-
+        this.lastClickedAsteroid = null;
         this.interfacePanel = new InterfacePanel();
         this.drawables.add(interfacePanel);
     }
@@ -90,6 +91,7 @@ public class Controller {
         for(Clickable clickable : allClickables){
             if(clickable.ClickedCheck(clickPos, cameraPos)) {
                 currentClickedAsteroid = clickable;
+                lastClickedAsteroid = (AsteroidView) clickable;
             }
         }
 
@@ -130,11 +132,21 @@ public class Controller {
     /**
      * kirajzol mindent is
      */
-    public void DrawAll(Graphics2D g, Position cameraPos){
+    public void DrawAll(Graphics2D g, Position cameraPos, Position cursorPos){
         synchronized (drawables) {
-            for (AsteroidView astview : asteroidViewMap.values()) {
+            /* (AsteroidView astview : asteroidViewMap.values()) {
                 astview.Draw_Neighbours_and_Teleports(g, cameraPos);
-            }
+            }*/
+            if(currentSettlerWaitingForInput != null)
+                asteroidViewMap.get(currentSettlerWaitingForInput.GetAsteroid()).Draw_Neighbours_and_Teleports(g, cameraPos, Color.WHITE);
+            asteroidViewMap.forEach((asteroid, asteroidView) ->  {
+                if(Math.sqrt((asteroidView.GetPos().x + 30 - cameraPos.x - cursorPos.x) * (asteroidView.GetPos().x + 30 - cameraPos.x - cursorPos.x) +
+                        (asteroidView.GetPos().y + 30 - cameraPos.y - cursorPos.y) * (asteroidView.GetPos().y + 30 - cameraPos.y  - cursorPos.y)) < AsteroidView.asteroidRadius)
+                    asteroidView.Draw_Neighbours_and_Teleports(g, cameraPos, Color.CYAN);
+            });
+            if(lastClickedAsteroid != null)
+                lastClickedAsteroid.Draw_Neighbours_and_Teleports(g, cameraPos, Color.CYAN);
+
             for (Drawable drawable : drawables) {
                 drawable.Draw(g, cameraPos);
             }

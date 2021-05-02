@@ -32,14 +32,14 @@ public class AsteroidBeltView extends Drawable {
 
         Random random = new Random();
         for(int i = 0; i < 2000; ++i){
-            stars.add(new Position(random.nextInt(2000*2)-2000, random.nextInt(2000*2)-2000));
+            stars.add(new Position(random.nextInt(2500*2)-2500, random.nextInt(2500*2)-2500));
         }
     }
 
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
         graphics.setColor(Color.WHITE);
-        stars.forEach(star -> graphics.drawOval(star.x - cameraPos.x, star.y - cameraPos.y, 1, 1));
+        stars.forEach(star -> graphics.fillOval(star.x - cameraPos.x, star.y - cameraPos.y, 1, 1));
 
         if(solarFlareHappening || nearSunHappening){
             System.out.println("ANIMATIONNN");

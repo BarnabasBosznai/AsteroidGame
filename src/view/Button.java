@@ -3,16 +3,6 @@ package view;
 import java.awt.*;
 
 public class Button implements Clickable {
-    /*private final int borderX;
-    private final int borderY;
-    private final int borderWidthX;
-    private final int borderWidthY;
-    private final int innerX;
-    private final int innerY;
-    private final int innerWidthX;
-    private final int innerWidthY;
-    private final int stringPosX;
-    private final int stringPosY;*/
     private String string;
     private final int fontSize;
     private Color backGroundColor;
@@ -22,25 +12,6 @@ public class Button implements Clickable {
     private Font font;
     private boolean state;
     private Runnable callback;
-
-    /*public Button(int borderX, int borderY, int borderWidthX, int borderWidthY, int innerX,
-                  int innerY, int innerWidthX, int innerWidthY, String string, int stringPosX, int stringPosY, int fontSize){
-        this.borderX = borderX;
-        this.borderY = borderY;
-        this.borderWidthX = borderWidthX;
-        this.borderWidthY = borderWidthY;
-        this.innerX = innerX;
-        this.innerY = innerY;
-        this.innerWidthX = innerWidthX;
-        this.innerWidthY = innerWidthY;
-        this.string = string;
-        this.stringPosX = stringPosX;
-        this.stringPosY = stringPosY;
-        this.fontSize = fontSize;
-        this.backGroundColor = Color.GRAY;
-        this.state = false;
-        this.font = new Font("Dialog",Font.PLAIN,fontSize);
-    }*/
 
     public Button(Rectangle border, Rectangle inner, String string, int fontSize){
         this.border = border;
@@ -66,7 +37,6 @@ public class Button implements Clickable {
 
     @Override
     public boolean ClickedCheck(Position clickPos, Position cameraPos) {
-        //return true;
         return border.contains(clickPos.x, clickPos.y);
     }
 
@@ -95,16 +65,11 @@ public class Button implements Clickable {
 
     public void Draw(Graphics2D graphics){
         graphics.setColor(this.backGroundColor);
-        //graphics.fillRect(borderX, borderY, borderWidthX, borderWidthY);
         graphics.fillRect(border.x, border.y, border.width, border.height);
-
         graphics.setColor(Color.LIGHT_GRAY);
-        //graphics.fillRect(innerX, innerY, innerWidthX, innerWidthY);
         graphics.fillRect(inner.x, inner.y, inner.width, inner.height);
-
         graphics.setColor(Color.BLACK);
         graphics.setFont(font);
         drawCenteredText(graphics);
-        //graphics.drawString(string, stringPosX, stringPosY);
     }
 }
