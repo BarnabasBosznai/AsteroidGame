@@ -114,7 +114,7 @@ public class Game {
             final List<Double> distancesCopy = new ArrayList<>(distances);
             distances.remove(distances.stream().mapToDouble(d -> d).min().getAsDouble());
 
-            for(int i = 0; i < 5; i++) {
+            /*for(int i = 0; i < 5; i++) {
                 Double min = distances.stream().mapToDouble(d -> d).min().getAsDouble();
                 Asteroid neighbor = asteroids.get(distancesCopy.indexOf(min));
                 if (ast.GetNeighboringAsteroids().size() < 5 && neighbor.GetNeighboringAsteroids().size() < 5) {
@@ -122,8 +122,24 @@ public class Game {
                     neighbor.AddNeighbor(ast);
                 }
                 distances.remove(min);
+            }*/
+
+            while(ast.GetNeighboringAsteroids().size() < 5 && distances.size() > 0) {
+                double min = distances.stream().mapToDouble(d -> d).min().getAsDouble();
+                Asteroid neighbor = asteroids.get(distancesCopy.indexOf(min));
+
+                if(!ast.GetNeighboringAsteroids().contains(neighbor) && neighbor.GetNeighboringAsteroids().size() < 5) {
+                    ast.AddNeighbor(neighbor);
+                    neighbor.AddNeighbor(ast);
+                }
+                distances.remove(min);
             }
         }
+
+        if(AsteroidBelt.getInstance().BFS())
+            System.out.println("Osszefuggo");
+        else
+            System.out.println("Nem Osszefuggo");
 
         int numOfUFOs = random.nextInt(20 - 5) + 5;
         for(int i = 0; i < numOfUFOs; i++) {
