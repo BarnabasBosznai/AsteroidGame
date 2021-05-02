@@ -67,6 +67,7 @@ public abstract class DrawableCharacter {
             return true;
         }
         animationTime = 1;
+        newPos.AddDrawableCharacter(this);
         return false;
     }
 

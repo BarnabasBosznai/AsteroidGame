@@ -1,6 +1,5 @@
 package view;
 
-import characters.Character;
 import characters.Robot;
 import characters.Settler;
 import characters.UFO;
@@ -37,6 +36,8 @@ public class Controller {
     private boolean canCallNextStep = false;
 
     DrawableCharacter lastMovedCharacter;
+    List<DrawableCharacter> queuedCharactersForMoving = new ArrayList<>();
+    List<DrawableCharacter> queuedFinishedCharacters = new ArrayList<>();
 
     private Controller(){
         this.drawables = new ArrayList<>();
@@ -143,12 +144,14 @@ public class Controller {
      */
     public void DrawAll(Graphics2D g, Position cameraPos, Position cursorPos){
         synchronized (drawables) {
-            if(lastMovedCharacter != null) {
-                if (!lastMovedCharacter.PlayMoveAnimation(g, cameraPos, asteroidViewMap.get(lastMovedCharacter.GetLastAsteroid()), asteroidViewMap.get(lastMovedCharacter.GetAsteroid()))) {
-                    asteroidViewMap.get(lastMovedCharacter.GetAsteroid()).AddDrawableCharacter(lastMovedCharacter);
-                    lastMovedCharacter = null;
-                }
+            for(var c : queuedCharactersForMoving) {
+                if(!c.PlayMoveAnimation(g, cameraPos, asteroidViewMap.get(c.GetLastAsteroid()), asteroidViewMap.get(c.GetAsteroid())))
+                    queuedFinishedCharacters.add(c);
             }
+            for(var c : queuedFinishedCharacters)
+                queuedCharactersForMoving.remove(c);
+            queuedFinishedCharacters.clear();
+
             /* (AsteroidView astview : asteroidViewMap.values()) {
                 astview.Draw_Neighbours_and_Teleports(g, cameraPos);
             }*/
@@ -258,6 +261,7 @@ public class Controller {
         AsteroidView av2 = this.asteroidViewMap.get(newAsteroid);
 
         lastMovedCharacter = dc;
+        queuedCharactersForMoving.add(dc);
         av1.RemoveDrawableCharacter(dc);
         //av2.AddDrawableCharacter(dc);
     }
