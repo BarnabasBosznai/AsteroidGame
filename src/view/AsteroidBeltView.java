@@ -39,7 +39,7 @@ public class AsteroidBeltView extends Drawable {
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
         graphics.setColor(Color.WHITE);
-        stars.forEach(star -> graphics.drawOval(star.x - cameraPos.x, star.y - cameraPos.y, 1, 1));
+        stars.forEach(star -> graphics.fillOval(star.x - cameraPos.x, star.y - cameraPos.y, 1, 1));
 
         if(solarFlareHappening || nearSunHappening){
             System.out.println("ANIMATIONNN");
