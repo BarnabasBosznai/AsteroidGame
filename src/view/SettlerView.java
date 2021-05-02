@@ -7,16 +7,25 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
+import java.util.*;
+import java.util.List;
 
 public class SettlerView extends DrawableCharacter {
 
     private final Settler settler;
     private static final int settlerRadius = 10;
-    private Random rand = new Random();
-    private Color color;
+    private final Color color;
 
-    public Color GetColor(){return this.color;}
+    private static final List<Color> settlerColors;
+    private static int settlerViewCreationCounter;
+
+    static{
+        settlerViewCreationCounter = 0;
+        settlerColors = new ArrayList<>(Arrays.asList(new Color(255,0,0), new Color(0,255,0),
+                                        new Color(0,0,255), new Color(255,255,0), new Color(255,255,255)));
+    }
+
+    public Color GetColor(){ return this.color;}
 
     public Position GetPosition(){return this.pos;}
 
@@ -32,8 +41,9 @@ public class SettlerView extends DrawableCharacter {
         catch (IOException ex){
             ex.printStackTrace();
         }
-        color = new Color(rand.nextInt(256),rand.nextInt(256),rand.nextInt(256));
 
+        this.color = settlerColors.get(settlerViewCreationCounter);
+        ++settlerViewCreationCounter;
     }
 
     @Override
