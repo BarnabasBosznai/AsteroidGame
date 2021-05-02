@@ -123,4 +123,35 @@ public class AsteroidBelt implements Steppable {
     public void AddAsteroid(Asteroid asteroid) {
         asteroids.add(asteroid);
     }
+
+    public boolean BFS() {
+        boolean[] visited = new boolean[asteroids.size()];
+        Queue<Asteroid> queue = new LinkedList<>();
+
+        Random random = new Random();
+        Asteroid s = asteroids.get(random.nextInt(asteroids.size()));
+
+        visited[asteroids.indexOf(s)] = true;
+        queue.add(s);
+
+        while(queue.size() != 0) {
+            s = queue.poll();
+
+            Iterator<Asteroid> i = s.GetNeighboringAsteroids().listIterator();
+            while (i.hasNext()) {
+                Asteroid n = i.next();
+                if (!visited[asteroids.indexOf(n)]) {
+                    visited[asteroids.indexOf(n)] = true;
+                    queue.add(n);
+                }
+            }
+        }
+
+        for(boolean b : visited) {
+            if (!b) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
