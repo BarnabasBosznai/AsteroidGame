@@ -19,17 +19,13 @@ public class Settler extends MiningCharacter {
      * A játékos inventoryja, amiben a nála található dolgokat tárolja.
      */
     private final Inventory inventory;
-
-    private final SettlerView view;
-
     /**
      * Settler konstruktora
      */
     public Settler(Asteroid ast) {
         inventory = new Inventory();
         this.asteroid = ast;
-        this.view = Controller.getInstance().AddSettlerView(this);
-        this.viewC = this.view;
+        this.viewC = Controller.getInstance().AddSettlerView(this);
     }
 
     /**
@@ -69,7 +65,7 @@ public class Settler extends MiningCharacter {
         if(place.Move(this)){
             currentAsteroid.TakeOff(this);
 
-            this.view.CharacterMoved(currentAsteroid, this.asteroid);
+            this.viewC.CharacterMoved(currentAsteroid, this.asteroid);
 
             return true;
         }
@@ -185,41 +181,7 @@ public class Settler extends MiningCharacter {
     @Override
     public void Step() {
 
-        //ezen kivul elvileg nem is kell mas, controllerbol meghivodik fv
-        this.view.WaitingForInput();
-
-       /* int input = (int)(Math.random()*7);
-
-
-        boolean failed = true;
-        while (failed) {
-            switch (input) {
-                case (1): // Mozgás
-                    failed = Move();
-                    break;
-                case (2): // Bányászás
-                    failed = Mine(inventory);
-                    break;
-                case (3): // Fúrás
-                    failed = Drill();
-                    break;
-                case (4): // Build Robot
-                    failed = CraftRobot();
-                    break;
-                case (5): // Build Teleport
-                    // Benne maradt a doksiban egy material paraméter
-                    failed = CraftTeleportGates();
-                    break;
-                case (6): // Place Material
-                    // Vagyis tudja a halál, de ez is a menüből kéne kiválasztani.
-                    //Material choosenMaterial = new Coal();
-                    //failed = PlaceMaterial(choosenMaterial);
-                    break;
-                case (7): // Install Teleport
-                    failed = PlaceTeleportGate();
-                    break;
-            }
-        }*/
+        Controller.getInstance().CurrentSettlerWaitingForInput(this);
     }
 
     @Override
