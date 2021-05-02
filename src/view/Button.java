@@ -45,7 +45,7 @@ public class Button implements Clickable {
 
     @Override
     public boolean ClickedCheck(Position clickPos, Position cameraPos) {
-        return false;
+        return true;
     }
 
     public void SetString(String string){

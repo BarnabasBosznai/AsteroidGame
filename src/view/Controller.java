@@ -79,16 +79,12 @@ public class Controller {
         }
 
         // ha ez sem, megnézi mindet
-        ArrayList<AsteroidView> allClickables = new ArrayList<>();
 
-        for(AsteroidView av: asteroidViewMap.values()){
-            allClickables.add(av);
-        }
+        ArrayList<AsteroidView> allClickables = new ArrayList<>(asteroidViewMap.values());
 
         //mindenesetre ne maradjon semmi se clickelve
         for(Clickable clickable : allClickables)
             clickable.UnClicked();
-
 
         currentClickedAsteroid=null;
         for(Clickable clickable : allClickables){

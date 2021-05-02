@@ -32,7 +32,8 @@ public class InterfacePanel extends Drawable {
 
         this.buttonMap = new HashMap<>();
         this.buttonMap.put("Robot", new Button(0,434,120,43,5,439,110,33,"Robot",26,466,26));
-        this.buttonMap.put("Teleport", new Button(0,477,120,43,5,482,110,33,"Teleport",12,508,26));
+        this.buttonMap.put("CraftTeleport", new Button(0,477,120,43,5,482,110,33,"Teleport",12,508,26));
+        this.buttonMap.put("PlaceTeleport", new Button(880,305,120,43,885,310,110,33,"Teleport",893,337,26));
         this.buttonMap.put("Craft", new Button(0,520,120,43,5,525,110,33,"Craft",29,552,26));
         this.buttonMap.put("Drill", new Button(120,520,120,43,125,525,110,33,"Drill",155,552,26));
         this.buttonMap.put("Mine", new Button(760,520,120,43,765,525,110,33,"Mine",790,552,26));
@@ -63,7 +64,7 @@ public class InterfacePanel extends Drawable {
             this.buttonMap.get("Robot").Draw(graphics);
 
             // Teleport craftoló gomb
-            this.buttonMap.get("Teleport").Draw(graphics);
+            this.buttonMap.get("CraftTeleport").Draw(graphics);
 
             //Craft gomb meg van nyomva
             this.buttonMap.get("Craft").Draw(graphics);
@@ -77,7 +78,7 @@ public class InterfacePanel extends Drawable {
         if (place){ // mágikus számok hada 3.
 
             /// Teleportkaput letevő gomb
-            this.buttonMap.get("Teleport").Draw(graphics);
+            this.buttonMap.get("PlaceTeleport").Draw(graphics);
 
             // Szenet letevő gomb
             this.buttonMap.get("Coal").Draw(graphics);

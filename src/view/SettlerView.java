@@ -21,8 +21,7 @@ public class SettlerView extends DrawableCharacter {
 
     static{
         settlerViewCreationCounter = 0;
-        settlerColors = new ArrayList<>(Arrays.asList(new Color(255,0,0), new Color(0,255,0),
-                                        new Color(0,0,255), new Color(255,255,0), new Color(255,255,255)));
+        settlerColors = new ArrayList<>(Arrays.asList(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.WHITE));
     }
 
     public Color GetColor(){ return this.color;}

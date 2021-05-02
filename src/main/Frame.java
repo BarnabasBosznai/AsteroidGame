@@ -37,7 +37,7 @@ public class Frame extends JFrame{
         this.getContentPane().setPreferredSize(new Dimension(1000,563)); // "Így nagyobb"
         this.pack();
         this.setResizable(true);
-        this.setLocation(300, 300);
+        this.setLocation(300, 150);
         this.setVisible(true);
 
         this.addWindowListener(new FrameClosedListener());
