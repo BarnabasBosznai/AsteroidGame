@@ -114,7 +114,6 @@ public class Controller {
     public void TimerTicked(){
         if(canCallNextStep)
             Game.getInstance().NextStep();
-
     }
 
     public void StepEnded(){
