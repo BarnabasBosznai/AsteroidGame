@@ -43,7 +43,7 @@ public class AsteroidBeltView extends Drawable {
 
         if(solarFlareHappening || nearSunHappening){
             graphics.setColor(new Color(1.0f, 0.369f, 0.075f, ((float)animationCounter/(float)animationCounterMax)));
-            graphics.fillRect(0,0,1000,563);
+            graphics.fillRect(0,0,Controller.getInstance().windowSize.x,Controller.getInstance().windowSize.y);
             ++animationCounter;
             if(animationCounter == animationCounterMax){
                 animationCounter = 0;
