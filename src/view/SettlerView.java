@@ -52,12 +52,7 @@ public class SettlerView extends DrawableCharacter implements Clickable {
 
     @Override
     public void Draw(Graphics2D graphics) {
-        graphics.setColor(color);
-        graphics.setStroke(new BasicStroke(2));
-        graphics.rotate(angle,this.pos.x,this.pos.y);
-        graphics.drawRect((this.pos.x-settlerRadius-1),(this.pos.y-settlerRadius-2),2*(settlerRadius)+2,2*(settlerRadius)+4);
-        graphics.rotate(-angle,this.pos.x,this.pos.y);
-        graphics.drawImage(rotate(angle),this.pos.x-settlerRadius,this.pos.y-settlerRadius,2*settlerRadius,2*settlerRadius,null);
+        this.Draw(graphics, this.pos);
 
         if (clicked) {
             graphics.setColor(new Color(255,255,255,100));
@@ -103,6 +98,16 @@ public class SettlerView extends DrawableCharacter implements Clickable {
             graphics.drawString(waterice+"" ,45,117+ 20);
             graphics.drawString(uranium+"" ,45,148+ 20);
         }
+    }
+
+    @Override
+    public void Draw(Graphics2D graphics, Position position) {
+        graphics.setColor(color);
+        graphics.setStroke(new BasicStroke(2));
+        graphics.rotate(angle,position.x,position.y);
+        graphics.drawRect((position.x-settlerRadius-1),(position.y-settlerRadius-2),2*(settlerRadius)+2,2*(settlerRadius)+4);
+        graphics.rotate(-angle,position.x,position.y);
+        graphics.drawImage(rotate(angle),position.x-settlerRadius,position.y-settlerRadius,2*settlerRadius,2*settlerRadius,null);
     }
 
     public void Draw_Inventory(Graphics2D graphics){
