@@ -29,7 +29,7 @@ public class Controller {
     private final Map<Settler, SettlerView> settlerViewMap;
     private Clickable currentClickedAsteroid;
     private AsteroidView lastClickedAsteroid;
-    public Position windowSize;
+    private final Position windowSize;
 
     private Settler currentSettlerWaitingForInput;
 
@@ -39,9 +39,9 @@ public class Controller {
     private boolean end = false;
     private boolean win;
 
-    DrawableCharacter lastMovedCharacter;
-    List<DrawableCharacter> queuedCharactersForMoving = new ArrayList<>();
-    List<DrawableCharacter> queuedFinishedCharacters = new ArrayList<>();
+    private DrawableCharacter lastMovedCharacter;
+    private List<DrawableCharacter> queuedCharactersForMoving = new ArrayList<>();
+    private List<DrawableCharacter> queuedFinishedCharacters = new ArrayList<>();
 
     private Controller(){
         this.drawables = new ArrayList<>();
@@ -52,7 +52,7 @@ public class Controller {
         this.interfacePanel = new InterfacePanel();
         this.drawables.add(interfacePanel);
 
-        lastMovedCharacter = null;
+        this.lastMovedCharacter = null;
         this.windowSize = new Position(1000,563); // lehetne paraméterként kapni
     }
 
@@ -77,6 +77,11 @@ public class Controller {
         this.windowSize.x = DownRight.x;
         this.windowSize.y = DownRight.y;
     }
+
+    public Position GetWindowSize(){
+        return this.windowSize;
+    }
+
     /**
      * Mouseclick re hivodik meg
      * @param clickPos
@@ -110,7 +115,6 @@ public class Controller {
             }
         }
 
-        //koordinatarendszerek+origo eltolas meg nincs lekezelve, majd az eltoltat adnam oda
         if(currentClickedAsteroid != null) {
             currentClickedAsteroid.Clicked(clickPos, cameraPos);
             return true;

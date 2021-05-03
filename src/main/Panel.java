@@ -117,7 +117,7 @@ public class Panel extends JPanel {
         public void mouseDragged(MouseEvent e) {
 
             if (!nem_interface){
-                Position winSize = Controller.getInstance().windowSize;
+                Position winSize = Controller.getInstance().GetWindowSize();
                 cameraPos.x = cameraPosSaved.x - e.getX() + lastClickPos.x;
                 cameraPos.y = cameraPosSaved.y - e.getY() + lastClickPos.y; // ez valószínűleg negálni kell
                 if (cameraPos.x<-2500) cameraPos.x=-2500;

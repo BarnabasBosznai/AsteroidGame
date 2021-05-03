@@ -21,7 +21,7 @@ public class AsteroidView extends Drawable implements Clickable {
     public static final int asteroidRadius = 42;
     private boolean clicked;
 
-    private double angle;
+    private final double angle;
     public AsteroidView(Asteroid a, Position pos, int z){
         this.asteroid = a;
         this.pos = pos;
@@ -60,9 +60,10 @@ public class AsteroidView extends Drawable implements Clickable {
 
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
-        if (!(pos.x >cameraPos.x-100 && pos.x < cameraPos.x+1000*Controller.getInstance().windowSize.x/1000))
+        Position windowSize = Controller.getInstance().GetWindowSize();
+        if (!(pos.x >cameraPos.x-100 && pos.x < cameraPos.x+1000*windowSize.x/1000))
             return;
-        if (!(pos.y >cameraPos.y-100 && pos.y < cameraPos.y+600*Controller.getInstance().windowSize.y/563))
+        if (!(pos.y >cameraPos.y-100 && pos.y < cameraPos.y+600*windowSize.y/563))
             return;
         //aszteroida magat kirajzolja
 
