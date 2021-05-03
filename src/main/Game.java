@@ -44,6 +44,8 @@ public class Game {
 
     private final List<Steppable> allSteppables;
 
+    private GameState gameState;
+
     /**
      * Visszatér a tesztelhető Game osztály egyetlen objetumával
      * @return testgame: az egyetlen TestGame objektum
@@ -63,6 +65,8 @@ public class Game {
         this.settlers = new ArrayList<>();
         this.allSteppables = new ArrayList<>();
         this.steppablesLeftinRound = new PriorityQueue<>(30, Comparator.comparingInt(Steppable::GetSteppablePriority));
+
+        this.gameState = GameState.NOTENDED;
     }
 
     /**
@@ -162,12 +166,6 @@ public class Game {
     }
 
     public void NextStep(){
-        //lehet felesleges, elfer
-        if(allSteppables.size() == 0) {
-            Controller.getInstance().GameEnded(GameState.SETTLERSLOST);
-            return;
-        }
-
         if(steppablesLeftinRound.size() == 0){
             steppablesLeftinRound.addAll(allSteppables);
         }
@@ -180,12 +178,17 @@ public class Game {
         //check
         GameState currentGameState = this.CheckGameStatus();
         if(currentGameState != GameState.NOTENDED){
-            Controller.getInstance().GameEnded(currentGameState);
+            this.gameState = currentGameState;
+            Controller.getInstance().GameEnded();
         }
 
         AsteroidBelt.getInstance().MakeItConnected();
 
         Controller.getInstance().StepEnded();
+    }
+
+    public GameState GetGameState(){
+        return this.gameState;
     }
 
     /**
