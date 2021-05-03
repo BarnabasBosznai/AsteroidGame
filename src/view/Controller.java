@@ -99,6 +99,16 @@ public class Controller {
             return true;
         }
 
+        for (SettlerView setView: settlerViewMap.values()
+        ) {
+            setView.UnClicked();
+        }
+
+        for (SettlerView setView: settlerViewMap.values()
+        ) {
+            if (setView.ClickedCheck(clickPos,cameraPos))
+                return true;
+        }
         // ha ez sem, megnézi mindet
 
         ArrayList<AsteroidView> allClickables = new ArrayList<>(asteroidViewMap.values());
