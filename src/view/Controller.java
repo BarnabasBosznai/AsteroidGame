@@ -35,6 +35,10 @@ public class Controller {
 
     private boolean canCallNextStep = false;
 
+    private boolean running = true;
+    private boolean end = false;
+    private boolean win;
+
     DrawableCharacter lastMovedCharacter;
     List<DrawableCharacter> queuedCharactersForMoving = new ArrayList<>();
     List<DrawableCharacter> queuedFinishedCharacters = new ArrayList<>();
@@ -143,37 +147,49 @@ public class Controller {
      * kirajzol mindent is
      */
     public void DrawAll(Graphics2D g, Position cameraPos, Position cursorPos){
-        synchronized (drawables) {
-            for(var c : queuedCharactersForMoving) {
-                if(!c.PlayMoveAnimation(g, cameraPos, asteroidViewMap.get(c.GetLastAsteroid()), asteroidViewMap.get(c.GetAsteroid())))
-                    queuedFinishedCharacters.add(c);
-            }
-            for(var c : queuedFinishedCharacters)
-                queuedCharactersForMoving.remove(c);
-            queuedFinishedCharacters.clear();
+        if(!end){
+            synchronized (drawables) {
+                for(var c : queuedCharactersForMoving) {
+                    if(!c.PlayMoveAnimation(g, cameraPos, asteroidViewMap.get(c.GetLastAsteroid()), asteroidViewMap.get(c.GetAsteroid())))
+                        queuedFinishedCharacters.add(c);
+                }
+                for(var c : queuedFinishedCharacters)
+                     queuedCharactersForMoving.remove(c);
+                queuedFinishedCharacters.clear();
 
-            /* (AsteroidView astview : asteroidViewMap.values()) {
-                astview.Draw_Neighbours_and_Teleports(g, cameraPos);
-            }*/
-            if(currentSettlerWaitingForInput != null)
-                asteroidViewMap.get(currentSettlerWaitingForInput.GetAsteroid()).Draw_Neighbours_and_Teleports(g, cameraPos, Color.WHITE);
-            asteroidViewMap.forEach((asteroid, asteroidView) ->  {
-                if(Math.sqrt((asteroidView.GetPos().x + 30 - cameraPos.x - cursorPos.x) * (asteroidView.GetPos().x + 30 - cameraPos.x - cursorPos.x) +
-                        (asteroidView.GetPos().y + 30 - cameraPos.y - cursorPos.y) * (asteroidView.GetPos().y + 30 - cameraPos.y  - cursorPos.y)) < AsteroidView.asteroidRadius)
-                    asteroidView.Draw_Neighbours_and_Teleports(g, cameraPos, Color.CYAN);
-            });
-            if(lastClickedAsteroid != null)
-                lastClickedAsteroid.Draw_Neighbours_and_Teleports(g, cameraPos, Color.CYAN);
+                /* (AsteroidView astview : asteroidViewMap.values()) {
+                    astview.Draw_Neighbours_and_Teleports(g, cameraPos);
+                }*/
+                 if(currentSettlerWaitingForInput != null)
+                     asteroidViewMap.get(currentSettlerWaitingForInput.GetAsteroid()).Draw_Neighbours_and_Teleports(g, cameraPos, Color.WHITE);
+                 asteroidViewMap.forEach((asteroid, asteroidView) ->  {
+                     if(Math.sqrt((asteroidView.GetPos().x + 30 - cameraPos.x - cursorPos.x) * (asteroidView.GetPos().x + 30 - cameraPos.x - cursorPos.x) +
+                             (asteroidView.GetPos().y + 30 - cameraPos.y - cursorPos.y) * (asteroidView.GetPos().y + 30 - cameraPos.y  - cursorPos.y)) < AsteroidView.asteroidRadius)
+                         asteroidView.Draw_Neighbours_and_Teleports(g, cameraPos, Color.CYAN);
+                 });
+                 if(lastClickedAsteroid != null)
+                     lastClickedAsteroid.Draw_Neighbours_and_Teleports(g, cameraPos, Color.CYAN);
 
-            for (Drawable drawable : drawables) {
-                drawable.Draw(g, cameraPos);
+                 for (Drawable drawable : drawables) {
+                     drawable.Draw(g, cameraPos);
+                 }
+                 g.setColor(Color.GRAY); // Tesztelésre csak talán
+                 g.setFont(new Font("Dialog",Font.PLAIN,14));
+                 g.drawString("X: "+cameraPos.x,0,12);
+                 g.drawString("Y: "+cameraPos.y,0,28);
+             }
+        }
+        if(!running && queuedFinishedCharacters.size()==0 && queuedCharactersForMoving.size() == 0) {
+            g.setFont(new Font("Game_ended", Font.ITALIC, 100));
+            end = true;
+            if (win) {
+                g.setColor(Color.GREEN);
+                g.drawString("Gratulálok önök nyertek", windowSize.x / 2 - 500, windowSize.y / 2);
+            }else {
+                g.setColor(Color.RED);
+                g.drawString("Vereség", windowSize.x / 2 - 250, windowSize.y / 2);
             }
         }
-
-        g.setColor(Color.GRAY); // Tesztelésre csak talán
-        g.setFont(new Font("Dialog",Font.PLAIN,14));
-        g.drawString("X: "+cameraPos.x,0,12);
-        g.drawString("Y: "+cameraPos.y,0,28);
     }
 
     private void AddDrawableCharacter(DrawableCharacter dc){
@@ -300,11 +316,12 @@ public class Controller {
     }
 
     public void GameEnded(GameState gameState){
+        running = false;
         if(gameState == GameState.SETTLERSLOST){
-            //KEKW
+            win = false;
         }
         else if(gameState == GameState.SETTLERSWON){
-            //woozyface
+            win = true;
         }
     }
 }
