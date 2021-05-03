@@ -37,7 +37,8 @@ public class Button implements Clickable {
 
     @Override
     public boolean ClickedCheck(Position clickPos, Position cameraPos) {
-        return border.contains(clickPos.x*1000/Controller.getInstance().windowSize.x, clickPos.y*563/Controller.getInstance().windowSize.y);
+        Position windowSize = Controller.getInstance().GetWindowSize();
+        return border.contains(clickPos.x*1000/windowSize.x, clickPos.y*563/windowSize.y);
     }
 
     public void SetString(String string){
@@ -58,14 +59,14 @@ public class Button implements Clickable {
 
     private void drawCenteredText(Graphics2D g) {
         FontMetrics metrics = g.getFontMetrics(font);
-        Position winSize = Controller.getInstance().windowSize;
+        Position winSize = Controller.getInstance().GetWindowSize();
         int x = border.x*winSize.x/1000 + (border.width*winSize.x/1000 - metrics.stringWidth(string)) / 2;
         int y = border.y*winSize.y/563 + ((border.height*winSize.y/563 - metrics.getHeight()) / 2) + metrics.getAscent();
         g.drawString(string, x, y);
     }
 
     public void Draw(Graphics2D graphics){
-        Position winSize = Controller.getInstance().windowSize;
+        Position winSize = Controller.getInstance().GetWindowSize();
         graphics.setColor(this.backGroundColor);
         graphics.fillRect(border.x*winSize.x/1000, border.y*winSize.y/563, border.width*winSize.x/1000, border.height*winSize.y/563);
         graphics.setColor(Color.LIGHT_GRAY);

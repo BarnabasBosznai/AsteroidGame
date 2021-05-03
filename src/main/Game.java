@@ -138,12 +138,6 @@ public class Game {
             }
         }
 
-        /*if(AsteroidBelt.getInstance().BFS())
-            System.out.println("Osszefuggo");
-        else
-            System.out.println("Nem Osszefuggo");*/
-
-        //kisebb
         AsteroidBelt.getInstance().MakeItConnected();
 
         int numOfUFOs = random.nextInt(20 - 5) + 5;

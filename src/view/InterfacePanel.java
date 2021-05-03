@@ -204,7 +204,8 @@ public class InterfacePanel extends Drawable {
         // Nyersanyagok kijelzése
 
         graphics.setColor(brown);
-        Position winSize = Controller.getInstance().windowSize;
+        Position winSize = Controller.getInstance().GetWindowSize();
+
         graphics.fillRect(240*winSize.x/1000,0*winSize.y/563,520*winSize.x/1000,43*winSize.y/563);
         graphics.setColor(Color.LIGHT_GRAY);
         graphics.fillRect(245*winSize.x/1000,5*winSize.y/563,510*winSize.x/1000,33*winSize.y/563);
