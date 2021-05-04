@@ -42,6 +42,7 @@ public class Controller {
     private List<DrawableCharacter> queuedCharactersForMoving = new ArrayList<>();
     private List<DrawableCharacter> queuedFinishedCharacters = new ArrayList<>();
 
+
     private EventFeed eventFeed;
     //nem kell, tesztelesbol van
     private int counter = 0;
