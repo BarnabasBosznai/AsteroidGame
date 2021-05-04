@@ -281,8 +281,11 @@ public class Controller {
         AsteroidView av2 = this.asteroidViewMap.get(newAsteroid);
 
         lastMovedCharacter = dc;
-        queuedCharactersForMoving.add(dc);
-        av1.RemoveDrawableCharacter(dc);
+        synchronized (drawables) {
+            queuedCharactersForMoving.add(dc);
+            av1.RemoveDrawableCharacter(dc);
+        }
+
         //av2.AddDrawableCharacter(dc);
     }
 
