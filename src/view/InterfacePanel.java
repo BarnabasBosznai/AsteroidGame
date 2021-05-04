@@ -49,6 +49,7 @@ public class InterfacePanel extends Drawable {
                 output = "Sikerült fúrni!";
                 stepped = true;
                 Controller.getInstance().SettlerStepped();
+                Controller.getInstance().EventHappened("Settler drilled!");
             } else {
                 output = "Nem sikerült fúrni!";
             }
@@ -58,6 +59,7 @@ public class InterfacePanel extends Drawable {
                 output = "Sikerült bányászni!";
                 stepped = true;
                 Controller.getInstance().SettlerStepped();
+                Controller.getInstance().EventHappened("Settler mined!");
             } else {
                 output = "Nem sikerült bányászni!";
             }
@@ -68,6 +70,7 @@ public class InterfacePanel extends Drawable {
                     output = "Sikerült a Robot craftolása!";
                     stepped = true;
                     Controller.getInstance().SettlerStepped();
+                    Controller.getInstance().EventHappened("Robot crafted!");
                 } else {
                     output = "Nem sikerült a Robot Craftolása!";
                 }
@@ -81,6 +84,7 @@ public class InterfacePanel extends Drawable {
                     Controller.getInstance().SettlerStepped();
                 } else {
                     output = "Nem sikerült a Teleport Craftolása!";
+                    Controller.getInstance().EventHappened("Teleport crafted!");
                 }
             }
         });
@@ -90,6 +94,7 @@ public class InterfacePanel extends Drawable {
                     output = "Sikerült letenni a Vasat!";
                     stepped=true;
                     Controller.getInstance().SettlerStepped();
+                    Controller.getInstance().EventHappened("Iron placed!");
                 } else {
                     output = "Nem sikerült letenni a Vasat!";
                 }
@@ -101,6 +106,7 @@ public class InterfacePanel extends Drawable {
                     output = "Sikerült letenni a Szenet!";
                     stepped=true;
                     Controller.getInstance().SettlerStepped();
+                    Controller.getInstance().EventHappened("Coal placed!");
                 } else {
                     output = "Nem sikerült letenni a Szenet!";
                 }
@@ -112,6 +118,7 @@ public class InterfacePanel extends Drawable {
                     output = "Sikerült letenni a Vízjeget!";
                     stepped=true;
                     Controller.getInstance().SettlerStepped();
+                    Controller.getInstance().EventHappened("Waterice placed!");
                 } else {
                     output = "Nem sikerült letenni a Vízjeget!";
                 }
@@ -123,6 +130,7 @@ public class InterfacePanel extends Drawable {
                     output = "Sikerült letenni az Uránt!";
                     stepped=true;
                     Controller.getInstance().SettlerStepped();
+                    Controller.getInstance().EventHappened("Uranium placed!");
                 } else {
                     output = "Nem sikerült letenni az Uránt!";
                 }
@@ -134,6 +142,7 @@ public class InterfacePanel extends Drawable {
                     output = "Sikerült letenni a Teleportkaput!";
                     stepped = true;
                     Controller.getInstance().SettlerStepped();
+                    Controller.getInstance().EventHappened("Teleport placed!");
                 } else {
                     output = "Nem sikerült letenni a Teleportkaput!";
                 }
