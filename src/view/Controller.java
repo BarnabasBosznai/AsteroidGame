@@ -42,6 +42,10 @@ public class Controller {
     private List<DrawableCharacter> queuedCharactersForMoving = new ArrayList<>();
     private List<DrawableCharacter> queuedFinishedCharacters = new ArrayList<>();
 
+    private EventFeed eventFeed;
+    //nem kell, tesztelesbol van
+    private int counter = 0;
+
     private Controller(){
         this.drawables = new ArrayList<>();
         this.asteroidViewMap = new HashMap<>();
@@ -81,6 +85,11 @@ public class Controller {
 
     public Position GetWindowSize(){
         return this.windowSize;
+    }
+
+    public void EventHappened(String string){
+        this.eventFeed.EventHappened(string + " " + counter, 200);
+        ++counter;
     }
 
     /**
