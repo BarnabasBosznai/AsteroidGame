@@ -93,8 +93,8 @@ public class Controller {
     }
 
     public void EventHappened(String string){
-        //this.eventFeed.EventHappened(string + " " + counter, 200);
-        //++counter;
+        this.eventFeed.EventHappened(string + " " + counter, 200);
+        ++counter;
     }
 
     /**
