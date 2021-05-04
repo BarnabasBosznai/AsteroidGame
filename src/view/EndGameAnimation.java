@@ -27,18 +27,18 @@ public class EndGameAnimation extends Drawable {
         }
     }
 
-    private void DrawCenteredText(Graphics2D g){
+    private void DrawCenteredText(Graphics2D g, String string){
         FontMetrics metrics = g.getFontMetrics(this.font);
         Position winSize = Controller.getInstance().GetWindowSize();
         int x = (winSize.x - metrics.stringWidth(this.string)) / 2;
         int y = winSize.y - (winSize.y - (-(int) metrics.getLineMetrics(this.string, g).getBaselineOffsets()[2])) / 2;
-        g.drawString(this.string, x, y);
+        g.drawString(string, x, y);
     }
 
     @Override
     public void Draw(Graphics2D g, Position cameraPos) {
         g.setFont(this.font);
         g.setColor(this.fontColor);
-        this.DrawCenteredText(g);
+        this.DrawCenteredText(g, this.string);
     }
 }

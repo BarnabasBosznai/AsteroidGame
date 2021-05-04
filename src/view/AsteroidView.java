@@ -151,7 +151,6 @@ public class AsteroidView extends Drawable implements Clickable {
 
                 Controller.getInstance().GetCurrentSettlerWaitingForInput().Move(this.asteroid);
                 Controller.getInstance().SettlerStepped();
-                Controller.getInstance().EventHappened("Settler moved!");
             }
         }
         this.clicked = true;
