@@ -42,10 +42,6 @@ public class Controller {
     private List<DrawableCharacter> queuedCharactersForMoving = new ArrayList<>();
     private List<DrawableCharacter> queuedFinishedCharacters = new ArrayList<>();
 
-    private EventFeed eventFeed;
-    //nem kell, tesztelesbol van
-    private int counter = 0;
-
     private Controller(){
         this.drawables = new ArrayList<>();
         this.asteroidViewMap = new HashMap<>();
@@ -56,10 +52,6 @@ public class Controller {
         this.drawables.add(interfacePanel);
 
         this.AddDrawable(new PositionView());
-
-        this.eventFeed = new EventFeed();
-
-        this.AddDrawable(this.eventFeed);
 
         this.lastMovedCharacter = null;
         this.windowSize = new Position(1000,563); // lehetne paraméterként kapni
@@ -89,11 +81,6 @@ public class Controller {
 
     public Position GetWindowSize(){
         return this.windowSize;
-    }
-
-    public void EventHappened(String string){
-        //this.eventFeed.EventHappened(string + " " + counter, 200);
-        //++counter;
     }
 
     /**
@@ -307,8 +294,6 @@ public class Controller {
         AsteroidView av = this.asteroidViewMap.get(dc.GetAsteroid());
 
         av.RemoveDrawableCharacter(dc);
-
-        this.EventHappened("Character Died!");
     }
 
     public void SettlerDied(SettlerView sv){
