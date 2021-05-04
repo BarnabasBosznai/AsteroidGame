@@ -82,9 +82,9 @@ public class InterfacePanel extends Drawable {
                     output = "Sikerült a Teleport craftolása!";
                     stepped = true;
                     Controller.getInstance().SettlerStepped();
+                    Controller.getInstance().EventHappened("Teleport crafted!");
                 } else {
                     output = "Nem sikerült a Teleport Craftolása!";
-                    Controller.getInstance().EventHappened("Teleport crafted!");
                 }
             }
         });
