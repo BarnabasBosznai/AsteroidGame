@@ -4,7 +4,6 @@ import characters.Robot;
 import characters.Settler;
 import characters.UFO;
 import main.Game;
-import main.GameState;
 import places.Asteroid;
 import places.TeleportGate;
 
@@ -12,42 +11,82 @@ import java.awt.*;
 import java.util.*;
 import java.util.List;
 
-public class Controller {
-    private static Controller instance;
+/**
+ * Gui vezérléséért felelős osztály
+ */
+public class ViewController {
 
     /**
-     * Amiket onmagukban ki lehet rajzolni
+     * Singleton minta szerinti egyetlen objektum az osztályból
+     */
+    private static ViewController instance;
+
+    /**
+     * Amiket önmagukban ki lehet rajzolni
      */
     private final List<Drawable> drawables;
 
+    /**
+     * InterfacePanel
+     */
     private final InterfacePanel interfacePanel;
 
     /**
-     * asteroid-asteroidview parositasok kereshetoseg miatt
+     * asteroid-asteroidview párositások kereshetőseg miatt
      */
     private final Map<Asteroid, AsteroidView> asteroidViewMap;
+
+    /**
+     * setller-settlerview párositások kereshetőseg miatt
+     */
     private final Map<Settler, SettlerView> settlerViewMap;
+
+    /**
+     * Kiválaszttott aszteroida
+     */
     private Clickable currentClickedAsteroid;
+
+    /**
+     * Utoljára kattintott aszteroida
+     */
     private AsteroidView lastClickedAsteroid;
+
+    /**
+     * Ablak mérete
+     */
     private final Position windowSize;
 
+    /**
+     * Éppen inputra várakozó telepes
+     */
     private Settler currentSettlerWaitingForInput;
 
+    /**
+     * Jelzi, hogy hívható-e következő Step a modellben
+     */
     private boolean canCallNextStep = false;
 
+    /**
+     * Jelzik a játék kirajzolásbeli állapotát
+     */
     private boolean running = true;
     private boolean end = false;
 
-    private DrawableCharacter lastMovedCharacter;
-    private List<DrawableCharacter> queuedCharactersForMoving = new ArrayList<>();
-    private List<DrawableCharacter> queuedFinishedCharacters = new ArrayList<>();
+    /**
+     * Mozgás animációhoz szükséges lista
+     */
+    private final List<DrawableCharacter> queuedCharactersForMoving = new ArrayList<>();
+    private final List<DrawableCharacter> queuedFinishedCharacters = new ArrayList<>();
 
-
+    /**
+     * Események kiírásához EventFeed
+     */
     private final EventFeed eventFeed;
-    //nem kell, tesztelesbol van
-    private int counter = 0;
 
-    private Controller(){
+    /**
+     * Konstruktor
+     */
+    private ViewController(){
         this.drawables = new ArrayList<>();
         this.asteroidViewMap = new HashMap<>();
         this.settlerViewMap = new HashMap<>();
@@ -56,21 +95,24 @@ public class Controller {
         this.interfacePanel = new InterfacePanel();
         this.drawables.add(interfacePanel);
 
-        this.AddDrawable(new PositionView());
+        this.AddDrawable(new CameraView());
 
         this.eventFeed = new EventFeed();
 
         this.AddDrawable(this.eventFeed);
 
-        this.lastMovedCharacter = null;
         this.windowSize = new Position(1000,563); // lehetne paraméterként kapni
     }
 
-    public static Controller getInstance() {
+    /**
+     * Visszatér a ViewController osztály egyetlen objektumával
+     * @return ViewController osztály egyetlen objektuma
+     */
+    public static ViewController getInstance() {
         if (instance == null) {
-            synchronized (Controller.class) {
+            synchronized (ViewController.class) {
                 if (instance == null) {
-                    instance = new Controller();
+                    instance = new ViewController();
                 }
             }
 
@@ -79,36 +121,49 @@ public class Controller {
         return instance;
     }
 
+    /**
+     * Elindítja a modellbeli játékot
+     */
     public static void StartGame(){
         Game.getInstance().Start();
     }
 
+    /**
+     * Jelzés, hogy átméreteződött az ablak
+     * @param DownRight: új méret
+     */
     public void FrameResized(Position DownRight){
         this.windowSize.x = DownRight.x;
         this.windowSize.y = DownRight.y;
     }
 
+    /**
+     * Visszatér az ablak méretével
+     * @return ablak mérete
+     */
     public Position GetWindowSize(){
         return this.windowSize;
     }
 
+    /**
+     * Jelzés, hogy esemény történt az aszteroidamezőben
+     * @param string: esemény leírása
+     */
     public void EventHappened(String string){
-        this.eventFeed.EventHappened(string + " " + counter, 200);
-        ++counter;
+        this.eventFeed.EventHappened(string);
     }
 
     /**
-     * Mouseclick re hivodik meg
-     * @param clickPos
+     * Lekezeli az ablakon történt kattintást
+     * @param clickPos: kattintés pozíciója
+     * @param cameraPos: kamera pozíciója
      */
     public boolean ClickHandler(Position clickPos, Position cameraPos){
 
-        //eloszor megnezi, hogy az interface en tortent e a kattintas
         if(!this.interfacePanel.HandleClick(clickPos)) {
             return true;
         }
-        //ha nem lehetett interface t lekezelni, megnezi a tobbit is
-        // megnézi az esetleg már kattintott aszteroidát
+
         if (currentClickedAsteroid!=null && currentClickedAsteroid.ClickedCheck(clickPos,cameraPos)){
             currentClickedAsteroid.Clicked(clickPos, cameraPos);
             return true;
@@ -124,11 +179,9 @@ public class Controller {
             if (setView.ClickedCheck(clickPos,cameraPos))
                 return true;
         }
-        // ha ez sem, megnézi mindet
 
         ArrayList<AsteroidView> allClickables = new ArrayList<>(asteroidViewMap.values());
 
-        //mindenesetre ne maradjon semmi se clickelve
         for(Clickable clickable : allClickables)
             clickable.UnClicked();
 
@@ -149,31 +202,51 @@ public class Controller {
 
     }
 
+    /**
+     * Jelzi, hogy hívható a következő Step
+     */
     public void TimerTicked(){
         if(canCallNextStep)
             Game.getInstance().NextStep();
     }
 
+    /**
+     * Jelzi, hogy befejeződött a modellben a Step hívás
+     */
     public void StepEnded(){
         this.canCallNextStep = this.currentSettlerWaitingForInput == null;
     }
 
+    /**
+     * Jelzi, hogy a paraméter telepes inputra várakozik
+     * @param settler: inputra váró telepes
+     */
     public void CurrentSettlerWaitingForInput(Settler settler){
         this.currentSettlerWaitingForInput = settler;
         interfacePanel.SetCurrentWaitingSettler(currentSettlerWaitingForInput);
     }
 
+    /**
+     * Jelzi, hogy a telepes lépett
+     */
     public void SettlerStepped(){
         this.currentSettlerWaitingForInput = null;
         this.canCallNextStep = true;
     }
 
+    /**
+     * Visszatér az inputra várakozó telepessel
+     * @return inputra várakozó telepes
+     */
     public Settler GetCurrentSettlerWaitingForInput(){
         return this.currentSettlerWaitingForInput;
     }
 
     /**
-     * kirajzol mindent is
+     * Kirajzolás
+     * @param g: graphics
+     * @param cameraPos: kamera pozíciója
+     * @param cursorPos: kurzor pozíciója
      */
     public void DrawAll(Graphics2D g, Position cameraPos, Position cursorPos){
         if(!end){
@@ -186,18 +259,12 @@ public class Controller {
                      queuedCharactersForMoving.remove(c);
                 queuedFinishedCharacters.clear();
 
-                /* (AsteroidView astview : asteroidViewMap.values()) {
-                    astview.Draw_Neighbours_and_Teleports(g, cameraPos);
-                }*/
                  if(currentSettlerWaitingForInput != null)
-                     asteroidViewMap.get(currentSettlerWaitingForInput.GetAsteroid()).Draw_Neighbours_and_Teleports(g, cameraPos, Color.WHITE);
-                 asteroidViewMap.forEach((asteroid, asteroidView) ->  {
-                     if(Math.sqrt((asteroidView.GetPos().x + 30 - cameraPos.x - cursorPos.x) * (asteroidView.GetPos().x + 30 - cameraPos.x - cursorPos.x) +
-                             (asteroidView.GetPos().y + 30 - cameraPos.y - cursorPos.y) * (asteroidView.GetPos().y + 30 - cameraPos.y  - cursorPos.y)) < AsteroidView.asteroidRadius)
-                         asteroidView.Draw_Neighbours_and_Teleports(g, cameraPos, Color.CYAN);
-                 });
+                     asteroidViewMap.get(currentSettlerWaitingForInput.GetAsteroid()).Draw_Neighbours_and_Teleports(g, cameraPos, cursorPos, false, true);
+
+                     asteroidViewMap.forEach((asteroid, asteroidView) ->  asteroidView.Draw_Neighbours_and_Teleports(g, cameraPos, cursorPos, true, false) );
                  if(lastClickedAsteroid != null)
-                     lastClickedAsteroid.Draw_Neighbours_and_Teleports(g, cameraPos, Color.CYAN);
+                     lastClickedAsteroid.Draw_Neighbours_and_Teleports(g, cameraPos, cursorPos, false, false);
 
                  for (Drawable drawable : drawables) {
                      drawable.Draw(g, cameraPos);
@@ -210,13 +277,18 @@ public class Controller {
         }
     }
 
+    /**
+     * Hozzáad egy DrawableCharactert a kirajzoláshoz
+     * @param dc: DrawableCharacter
+     */
     private void AddDrawableCharacter(DrawableCharacter dc){
         AsteroidView av = asteroidViewMap.get(dc.GetAsteroid());
         av.AddDrawableCharacter(dc);
     }
+
     /**
      * Megfelelo asteroidView hoz hozzaadja a drawableCharactert
-     * @param ufo
+     * @param ufo: ufo
      */
     public UFOView AddUFOView(UFO ufo){
         UFOView uv = new UFOView(ufo);
@@ -225,6 +297,10 @@ public class Controller {
         return uv;
     }
 
+    /**
+     * Megfelelo asteroidView hoz hozzaadja a drawableCharactert
+     * @param robot: robot
+     */
     public RobotView AddRobotView(Robot robot){
         RobotView rv = new RobotView(robot);
         this.AddDrawableCharacter(rv);
@@ -232,6 +308,10 @@ public class Controller {
         return rv;
     }
 
+    /**
+     * Megfelelo asteroidView hoz hozzaadja a drawableCharactert
+     * @param settler: telepes
+     */
     public SettlerView AddSettlerView(Settler settler){
         SettlerView sv = new SettlerView(settler);
         this.AddDrawableCharacter(sv);
@@ -242,39 +322,48 @@ public class Controller {
 
     /**
      * View hoz hozzaad egy asteroidview t, itt tortenik init is a koordinatak miatt
-     * @param asteroid
+     * @param asteroid: aszteroida
+     * @param position: aszteroida pozíciója
      */
     public void AddAsteroidView(Asteroid asteroid, Position position){
         AsteroidView av = new AsteroidView(asteroid, position, 2);
-        asteroid.setView(av);
-
-        //System.out.println("AddAsteroidView called with: " + asteroid.toString() + " - " + av.toString());
+        asteroid.SetView(av);
 
         this.AddDrawable(av);
-        var x = this.asteroidViewMap.put(av.GetAsteroid(), av);
-        //asteroidViewMap.forEach((key, value) -> System.out.println(key + ":" + value));
-        //System.out.println();
-
-        //System.out.println("\tPut in map.");
-
+        this.asteroidViewMap.put(av.GetAsteroid(), av);
     }
 
+    /**
+     * Hozzáad egy TeleportGateView-t a kirajzoláshoz
+     * @param teleportGate1: egyik teleportkapu
+     * @param teleportGate2: másik teleportkapu
+     */
     public void AddTeleportGateView(TeleportGate teleportGate1, TeleportGate teleportGate2){
         TeleportGateView tv = new TeleportGateView(teleportGate1, teleportGate2, 1);
         this.AddDrawable(tv);
     }
 
+    /**
+     * Visszatér a modellbeli aszteroidához tartozó AsteroidView-al
+     * @param asteroid: modellbeli aszteroida
+     * @return AsteroidView
+     */
     public AsteroidView GetAsteroidView(Asteroid asteroid){
         return this.asteroidViewMap.get(asteroid);
     }
 
+    /**
+     * Visszatér a modellbeli telepeshez tartozó SettlerView-al
+     * @param settler: modellbeli telepes
+     * @return SettlerView
+     */
     public SettlerView GetSettlerView(Settler settler){
         return this.settlerViewMap.get(settler);
     }
 
     /**
-     * listahoz hozzaad, ezt hivja meg a teleportgate siman, asteroid pluszban meg
-     * @param d
+     * Hozzáad a kirajzoláshoz egy Drawable-t
+     * @param d: drawable
      */
     public void AddDrawable(Drawable d){
         synchronized (drawables) {
@@ -285,26 +374,24 @@ public class Controller {
 
 
     /**
-     * DrawableCharacter jelzett, h a modellben elmozgott a karakter, itt is valtoztatjuk
-     * @param dc
-     * @param oldAsteroid
-     * @param newAsteroid
+     * DrawableCharacter jelzett, hogy a modellben elmozgott a karakter, itt is változtatjuk
+     * @param dc: DrawableCharacter
+     * @param oldAsteroid: régi aszteroida
+     * @param newAsteroid: új aszteroida
      */
     public void CharacterMoved(DrawableCharacter dc, Asteroid oldAsteroid, Asteroid newAsteroid){
         AsteroidView av1 = this.asteroidViewMap.get(oldAsteroid);
         AsteroidView av2 = this.asteroidViewMap.get(newAsteroid);
 
-        lastMovedCharacter = dc;
         synchronized (drawables) {
             queuedCharactersForMoving.add(dc);
             av1.RemoveDrawableCharacter(dc);
         }
-        //av2.AddDrawableCharacter(dc);
     }
 
     /**
-     * DrawableCharacter jelzett, hogy modellben meghalt a karakter, itt is alkalmazkodik
-     * @param dc
+     * DrawableCharacter jelzett, hogy modellben meghalt a karakter
+     * @param dc: DrawableCharacter
      */
     public void CharacterDied(DrawableCharacter dc){
         AsteroidView av = this.asteroidViewMap.get(dc.GetAsteroid());
@@ -314,6 +401,10 @@ public class Controller {
         this.EventHappened("Character Died!");
     }
 
+    /**
+     * SettlerView jelzett, hogy meghalt a modellben
+     * @param sv: SettlerView
+     */
     public void SettlerDied(SettlerView sv){
         this.CharacterDied(sv);
 
@@ -322,7 +413,7 @@ public class Controller {
 
     /**
      * TeleportGateView jelzett, h modellben felrobbant teleportkapu, toroljuk viewbol
-     * @param tv
+     * @param tv: TeleportGateView
      */
     public void TeleportGateDestroyed(TeleportGateView tv){
         this.drawables.remove(tv);
@@ -330,13 +421,16 @@ public class Controller {
 
     /**
      * Asteroida felrobbant, nem kene tovabb kirajzolni (karakterek magukat elintezik)
-     * @param av
+     * @param av: AsteroidView
      */
     public void AsteroidExploded(AsteroidView av){
         this.drawables.remove(av);
         this.asteroidViewMap.values().remove(av);
     }
 
+    /**
+     * Jelzés, hogy véget ért a játék a modellben
+     */
     public void GameEnded(){
         running = false;
         this.AddDrawable(new EndGameAnimation());

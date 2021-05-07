@@ -41,31 +41,14 @@ public class Uranium extends RadioactiveMaterial {
     }
 
     /**
-     * Kiírja a nyersanyag típusát
-     * @return string: a nyersanyag típusa stringként a kiíratáshoz
-     */
-    @Override
-    public String Print(){return "uranium"+(nearSuns);}
-
-    /**
      * Napközelbe érve egy teljesen megfúrt aszteroidán felrobban, vele együtt az aszteroida is.
      * @param asteroid: a nyersanyagot tartalmazó aszteroida
      */
     @Override
-    public void OnNearSun(Asteroid asteroid){
+    public void OnNearSun(Asteroid asteroid) {
         nearSuns--;
-        if(nearSuns < 0)
+        if (nearSuns < 0)
             asteroid.Explosion();
 
     }
-
-    /**
-     * Visszatér a még hátralévő napközelek számával a robbanásig
-     * @return int: a még hátralévő napközelek száma a robbanásig
-     */
-    public int getNearSuns() {
-        return nearSuns;
-    }
-
-    // public void setNearSuns(int c) { nearSuns = c; } // NAPKÖZEL TESZTHEZ
 }

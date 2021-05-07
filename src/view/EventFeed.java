@@ -4,24 +4,43 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
 
+/**
+ * Eseményeket jelző felület
+ */
 public class EventFeed extends Drawable {
-    private final Queue<EventBox> eventQueue;
-    private final int animationTimeMax;
-    private final Dimension eventBoxDimension;
 
+    /**
+     * Események várakozási sora
+     */
+    private final Queue<EventBox> eventQueue;
+
+    /**
+     * Animáció ideje
+     */
+    private static final int animationTimeMax = 200;
+
+    /**
+     * Konstruktor
+     */
     public EventFeed(){
         this.eventQueue = new PriorityQueue<>(25, Comparator.comparingInt(EventBox::GetTimeLeft));
-        this.animationTimeMax = 200;
         this.zIndex = 1000;
-        this.eventBoxDimension = new Dimension(200,25);
     }
 
-    public void EventHappened(String eventDescription, int animationTimeMax){
-        if(eventQueue.size() == 4)
-            eventQueue.poll();
-        this.eventQueue.add(new EventBox(eventDescription, animationTimeMax));
+    /**
+     * Jelzi, hogy kiírandó esemény történt
+     * @param eventDescription: esemény leírása
+     */
+    public void EventHappened(String eventDescription){
+        System.out.println(eventDescription);
+        this.eventQueue.add(new EventBox(eventDescription));
     }
 
+    /**
+     * Kirajzolás
+     * @param graphics: graphics
+     * @param cameraPos: kameria pozíciója
+     */
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
         if(eventQueue.size() > 0){
@@ -36,44 +55,88 @@ public class EventFeed extends Drawable {
 
             int ct = 0;
             for(EventBox eb : eventQueue){
-                Position winSize = Controller.getInstance().GetWindowSize();
-                eb.SetPosition(new Position(winSize.x - eventBoxDimension.width - 20, 10 + ct * (eventBoxDimension.height + 10)));
+                Position winSize = ViewController.getInstance().GetWindowSize();
+                eb.SetPosition(new Position(winSize.x - EventBox.eventBoxDimensions.width - 20, 10 + ct * (EventBox.eventBoxDimensions.height + 10)));
                 ++ct;
                 eb.Draw(graphics, cameraPos);
                 eb.DecreaseTimeLeft();
+
+                if(ct == 4)
+                    break;
             }
         }
     }
 
-    private class EventBox extends Drawable{
+    /**
+     * Kirajzolandó doboz
+     */
+    private static class EventBox extends Drawable{
 
+        /**
+         * Szöveg
+         */
         private final String text;
+
+        /**
+         * Szöveg betűtípusa
+         */
         private Font font;
+
+        /**
+         * Doboz pozíciója
+         */
         private Position pos;
-        private final Dimension eventBoxDimensions;
+
+        /**
+         * Dobozok mérete
+         */
+        private static final Dimension eventBoxDimensions = new Dimension(200, 25);
+
+        /**
+         * Az animációból hátralévő idő
+         */
         private int timeLeft;
 
-        public EventBox(String string, int animationTimeMax){
+        /**
+         * Konstruktor
+         * @param string: esemény leírása
+         */
+        public EventBox(String string){
             this.text = string;
-            this.eventBoxDimensions = new Dimension(200, 25);
 
             this.font = new Font("Dialog", Font.PLAIN, 20);
 
-            this.timeLeft = animationTimeMax;
+            this.timeLeft = EventFeed.animationTimeMax;
         }
 
+        /**
+         * Pozíció beállítása
+         * @param pos: új pozíció
+         */
         public void SetPosition(Position pos){
             this.pos = pos;
         }
 
+        /**
+         * Csökkenti a hátralévő időt az animációból
+         */
         public void DecreaseTimeLeft(){
             --timeLeft;
         }
 
+        /**
+         * Visszatér a hátralévő idővel az animációból
+         * @return hátralévő idő
+         */
         public int GetTimeLeft(){
             return this.timeLeft;
         }
 
+        /**
+         * Kirajzolás
+         * @param graphics: graphics
+         * @param cameraPos: kameria pozíciója
+         */
         @Override
         public void Draw(Graphics2D graphics, Position cameraPos) {
             graphics.setColor(Color.GRAY);
@@ -86,6 +149,10 @@ public class EventFeed extends Drawable {
             DrawCenteredText(graphics);
         }
 
+        /**
+         * A doboz közepére kirajzolja a a szöveget
+         * @param g: graphics
+         */
         private void DrawCenteredText(Graphics2D g){
             FontMetrics metrics = g.getFontMetrics(this.font);
             int x = this.pos.x + (eventBoxDimensions.width - metrics.stringWidth(this.text)) / 2;

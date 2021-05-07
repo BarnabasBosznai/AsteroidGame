@@ -24,11 +24,4 @@ public class WaterIce extends Material {
     public void Count(MaterialCounter counter) {
         counter.Count(WaterIce.class);
     }
-
-    /**
-     * Kiírja a nyersanyag típusát
-     * @return string: a nyersanyag típusa stringként a kiíratáshoz
-     */
-    @Override
-    public String Print(){return "waterice";}
 }

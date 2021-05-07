@@ -1,6 +1,5 @@
 package view;
 
-import characters.Settler;
 import places.Asteroid;
 
 import javax.imageio.ImageIO;
@@ -12,16 +11,61 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Aszteroida View-ja
+ */
 public class AsteroidView extends Drawable implements Clickable {
 
+    /**
+     * A View modellje
+     */
     private final Asteroid asteroid;
+
+    /**
+     * A karakterek, akiket neki kell kirajzolnia (rajta vannak)
+     */
     private final List<DrawableCharacter> drawableCharacterList;
 
+    /**
+     * Az aszteroida pozíciója
+     */
     private final Position pos;
+
+    /**
+     * Az aszteroida sugara
+     */
     public static final int asteroidRadius = 42;
+
+    /**
+     * Rá van-e kattintva
+     */
     private boolean clicked;
 
+    /**
+     * Forgási szög
+     */
     private final double angle;
+
+    /**
+     * Az aszteroida képe
+     */
+    private static BufferedImage img;
+
+    static{
+        try{
+            img= ImageIO.read(new File("Textures/aszteroida.png"));
+        }
+        catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * Konstruktor
+     * @param a: a modell
+     * @param pos: az aszteroida pozíciója
+     * @param z: hányadik rétegre kell kirajzolni
+     */
     public AsteroidView(Asteroid a, Position pos, int z){
         this.asteroid = a;
         this.pos = pos;
@@ -29,27 +73,37 @@ public class AsteroidView extends Drawable implements Clickable {
         this.clicked = false;
         this.drawableCharacterList = new ArrayList<>();
         this.angle=new Random().nextDouble()*2*Math.PI;
-        try{
-            //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
-            this.img= ImageIO.read(new File("Textures/aszteroida.png"));
-        }
-        catch (IOException ex){
-            ex.printStackTrace();
-        }
     }
 
+    /**
+     * Visszatér a pozícióval
+     * @return pozíció
+     */
     public Position GetPos(){
         return pos;
     }
 
-
-    public void Draw_Neighbours_and_Teleports(Graphics2D graphics, Position cameraPos, Color color){
+    /**
+     * Kirajzolja a kapcsolatok
+     * @param graphics: graphics
+     * @param cameraPos: kamera pozíciója
+     * @param cursorPos: egér pozíciója
+     * @param check: check
+     * @param waitingSettlersAsteroid: inputra várakozó settler aszteroidája-e
+     */
+    public void Draw_Neighbours_and_Teleports(Graphics2D graphics, Position cameraPos, Position cursorPos, boolean check, boolean waitingSettlersAsteroid){
+        if(check){
+            if(!(Math.sqrt((pos.x + 30 - cameraPos.x - cursorPos.x) * (pos.x + 30 - cameraPos.x - cursorPos.x) +
+                    (pos.y + 30 - cameraPos.y - cursorPos.y) * (pos.y + 30 - cameraPos.y  - cursorPos.y)) < AsteroidView.asteroidRadius))
+                return;
+        }
+        Color color = waitingSettlersAsteroid ? Color.WHITE : Color.CYAN;
         var asteroidviews = new ArrayList<AsteroidView>();
         var asteroids = this.GetAsteroid().GetNeighboringAsteroids();
         for (Asteroid ast: asteroids) {
-            asteroidviews.add(Controller.getInstance().GetAsteroidView(ast));
+            asteroidviews.add(ViewController.getInstance().GetAsteroidView(ast));
         }
-        //graphics.setColor(Color.LIGHT_GRAY);
+
         graphics.setColor(color);
         graphics.setStroke(new BasicStroke(3));
 
@@ -58,21 +112,21 @@ public class AsteroidView extends Drawable implements Clickable {
         }
     }
 
+    /**
+     * Kirajzolás
+     * @param graphics: graphics
+     * @param cameraPos: kamera pozíciója
+     */
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
-        Position windowSize = Controller.getInstance().GetWindowSize();
+        Position windowSize = ViewController.getInstance().GetWindowSize();
         if (!(pos.x >cameraPos.x-100 && pos.x < cameraPos.x+1000*windowSize.x/1000))
             return;
         if (!(pos.y >cameraPos.y-100 && pos.y < cameraPos.y+600*windowSize.y/563))
             return;
-        //aszteroida magat kirajzolja
 
-        //graphics.setColor(Color.RED);
-        //graphics.fillOval(pos.x, pos.y,asteroidRadius*2,asteroidRadius*2);
+        graphics.drawImage(Rotate(angle),pos.x - cameraPos.x , pos.y  - cameraPos.y ,asteroidRadius*2,asteroidRadius*2,null);
 
-
-        graphics.drawImage(rotate(angle),pos.x - cameraPos.x , pos.y  - cameraPos.y ,asteroidRadius*2,asteroidRadius*2,null);
-        //majd a karakterjeit is
         for(int i = 0; i < drawableCharacterList.size(); i++){
 
             double phi = i * 2 * Math.PI/drawableCharacterList.size();
@@ -104,8 +158,8 @@ public class AsteroidView extends Drawable implements Clickable {
                 graphics.drawString("???", pos.x - cameraPos.x - 64, pos.y - cameraPos.y + 58);
             }
             boolean teleportabel = false;
-            if (Controller.getInstance().GetCurrentSettlerWaitingForInput()!=null) {
-                var teleportGates = Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetTeleportGates();
+            if (ViewController.getInstance().GetCurrentSettlerWaitingForInput()!=null) {
+                var teleportGates = ViewController.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetTeleportGates();
 
                 for (var teleport : teleportGates
                 ) {
@@ -113,8 +167,8 @@ public class AsteroidView extends Drawable implements Clickable {
                         teleportabel = true;
                 }
             }
-            if (Controller.getInstance().GetCurrentSettlerWaitingForInput()!=null &&
-                    (Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetNeighboringAsteroids().contains(this.asteroid)
+            if (ViewController.getInstance().GetCurrentSettlerWaitingForInput()!=null &&
+                    (ViewController.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetNeighboringAsteroids().contains(this.asteroid)
                     || teleportabel)) {
                 graphics.setColor(faded);
                 graphics.fillRect(pos.x - cameraPos.x - 70, pos.y - cameraPos.y + 65, 70, 30);
@@ -127,50 +181,70 @@ public class AsteroidView extends Drawable implements Clickable {
         }
     }
 
+    /**
+     * Visszatér az asteroidview modelljével
+     * @return asteroid
+     */
     public Asteroid GetAsteroid(){
         return this.asteroid;
     }
 
+    /**
+     * Eltávolítja a paramétert a drawableCharacterjei közül
+     * @param dc: eltávolítandó
+     */
     public void RemoveDrawableCharacter(DrawableCharacter dc){
         this.drawableCharacterList.remove(dc);
     }
 
+    /**
+     * Hozzáadja a paramétert a drawableCharacterjeihez
+     * @param dc: hozzáadandó
+     */
     public void AddDrawableCharacter(DrawableCharacter dc){
         this.drawableCharacterList.add(dc);
     }
 
+    /**
+     * Jelzés, hogy felrobbant a modellben
+     */
     public void AsteroidExploded(){
-        Controller.getInstance().AsteroidExploded(this);
+        ViewController.getInstance().AsteroidExploded(this);
     }
 
+    /**
+     * Jelzés, hogy rákattintottak
+     * @param clickPos: kattintás pozíciója
+     * @param cameraPos: kamera pozíciója
+     */
     @Override
     public void Clicked(Position clickPos, Position cameraPos) {
         if (clicked) {
-            if ((clickPos.x > pos.x-cameraPos.x-70) && (clickPos.x < pos.x-cameraPos.x-70 + 70) &&
-                    (clickPos.y > pos.y-cameraPos.y + 65) && (clickPos.y < pos.y-cameraPos.y + 65 + 30)){
+            if ((clickPos.x > pos.x - cameraPos.x - 70) && (clickPos.x < pos.x - cameraPos.x - 70 + 70) &&
+                    (clickPos.y > pos.y - cameraPos.y + 65) && (clickPos.y < pos.y - cameraPos.y + 65 + 30)) {
 
-                Controller.getInstance().GetCurrentSettlerWaitingForInput().Move(this.asteroid);
-                Controller.getInstance().SettlerStepped();
-                Controller.getInstance().EventHappened("Settler moved!");
+                ViewController.getInstance().GetCurrentSettlerWaitingForInput().Move(this.asteroid);
+                ViewController.getInstance().SettlerStepped();
+                ViewController.getInstance().EventHappened("Settler moved!");
             }
         }
         this.clicked = true;
-        //ha a gombra kattintottak
-        /*Settler settler = Controller.getInstance().GetCurrentSettlerWaitingForInput();
-        Asteroid settlerAsteroid = settler.GetAsteroid();
-
-        if(settlerAsteroid.GetNeighboringAsteroids().contains(this.asteroid)){
-            settler.Move(this.asteroid);
-            Controller.getInstance().CurrentSettlerWaitingForInput(null);
-        }*/
-
     }
 
+    /**
+     * Jelzés, hogy nincs rákattintva
+     */
     @Override
     public void UnClicked() {
         this.clicked = false;
     }
 
+    /**
+     * Ellenőrzi, hogy rákattintottak-e
+     * @param clickPos: kattintás pozíciója
+     * @param cameraPos: kamera pozíciója
+     * @return bool: rákattintottak-e
+     */
     @Override
     public boolean ClickedCheck(Position clickPos, Position cameraPos) {
         double tes = Math.sqrt(Math.pow((clickPos.x - (pos.x + 45 - cameraPos.x)), 2) + Math.pow(clickPos.y - (pos.y + 40 - cameraPos.y), 2));
@@ -180,7 +254,7 @@ public class AsteroidView extends Drawable implements Clickable {
         if (clicked){
             if (clickPos.x > pos.x-cameraPos.x-70 && clickPos.x < pos.x-cameraPos.x-70 + 70 &&
                     clickPos.y > pos.y-cameraPos.y && clickPos.y < pos.y-cameraPos.y + 65 + 30){
-                var teleportGates = Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetTeleportGates();
+                var teleportGates = ViewController.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetTeleportGates();
                 boolean teleportabel = false;
                 for (var teleport: teleportGates
                      ) {
@@ -188,9 +262,9 @@ public class AsteroidView extends Drawable implements Clickable {
                         teleportabel=true;
                 }
 
-                if (Controller.getInstance().GetCurrentSettlerWaitingForInput()!=null &&
+                if (ViewController.getInstance().GetCurrentSettlerWaitingForInput()!=null &&
                         clickPos.y > pos.y-cameraPos.y + 65 &&
-                        (!Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetNeighboringAsteroids().contains(this.asteroid)
+                        (!ViewController.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid().GetNeighboringAsteroids().contains(this.asteroid)
                                 && !teleportabel)) {
                     return false;
                 }
@@ -201,15 +275,19 @@ public class AsteroidView extends Drawable implements Clickable {
         return false;
     }
 
-    public BufferedImage rotate(double angle) {
+    /**
+     * Elforgatja az aszteroida képét
+     * @param angle: forgatási szög
+     * @return elforgatott kép
+     */
+    public BufferedImage Rotate(double angle) {
+        int w = img.getWidth();
+        int h = img.getHeight();
 
-        int w = this.img.getWidth();
-        int h = this.img.getHeight();
-
-        BufferedImage rotated = new BufferedImage(w, h, this.img.getType());
+        BufferedImage rotated = new BufferedImage(w, h, img.getType());
         Graphics2D graphic = rotated.createGraphics();
-        graphic.rotate(angle, w/2, h/2);
-        graphic.drawImage(this.img, null, 0, 0);
+        graphic.rotate(angle, w/2.0f, h/2.0f);
+        graphic.drawImage(img, null, 0, 0);
         graphic.dispose();
         return rotated;
     }

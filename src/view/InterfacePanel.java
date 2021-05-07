@@ -10,23 +10,51 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * InterfacePanel osztály
+ */
 public class InterfacePanel extends Drawable {
 
-    boolean craft, place, allMaterial;
-    String output;
-    Settler waitingSettler;
-    Image CoalImg, IronImg, WaterIceImg, UraniumImg;
-    Color textbox;
-    Color brown = new Color(128,64,0);
-    boolean stepped = false;
+    /**
+     * Output
+     */
+    private String output;
 
+    /**
+     * Inputra várakozó telepes
+     */
+    private Settler waitingSettler;
+
+    /**
+     * Nyersanyok képei
+     */
+    private Image CoalImg, IronImg, WaterIceImg, UraniumImg;
+
+    /**
+     * TextBox színe
+     */
+    private Color textbox;
+
+    /**
+     * Barna szín
+     */
+    private final Color brown = new Color(128,64,0);
+
+    /**
+     * Lépett-e a telepes
+     */
+    private boolean stepped = false;
+
+    /**
+     * Gombok az interfacepanelen
+     */
     private final Map<String, Button> buttonMap;
 
+    /**
+     * Konstruktor
+     */
     public InterfacePanel(){
         this.zIndex = 100;
-        craft = false;
-        place = false;
-        allMaterial = false;
         output = "";
         textbox = brown;
 
@@ -44,111 +72,111 @@ public class InterfacePanel extends Drawable {
         this.buttonMap.put("Uranium", new Button(new Rectangle(880,477,120,43), new Rectangle(885,482,110,33),"Uranium",26));
         this.buttonMap.put("Output", new Button(new Rectangle(240,520,520,43), new Rectangle(245,525,510,33),output,29));
 
-        this.buttonMap.get("Drill").setCallback(() -> {
+        this.buttonMap.get("Drill").SetCallback(() -> {
             if (waitingSettler.Drill()){
                 output = "Sikerült fúrni!";
                 stepped = true;
-                Controller.getInstance().SettlerStepped();
-                Controller.getInstance().EventHappened("Settler drilled!");
+                ViewController.getInstance().SettlerStepped();
+                ViewController.getInstance().EventHappened("Settler drilled!");
             } else {
                 output = "Nem sikerült fúrni!";
             }
         });
-        this.buttonMap.get("Mine").setCallback(() -> {
+        this.buttonMap.get("Mine").SetCallback(() -> {
             if (waitingSettler.Mine()){
                 output = "Sikerült bányászni!";
                 stepped = true;
-                Controller.getInstance().SettlerStepped();
-                Controller.getInstance().EventHappened("Settler mined!");
+                ViewController.getInstance().SettlerStepped();
+                ViewController.getInstance().EventHappened("Settler mined!");
             } else {
                 output = "Nem sikerült bányászni!";
             }
         });
-        this.buttonMap.get("Robot").setCallback(() -> {
-            if(buttonMap.get("Craft").getState()) {
+        this.buttonMap.get("Robot").SetCallback(() -> {
+            if(buttonMap.get("Craft").GetState()) {
                 if (waitingSettler.CraftRobot()) {
                     output = "Sikerült a Robot craftolása!";
                     stepped = true;
-                    Controller.getInstance().SettlerStepped();
-                    Controller.getInstance().EventHappened("Robot crafted!");
+                    ViewController.getInstance().SettlerStepped();
+                    ViewController.getInstance().EventHappened("Robot crafted!");
                 } else {
                     output = "Nem sikerült a Robot Craftolása!";
                 }
             }
         });
-        this.buttonMap.get("CraftTeleport").setCallback(() -> {
-            if(buttonMap.get("Craft").getState()) {
+        this.buttonMap.get("CraftTeleport").SetCallback(() -> {
+            if(buttonMap.get("Craft").GetState()) {
                 if (waitingSettler.CraftTeleportGates()) {
                     output = "Sikerült a Teleport craftolása!";
                     stepped = true;
-                    Controller.getInstance().SettlerStepped();
-                    Controller.getInstance().EventHappened("Teleport crafted!");
+                    ViewController.getInstance().SettlerStepped();
+                    ViewController.getInstance().EventHappened("Teleport crafted!");
                 } else {
                     output = "Nem sikerült a Teleport Craftolása!";
                 }
             }
         });
-        this.buttonMap.get("Iron").setCallback(() -> {
-            if(this.buttonMap.get("Place").getState()) {
+        this.buttonMap.get("Iron").SetCallback(() -> {
+            if(this.buttonMap.get("Place").GetState()) {
                 if (waitingSettler.PlaceMaterial(new Iron())) {
                     output = "Sikerült letenni a Vasat!";
                     stepped=true;
-                    Controller.getInstance().SettlerStepped();
-                    Controller.getInstance().EventHappened("Iron placed!");
+                    ViewController.getInstance().SettlerStepped();
+                    ViewController.getInstance().EventHappened("Iron placed!");
                 } else {
                     output = "Nem sikerült letenni a Vasat!";
                 }
             }
         });
-        this.buttonMap.get("Coal").setCallback(() -> {
-            if(this.buttonMap.get("Place").getState()) {
+        this.buttonMap.get("Coal").SetCallback(() -> {
+            if(this.buttonMap.get("Place").GetState()) {
                 if (waitingSettler.PlaceMaterial(new Coal())) {
                     output = "Sikerült letenni a Szenet!";
                     stepped=true;
-                    Controller.getInstance().SettlerStepped();
-                    Controller.getInstance().EventHappened("Coal placed!");
+                    ViewController.getInstance().SettlerStepped();
+                    ViewController.getInstance().EventHappened("Coal placed!");
                 } else {
                     output = "Nem sikerült letenni a Szenet!";
                 }
             }
         });
-        this.buttonMap.get("Waterice").setCallback(() -> {
-            if(this.buttonMap.get("Place").getState()) {
+        this.buttonMap.get("Waterice").SetCallback(() -> {
+            if(this.buttonMap.get("Place").GetState()) {
                 if (waitingSettler.PlaceMaterial(new WaterIce())) {
                     output = "Sikerült letenni a Vízjeget!";
                     stepped=true;
-                    Controller.getInstance().SettlerStepped();
-                    Controller.getInstance().EventHappened("Waterice placed!");
+                    ViewController.getInstance().SettlerStepped();
+                    ViewController.getInstance().EventHappened("Waterice placed!");
                 } else {
                     output = "Nem sikerült letenni a Vízjeget!";
                 }
             }
         });
-        this.buttonMap.get("Uranium").setCallback(() -> {
-            if(this.buttonMap.get("Place").getState()) {
+        this.buttonMap.get("Uranium").SetCallback(() -> {
+            if(this.buttonMap.get("Place").GetState()) {
                 if (waitingSettler.PlaceMaterial(new Uranium())) {
                     output = "Sikerült letenni az Uránt!";
                     stepped=true;
-                    Controller.getInstance().SettlerStepped();
-                    Controller.getInstance().EventHappened("Uranium placed!");
+                    ViewController.getInstance().SettlerStepped();
+                    ViewController.getInstance().EventHappened("Uranium placed!");
                 } else {
                     output = "Nem sikerült letenni az Uránt!";
                 }
             }
         });
-        this.buttonMap.get("PlaceTeleport").setCallback(() -> {
-            if(this.buttonMap.get("Place").getState()) {
+        this.buttonMap.get("PlaceTeleport").SetCallback(() -> {
+            if(this.buttonMap.get("Place").GetState()) {
                 if (waitingSettler.PlaceTeleportGate()) {
                     output = "Sikerült letenni a Teleportkaput!";
                     stepped = true;
-                    Controller.getInstance().SettlerStepped();
-                    Controller.getInstance().EventHappened("Teleport placed!");
+                    ViewController.getInstance().SettlerStepped();
+                    ViewController.getInstance().EventHappened("Teleport placed!");
                 } else {
                     output = "Nem sikerült letenni a Teleportkaput!";
                 }
             }
         });
-        this.buttonMap.get("Output").setCallback(() -> {
+        this.buttonMap.get("Output").SetCallback(() -> {
             // :woozy_face:
             output = "Itt meg mit szeretnél?";
         });
@@ -166,9 +194,14 @@ public class InterfacePanel extends Drawable {
         }
     }
 
+    /**
+     * Kirajzolás
+     * @param graphics: graphics
+     * @param cameraPos: kameria pozíciója
+     */
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) { // boolean-eket itt nagyban használnám
-        if (buttonMap.get("Craft").getState()){ // mágikus számok hada 1.
+        if (buttonMap.get("Craft").GetState()){ // mágikus számok hada 1.
             // Robot craftoló gomb
             this.buttonMap.get("Robot").Draw(graphics);
 
@@ -184,7 +217,7 @@ public class InterfacePanel extends Drawable {
             this.buttonMap.get("Craft").Draw(graphics);
         }
 
-        if (buttonMap.get("Place").getState()) { // mágikus számok hada 3.
+        if (buttonMap.get("Place").GetState()) { // mágikus számok hada 3.
 
             /// Teleportkaput letevő gomb
             this.buttonMap.get("PlaceTeleport").Draw(graphics);
@@ -213,7 +246,7 @@ public class InterfacePanel extends Drawable {
         // Nyersanyagok kijelzése
 
         graphics.setColor(brown);
-        Position winSize = Controller.getInstance().GetWindowSize();
+        Position winSize = ViewController.getInstance().GetWindowSize();
 
         graphics.fillRect(240*winSize.x/1000,0*winSize.y/563,520*winSize.x/1000,43*winSize.y/563);
         graphics.setColor(Color.LIGHT_GRAY);
@@ -259,7 +292,7 @@ public class InterfacePanel extends Drawable {
 
         // Szöveges visszacsatolás
         if (waitingSettler!=null)
-            textbox = Controller.getInstance().GetSettlerView(waitingSettler).GetColor();
+            textbox = ViewController.getInstance().GetSettlerView(waitingSettler).GetColor();
 
         Button outputButton = this.buttonMap.get("Output");
         outputButton.SetBackGroundColor(this.textbox);
@@ -273,6 +306,10 @@ public class InterfacePanel extends Drawable {
         this.buttonMap.get("Mine").Draw(graphics);
     }
 
+    /**
+     * Beállítja az akutálisan várakozó telepest
+     * @param currentWaitingSettler: akutálisan várakozó telepes
+     */
     public void SetCurrentWaitingSettler(Settler currentWaitingSettler) {
         try {
             Thread.sleep(1000);
@@ -285,6 +322,11 @@ public class InterfacePanel extends Drawable {
         output = "Te következel!";
     }
 
+    /**
+     * Ellenőrzi a kattintást
+     * @param clickPos: kattintás pozíciója
+     * @return le lett kattintva
+     */
     public boolean HandleClick(Position clickPos){
         if(waitingSettler == null){
             output = "Ilyen nincs, nem jön semelyik Settler!";
@@ -300,7 +342,7 @@ public class InterfacePanel extends Drawable {
                 .filter(stringButtonEntry -> stringButtonEntry.getValue().ClickedCheck(clickPos, null)).findAny();
         if(res.isPresent()) {
             res.get().getValue().Clicked(clickPos, null);
-            if(buttonMap.get("Place").getState() && buttonMap.get("Craft").getState())
+            if(buttonMap.get("Place").GetState() && buttonMap.get("Craft").GetState())
                 clickedOnInterface = true;
 
             buttonMap.entrySet().forEach(stringButtonEntry -> {

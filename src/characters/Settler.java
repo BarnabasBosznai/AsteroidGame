@@ -1,6 +1,5 @@
 package characters;
 
-import interfaces.Item;
 import items.CraftingTable;
 import items.Inventory;
 import main.Game;
@@ -8,8 +7,7 @@ import materials.Material;
 import places.Asteroid;
 import places.Place;
 import places.TeleportGate;
-import view.SettlerView;
-import view.Controller;
+import view.ViewController;
 
 /**
  * A telepeseket reprezentáló osztály. A játékos velük interaktál közvetlenül
@@ -25,7 +23,7 @@ public class Settler extends MiningCharacter {
     public Settler(Asteroid ast) {
         inventory = new Inventory();
         this.asteroid = ast;
-        this.viewC = Controller.getInstance().AddSettlerView(this);
+        this.view = ViewController.getInstance().AddSettlerView(this);
     }
 
     /**
@@ -65,7 +63,7 @@ public class Settler extends MiningCharacter {
         if(place.Move(this)){
             currentAsteroid.TakeOff(this);
 
-            this.viewC.CharacterMoved(currentAsteroid, this.asteroid);
+            this.view.CharacterMoved(currentAsteroid, this.asteroid);
 
             return true;
         }
@@ -167,21 +165,12 @@ public class Settler extends MiningCharacter {
     }
 
     /**
-     * Az inventoryhoz hozzá ad egy itemet.
-     * @param item: az item, amit hozzá akarunk adni az inventoryhoz
-     */
-    public void AddItem(Item item) {
-        inventory.AddItem(item);
-    }
-
-    /**
      * A telepes lépésének végrehajtása. Itt választhat a játékos a végezhető
      * tevékenységek közül (pl: move, drill, placeteleport, stb.)
      */
     @Override
     public void Step() {
-
-        Controller.getInstance().CurrentSettlerWaitingForInput(this);
+        ViewController.getInstance().CurrentSettlerWaitingForInput(this);
     }
 
     @Override

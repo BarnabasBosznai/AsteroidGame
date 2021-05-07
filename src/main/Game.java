@@ -14,7 +14,7 @@ import materials.WaterIce;
 import places.Asteroid;
 import places.AsteroidBelt;
 import places.TeleportGate;
-import view.Controller;
+import view.ViewController;
 import view.Position;
 
 import java.util.*;
@@ -28,7 +28,7 @@ import java.util.stream.Stream;
  */
 public class Game {
     /**
-     * A tesztelhető Game osztály egyetlen példánya
+     * A Game osztály egyetlen példánya
      */
     private static Game instance;
 
@@ -38,19 +38,24 @@ public class Game {
     private final List<Settler> settlers;
 
     /**
-     * A játékban található lépésre képes (steppable) entitások.
+     * Az adott körben még lépésre váró steppable-ök
      */
     private final Queue<Steppable> steppablesLeftinRound;
 
+    /**
+     * A játékban található lépésre képes (steppable) entitások.
+     */
     private final List<Steppable> allSteppables;
 
+    /**
+     * A játék állapota
+     */
     private GameState gameState;
 
     /**
-     * Visszatér a tesztelhető Game osztály egyetlen objetumával
+     * Visszatér Game osztály egyetlen objetumával
      * @return testgame: az egyetlen TestGame objektum
      */
-    
     public static Game getInstance() {
         if(instance == null)
             instance = new Game();
@@ -78,6 +83,9 @@ public class Game {
         this.NextStep();
     }
 
+    /**
+     * Elvégzi a játék inicializálását
+     */
     private void Init(){
         CraftingTable craftingTable = CraftingTable.getInstance();
         craftingTable.AddRecipe(new Recipe(Robot.class,
@@ -107,7 +115,7 @@ public class Game {
             asteroids.add(ast);
             AsteroidBelt.getInstance().AddAsteroid(ast);
 
-            Controller.getInstance().AddAsteroidView(ast, pos);
+            ViewController.getInstance().AddAsteroidView(ast, pos);
         }
 
         for(Asteroid ast : asteroids) {
@@ -119,16 +127,6 @@ public class Game {
 
             final List<Double> distancesCopy = new ArrayList<>(distances);
             distances.remove(distances.stream().mapToDouble(d -> d).min().getAsDouble());
-
-            /*for(int i = 0; i < 5; i++) {
-                Double min = distances.stream().mapToDouble(d -> d).min().getAsDouble();
-                Asteroid neighbor = asteroids.get(distancesCopy.indexOf(min));
-                if (ast.GetNeighboringAsteroids().size() < 5 && neighbor.GetNeighboringAsteroids().size() < 5) {
-                    ast.AddNeighbor(neighbor);
-                    neighbor.AddNeighbor(ast);
-                }
-                distances.remove(min);
-            }*/
 
             while(ast.GetNeighboringAsteroids().size() < 5 && distances.size() > 0) {
                 double min = distances.stream().mapToDouble(d -> d).min().getAsDouble();
@@ -165,12 +163,17 @@ public class Game {
         this.AddSteppable(AsteroidBelt.getInstance());
     }
 
+    /**
+     * Végrehajtja a következő lépést
+     */
     public void NextStep(){
         if(steppablesLeftinRound.size() == 0){
             steppablesLeftinRound.addAll(allSteppables);
         }
 
         Steppable currentSteppable = this.steppablesLeftinRound.poll();
+        if(currentSteppable == null) return;
+
         currentSteppable.Step();
 
         System.out.println("prioritas: " + currentSteppable.GetSteppablePriority());
@@ -179,14 +182,18 @@ public class Game {
         GameState currentGameState = this.CheckGameStatus();
         if(currentGameState != GameState.NOTENDED){
             this.gameState = currentGameState;
-            Controller.getInstance().GameEnded();
+            ViewController.getInstance().GameEnded();
         }
 
         AsteroidBelt.getInstance().MakeItConnected();
 
-        Controller.getInstance().StepEnded();
+        ViewController.getInstance().StepEnded();
     }
 
+    /**
+     * Visszatér a játék állapotával
+     * @return a játék állapota
+     */
     public GameState GetGameState(){
         return this.gameState;
     }

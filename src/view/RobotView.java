@@ -8,35 +8,61 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Robot kirajzolásáért felelős View
+ */
 public class RobotView extends DrawableCharacter {
 
+    /**
+     * Modellbeli robot
+     */
     private final Robot robot;
+
+    /**
+     * Robot sugara
+     */
     private static final int robotRadius = 10;
 
+    /**
+     * Konstruktor
+     * @param r: modellbeli robot
+     */
     public RobotView(Robot r){
         super();
 
         this.robot = r;
-        this.radius = robotRadius;
+
         try{
-            //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
-            this.img= ImageIO.read(new File("Textures/robot.png"));
+            img= ImageIO.read(new File("Textures/robot.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();
         }
     }
 
+    /**
+     * Kirajzolás
+     * @param graphics: graphics
+     */
     @Override
     public void Draw(Graphics2D graphics) {
         this.Draw(graphics, this.pos);
     }
 
+    /**
+     * Kirajzolás pozíció szerint
+     * @param graphics: graphics
+     * @param position: pozíció
+     */
     @Override
     public void Draw(Graphics2D graphics, Position position) {
-        graphics.drawImage(rotate(this.angle),position.x-robotRadius,position.y-robotRadius,2*robotRadius,2*robotRadius,null);
+        graphics.drawImage(Rotate(this.angle),position.x-robotRadius,position.y-robotRadius,2*robotRadius,2*robotRadius,null);
     }
 
+    /**
+     * Visszatér a modellbeli karakterrel
+     * @return modell
+     */
     @Override
     public Character GetCharacter() {
         return this.robot;

@@ -4,8 +4,7 @@ import main.Game;
 import materials.MaterialStorage;
 import places.Asteroid;
 import places.Place;
-import view.UFOView;
-import view.Controller;
+import view.ViewController;
 
 public class UFO extends MiningCharacter {
 
@@ -20,7 +19,7 @@ public class UFO extends MiningCharacter {
     public UFO(Asteroid ast){
         this.inventory = new MaterialStorage();
         this.asteroid = ast;
-        this.viewC = Controller.getInstance().AddUFOView(this);
+        this.view = ViewController.getInstance().AddUFOView(this);
     }
 
     /**

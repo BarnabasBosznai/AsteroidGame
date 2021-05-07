@@ -2,12 +2,23 @@ package view;
 
 import java.awt.*;
 
-public class PositionView extends Drawable{
+/**
+ * Kamera pozíciójának megjelenítése
+ */
+public class CameraView extends Drawable{
 
-    public PositionView(){
+    /**
+     * Konstruktor
+     */
+    public CameraView(){
         this.zIndex = 100;
     }
 
+    /**
+     * Kirajzolás
+     * @param graphics: graphics
+     * @param cameraPos: kameria pozíciója
+     */
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
         graphics.setColor(Color.GRAY); // Tesztelésre csak talán

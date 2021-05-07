@@ -8,35 +8,61 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * UFO-t megjelenítő View
+ */
 public class UFOView extends DrawableCharacter {
 
+    /**
+     * Modell
+     */
     private final UFO ufo;
+
+    /**
+     * UFO sugara
+     */
     private static final int ufoRadius = 10;
 
+    /**
+     * Konstruktor
+     * @param u: modellbeli ufo
+     */
     public UFOView(UFO u){
         super();
 
         this.ufo = u;
-        this.radius = ufoRadius*2;
+
         try{
-            //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
-            this.img = ImageIO.read(new File("Textures/ufo.png"));
+            img = ImageIO.read(new File("Textures/ufo.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();
         }
     }
 
+    /**
+     * Kirajzolás
+     * @param graphics: graphics
+     */
     @Override
     public void Draw(Graphics2D graphics) {
         this.Draw(graphics, this.pos);
     }
 
+    /**
+     * Kirajzolás pozíció szerint
+     * @param graphics: graphics
+     * @param position: pozíció
+     */
     @Override
     public void Draw(Graphics2D graphics, Position position) {
-        graphics.drawImage(rotate(angle),position.x-ufoRadius,position.y-ufoRadius,2*ufoRadius,2*ufoRadius,null);
+        graphics.drawImage(Rotate(angle),position.x-ufoRadius,position.y-ufoRadius,2*ufoRadius,2*ufoRadius,null);
     }
 
+    /**
+     * Visszatér a modellbeli karakterrel
+     * @return modell
+     */
     @Override
     public Character GetCharacter() {
         return this.ufo;

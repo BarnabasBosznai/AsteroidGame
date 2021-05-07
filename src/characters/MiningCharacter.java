@@ -3,6 +3,9 @@ package characters;
 import materials.Material;
 import materials.MaterialStorage;
 
+/**
+ * Bányászni képes karaktert reprezentáló osztály
+ */
 public abstract class MiningCharacter extends Character {
 
     /**

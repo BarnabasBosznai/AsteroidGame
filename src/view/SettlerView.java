@@ -2,7 +2,6 @@ package view;
 
 import characters.Character;
 import characters.Settler;
-import items.Inventory;
 import materials.Coal;
 import materials.Iron;
 import materials.WaterIce;
@@ -14,14 +13,39 @@ import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
+/**
+ * Telepes kirajzolására szolgáló osztály
+ */
 public class SettlerView extends DrawableCharacter implements Clickable {
 
+    /**
+     * Modellbeli telepes
+     */
     private final Settler settler;
-    private static final int settlerRadius = 10;
-    private final Color color;
-    Image CoalImg, IronImg, WaterIceImg, UraniumImg;
 
+    /**
+     * Telepes sugara
+     */
+    private static final int settlerRadius = 10;
+
+    /**
+     * Megkülönböztető szín
+     */
+    private final Color color;
+
+    /**
+     * Nyersanyagok képei
+     */
+    private Image CoalImg, IronImg, WaterIceImg, UraniumImg;
+
+    /**
+     * Lehetséges megkülönböztető színek
+     */
     private static final List<Color> settlerColors;
+
+    /**
+     * Létrehozott telepesek számlálója
+     */
     private static int settlerViewCreationCounter;
 
     static{
@@ -29,18 +53,22 @@ public class SettlerView extends DrawableCharacter implements Clickable {
         settlerColors = new ArrayList<>(Arrays.asList(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.WHITE));
     }
 
-    public Color GetColor(){ return this.color;}
-
-    public Position GetPosition(){return this.pos;}
-
+    /**
+     * Konstruktor
+     * @param s: modellbeli telepes
+     */
     public SettlerView(Settler s){
         super();
 
         this.settler = s;
-        this.radius = settlerRadius;
+
         try{
             //Beolvasas utan automatikusan bezarodnak a fajlok az ImageIO-nal
-            this.img= ImageIO.read(new File("Textures/settler.png"));
+            img= ImageIO.read(new File("Textures/settler.png"));
+            CoalImg = ImageIO.read(new File("Textures/szén.png"));
+            IronImg = ImageIO.read(new File("Textures/vas.png"));
+            WaterIceImg = ImageIO.read(new File("Textures/vízjég.png"));
+            UraniumImg = ImageIO.read(new File("Textures/urán.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();
@@ -50,6 +78,10 @@ public class SettlerView extends DrawableCharacter implements Clickable {
         ++settlerViewCreationCounter;
     }
 
+    /**
+     * Kirajzolás
+     * @param graphics: graphics
+     */
     @Override
     public void Draw(Graphics2D graphics) {
         this.Draw(graphics, this.pos);
@@ -63,14 +95,7 @@ public class SettlerView extends DrawableCharacter implements Clickable {
             graphics.setStroke(new BasicStroke(3));
             graphics.drawRect(2,48,65,140);
             graphics.setColor(Color.BLACK);
-            try {
-                CoalImg = ImageIO.read(new File("Textures/szén.png"));
-                IronImg = ImageIO.read(new File("Textures/vas.png"));
-                WaterIceImg = ImageIO.read(new File("Textures/vízjég.png"));
-                UraniumImg = ImageIO.read(new File("Textures/urán.png"));
-            } catch ( IOException e){
 
-            }
             int coal = 0;
             int iron = 0;
             int waterice = 0;
@@ -100,6 +125,11 @@ public class SettlerView extends DrawableCharacter implements Clickable {
         }
     }
 
+    /**
+     * Kirajzolás pozíció szerint
+     * @param graphics: graphics
+     * @param position: pozíció
+     */
     @Override
     public void Draw(Graphics2D graphics, Position position) {
         graphics.setColor(color);
@@ -107,33 +137,56 @@ public class SettlerView extends DrawableCharacter implements Clickable {
         graphics.rotate(angle,position.x,position.y);
         graphics.drawRect((position.x-settlerRadius-1),(position.y-settlerRadius-2),2*(settlerRadius)+2,2*(settlerRadius)+4);
         graphics.rotate(-angle,position.x,position.y);
-        graphics.drawImage(rotate(angle),position.x-settlerRadius,position.y-settlerRadius,2*settlerRadius,2*settlerRadius,null);
+        graphics.drawImage(Rotate(angle),position.x-settlerRadius,position.y-settlerRadius,2*settlerRadius,2*settlerRadius,null);
     }
 
-    public void Draw_Inventory(Graphics2D graphics){
+    /**
+     * Visszatér a telepes megkülönböztető színével
+     * @return szín
+     */
+    public Color GetColor(){ return this.color;}
 
-    }
-
+    /**
+     * Visszatér a modellbeli karakterrel
+     * @return modell
+     */
     @Override
     public Character GetCharacter() {
         return this.settler;
     }
 
+    /**
+     * Jelzés, hogy meghalt a modellben a telepes
+     */
     @Override
     public void CharacterDied(){
-        Controller.getInstance().SettlerDied(this);
+        ViewController.getInstance().SettlerDied(this);
     }
 
+    /**
+     * Jelzés, hogy rákattintottak
+     * @param pos: kattintás pozíciója
+     * @param cameraPos: kamera pozíciója
+     */
     @Override
     public void Clicked(Position pos, Position cameraPos) {
         clicked=true;
     }
 
+    /**
+     * Jelzés, hogy nincs rákattintva
+     */
     @Override
     public void UnClicked() {
         clicked=false;
     }
 
+    /**
+     * Ellenőrzi, hogy rákattintottak-e
+     * @param clickPos: kattintás pozíciója
+     * @param cameraPos: kamera pozíciója
+     * @return bool: rákattintottak-e
+     */
     @Override
     public boolean ClickedCheck(Position clickPos, Position cameraPos) {
         if (pos.x==0)   //gyenge szűrés

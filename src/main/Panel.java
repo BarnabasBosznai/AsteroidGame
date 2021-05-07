@@ -1,21 +1,42 @@
 package main;
 
-import view.Controller;
+import view.ViewController;
 import view.Position;
 
-import javax.sound.sampled.Control;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * JPanel, amit kirajzolunk a Frame-re
+ */
 public class Panel extends JPanel {
 
+    /**
+     * Kamera pozíciója
+     */
+    Position cameraPos;
 
-    Position cameraPos, cameraPosSaved;
+    /**
+     * Kamera pozíciójának mentése
+     */
+    Position cameraPosSaved;
+
+    /**
+     * Utolsó kattintás pozíciója
+     */
     Position lastClickPos;
-    boolean nem_interface=true;
+
+    /**
+     * Egér pozíciója
+     */
     Position cursorPos;
 
+    boolean nem_interface=true;
+
+    /**
+     * Panel konstruktora
+     */
     public Panel(){
         cameraPos = new Position(0,0);
         cameraPosSaved = new Position(0,0);
@@ -27,16 +48,22 @@ public class Panel extends JPanel {
         cursorPos = new Position(0, 0);
     }
 
+    /**
+     * Kirajzolás
+     * @param g: graphics
+     */
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         this.setBackground(Color.BLACK);
         Graphics2D graphics = (Graphics2D) g;
 
-        Controller.getInstance().DrawAll(graphics, cameraPos, cursorPos);
+        ViewController.getInstance().DrawAll(graphics, cameraPos, cursorPos);
     }
 
-
+    /**
+     * KeyListener a space-re
+     */
     private class KeyListenerHM implements KeyListener {
         @Override
         public void keyTyped(KeyEvent e) {
@@ -47,8 +74,8 @@ public class Panel extends JPanel {
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode()==KeyEvent.VK_SPACE) {
 
-                if (Controller.getInstance().GetCurrentSettlerWaitingForInput()!=null) {
-                    Position pos = Controller.getInstance().GetAsteroidView(Controller.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid()).GetPos();
+                if (ViewController.getInstance().GetCurrentSettlerWaitingForInput()!=null) {
+                    Position pos = ViewController.getInstance().GetAsteroidView(ViewController.getInstance().GetCurrentSettlerWaitingForInput().GetAsteroid()).GetPos();
 
                     cameraPos.x = pos.x - 500;
                     cameraPos.y = pos.y - 281;
@@ -64,15 +91,13 @@ public class Panel extends JPanel {
         }
     }
 
-    //TODO
+    /**
+     * Egér kattintásra figyelő Listener
+     */
     private class MouseClickedListener implements MouseListener {
 
         @Override
         public void mouseClicked(MouseEvent e) {
-            //System.out.println("cameraPosSaved: "+cameraPosSaved.x+" "+cameraPosSaved.y);
-
-
-            //System.out.println("LastClicked: "+lastClickPos.x+" "+lastClickPos.y);
 
         }
 
@@ -81,16 +106,14 @@ public class Panel extends JPanel {
 
             lastClickPos.x = e.getX();
             lastClickPos.y = e.getY();
-            //System.out.println("KameraPos: "+cameraPos.x+" "+cameraPos.y);
-            //System.out.println("l: "+e.getX()+" "+e.getY());
-            nem_interface = Controller.getInstance().ClickHandler(lastClickPos, cameraPos);
+
+            nem_interface = ViewController.getInstance().ClickHandler(lastClickPos, cameraPos);
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
             cameraPosSaved.x = cameraPos.x;
             cameraPosSaved.y = cameraPos.y;
-            //System.out.println("cameraPosSaved: "+cameraPosSaved.x+" "+cameraPosSaved.y);
         }
 
         @Override
@@ -104,27 +127,31 @@ public class Panel extends JPanel {
         }
     }
 
+    /**
+     * Jelzés, hogy átméreteződött az ablak
+     * @param winSize: új ablakméret
+     */
     public void WindowResized(Position winSize){
         if (cameraPos.x>1500+1000-winSize.x) cameraPos.x=1500+1000-winSize.x;
         if (cameraPos.y>2060+563-winSize.y) cameraPos.y=2060+563-winSize.y;
-
     }
 
-    //TODO
+    /**
+     * Egér mozgását figyelő Listener
+     */
     private class MouseMovedListener implements MouseMotionListener{
 
         @Override
         public void mouseDragged(MouseEvent e) {
 
             if (!nem_interface){
-                Position winSize = Controller.getInstance().GetWindowSize();
+                Position winSize = ViewController.getInstance().GetWindowSize();
                 cameraPos.x = cameraPosSaved.x - e.getX() + lastClickPos.x;
                 cameraPos.y = cameraPosSaved.y - e.getY() + lastClickPos.y; // ez valószínűleg negálni kell
                 if (cameraPos.x<-2500) cameraPos.x=-2500;
                 if (cameraPos.x>1500+1000-winSize.x) cameraPos.x=1500+1000-winSize.x;
                 if (cameraPos.y<-2500) cameraPos.y=-2500;
                 if (cameraPos.y>2060+563-winSize.y) cameraPos.y=2060+563-winSize.y;
-                //System.out.println("KameraPos: "+cameraPos.x+" "+cameraPosSaved.x+" "+e.getX()+" "+lastClickPos.x);
 
                 cursorPos.x = e.getX();
                 cursorPos.y = e.getY();

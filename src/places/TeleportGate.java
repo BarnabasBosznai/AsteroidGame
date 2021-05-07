@@ -27,6 +27,9 @@ public class TeleportGate extends Place implements Item, Steppable {
      */
     private boolean crazy;
 
+    /**
+     * View
+     */
     TeleportGateView view;
 
     /**
@@ -129,25 +132,5 @@ public class TeleportGate extends Place implements Item, Steppable {
      */
     public void HitByStorm(){
         crazy = true;
-    }
-
-    /**
-     * Beállítja a teleportkapu crazy attribútumát (csak teszteléshez)
-     * @param crazy: a beállítandó érték
-     */
-    public void SetCrazy(boolean crazy) {
-        this.crazy = crazy;
-    }
-
-    /**
-     * Viszatér a teleportkapu crazy attribútumának értékével (csak teszteléshez)
-     * @return true: megkergült a teleportkapu, false: nem kergült meg
-     */
-    public boolean GetCrazy(){
-        return this.crazy;
-    }
-
-    public void SettlerMoved(Asteroid asteroid){
-
     }
 }

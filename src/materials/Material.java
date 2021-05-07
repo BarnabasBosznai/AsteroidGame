@@ -21,12 +21,6 @@ public abstract class Material {
     public abstract void Count(MaterialCounter counter);
 
     /**
-     * Kiírja a nyersanyag típusát
-     * @return string: a nyersanyag típusa stringként a kiíratáshoz
-     */
-    public abstract String Print();
-
-    /**
      * Igazzal tér vissza, ha a paraméterként kapott material ugyanolyan típusú, mint ő, egyébként hamis.
      * @param material: összehasonlítandó nyersanyag
      * @return true: megegyezik a típus, false: nem egyezik meg

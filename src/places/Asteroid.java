@@ -3,8 +3,6 @@ package places;
 import characters.Character;
 import materials.*;
 import view.AsteroidView;
-import view.Controller;
-import view.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -225,22 +223,6 @@ public class Asteroid extends Place {
     }
 
     /**
-     * Beállítja az aszteroida magjának a paraméterül kapott nyersanyagot
-     * @param material: a beállítandó nyersanyag
-     */
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
-    /**
-     * Beállítja az aszteroida köpenyének vastagságát
-     * @param value: új vastagság
-     */
-    public void setThickness(int value) {
-        this.thickness = value;
-    }
-
-    /**
      * Visszaadja az aszteroida köpenyének vastagságát
      * @return thickness: az aszteroida köpenyének vastagsága
      */
@@ -257,14 +239,6 @@ public class Asteroid extends Place {
     }
 
     /**
-     * Visszatér az aszteroidán található karakterekkel
-     * @return characters: az aszteroidán található karakterek
-     */
-    public List<Character> GetCharacters() {
-        return characters;
-    }
-
-    /**
      * Visszatér az aszteroidán található teleportkapukkal
      * @return teleportgates: az aszteroidán található teleportkapuk
      */
@@ -272,7 +246,11 @@ public class Asteroid extends Place {
         return teleportGates;
     }
 
-    public void setView(AsteroidView view) {
+    /**
+     * Beállítja az aszteroida View-ját, hogy tudjon jelezni neki az állapotáról a modellben
+     * @param view: view
+     */
+    public void SetView(AsteroidView view) {
         this.view = view;
     }
 }

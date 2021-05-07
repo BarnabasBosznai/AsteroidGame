@@ -1,6 +1,6 @@
 package main;
 
-import view.Controller;
+import view.ViewController;
 import view.Position;
 
 import javax.imageio.ImageIO;
@@ -15,24 +15,32 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Létrehozza az ablakot.
- * Rábízza a mneüre a játék vezérlését.
- * Frissíti a képernyőt 1/60 másodpercenként.
+ * Létrehozza az ablakot
  */
 public class Frame extends JFrame{
 
+    /**
+     * Bezárult-e az ablak
+     */
     private boolean closed;
 
+    /**
+     * Az újrarajzolásért felelős szál
+     */
     Thread threadGui;
+
+    /**
+     * Léptetést vezérlő szál
+     */
     Thread threadStep;
 
+    /**
+     * Ikon
+     */
     BufferedImage img;
 
     /**
-     * Létrehozza az ablakot.
-     * Rábízza a mneüre a játék vezérlését.
-     * Ha mósodul a menü állapota, akkor új ablakot készít az új menühöz.
-     * Frissíti a képernyőt 1/60 másodpercenként.
+     * Konstruktor
      */
     public Frame() {
         Panel panel = new Panel();
@@ -62,7 +70,7 @@ public class Frame extends JFrame{
             public void componentResized(ComponentEvent e) {
                 Dimension dim = e.getComponent().getSize();
                 panel.WindowResized(new Position(dim.width-16,dim.height-39));
-                Controller.getInstance().FrameResized(new Position(dim.width-16,dim.height-39)); // mágikus számok
+                ViewController.getInstance().FrameResized(new Position(dim.width-16,dim.height-39)); // mágikus számok
             }
         });
 
@@ -81,7 +89,7 @@ public class Frame extends JFrame{
         threadStep = new Thread(() -> {
             while(!closed){
                 try {
-                    Controller.getInstance().TimerTicked();
+                    ViewController.getInstance().TimerTicked();
 
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
@@ -92,11 +100,17 @@ public class Frame extends JFrame{
 
     }
 
+    /**
+     * Elindítja a játékot (a szálakat)
+     */
     public void StartGame(){
         this.threadGui.start();
         this.threadStep.start();
     }
 
+    /**
+     * Az ablak bezárulását figyelő Listener
+     */
     private class FrameClosedListener implements WindowListener{
 
         @Override

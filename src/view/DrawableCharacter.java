@@ -4,48 +4,111 @@ import characters.Character;
 import places.Asteroid;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+/**
+ * Kirajzolható karakterek
+ */
 public abstract class DrawableCharacter {
 
+    /**
+     * Karakter képe
+     */
     protected BufferedImage img;
+
+    /**
+     * Rá van-e kattintva
+     */
     protected boolean clicked;
-    protected int radius;
+
+    /**
+     * Karakter pozíciója
+     */
     protected Position pos;
+
+    /**
+     * Forgatási szög
+     */
     protected double angle;
 
+    /**
+     * Előző aszteroida
+     */
     private Asteroid from;
+
+    /**
+     * Animáció ideje
+     */
     private int animationTime;
 
+    /**
+     * Konstruktor
+     */
     public DrawableCharacter(){
         this.pos = new Position(0,0);
         animationTime = 1;
     }
 
+    /**
+     * Kirajzolás
+     * @param graphics: graphics
+     */
     public abstract void Draw(Graphics2D graphics);
 
+    /**
+     * Kirajzolás pozíció szerint
+     * @param graphics: graphics
+     * @param pos: pozíció
+     */
     public abstract void Draw(Graphics2D graphics, Position pos);
 
+    /**
+     * Visszatér a karakter aszteroidájával a modellben
+     * @return asteroid
+     */
     public Asteroid GetAsteroid(){
         return this.GetCharacter().GetAsteroid();
     }
 
+    /**
+     * Visszatér az előző aszteroidájával a karakternek
+     * @return from
+     */
     public Asteroid GetLastAsteroid() {
         return from;
     }
 
+    /**
+     * Visszatér a karakter modelljével
+     * @return modellbeli karakter
+     */
     public abstract Character GetCharacter();
 
+    /**
+     * Jelzés, hogy meghalt a karakter a modellben
+     */
     public void CharacterDied(){
-        Controller.getInstance().CharacterDied(this);
+        ViewController.getInstance().CharacterDied(this);
     }
 
+    /**
+     * Jelzés, hogy elmozdult a karakter a modellben
+     * @param oldAsteroid: előző aszteroida
+     * @param newAsteroid: új aszteroida
+     */
     public void CharacterMoved(Asteroid oldAsteroid, Asteroid newAsteroid){
-        Controller.getInstance().CharacterMoved(this, oldAsteroid, newAsteroid);
+        ViewController.getInstance().CharacterMoved(this, oldAsteroid, newAsteroid);
         from = oldAsteroid;
     }
 
+    /**
+     * Mozgási animáció
+     * @param g: graphics
+     * @param cameraPos: kamera pozíciója
+     * @param lastPos: előző pozíció az animációban
+     * @param newPos: új pozíció az animációban
+     * @return vége lett-e az animációnak
+     */
     public boolean PlayMoveAnimation(Graphics2D g, Position cameraPos, AsteroidView lastPos, AsteroidView newPos) {
         if(animationTime < 120) {
             Position last = new Position(lastPos.GetPos().x, lastPos.GetPos().y);
@@ -66,7 +129,7 @@ public abstract class DrawableCharacter {
 
             animationTime++;
             Draw(g, temp);
-            //g.drawImage(img, temp.x, temp.y, 15,15,null);
+
             return true;
         }
         animationTime = 1;
@@ -74,13 +137,23 @@ public abstract class DrawableCharacter {
         return false;
     }
 
+    /**
+     * Beállítja a karakter pozícióját
+     * @param pos: pozíció
+     * @param ang: forgási szög
+     */
     public void SetPosition(Position pos, double ang){
         this.pos.x = pos.x;
         this.pos.y = pos.y;
         this.angle = ang;
     }
 
-    public BufferedImage rotate(double angle) {
+    /**
+     * Elforgatja a karaktert
+     * @param angle: forgatási szög
+     * @return elforgatott kép
+     */
+    public BufferedImage Rotate(double angle) {
 
         int w = this.img.getWidth();
         int h = this.img.getHeight();

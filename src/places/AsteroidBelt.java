@@ -1,9 +1,8 @@
 package places;
 
 import interfaces.Steppable;
-import main.Game;
 import view.AsteroidBeltView;
-import view.Controller;
+import view.ViewController;
 
 import java.util.*;
 
@@ -19,6 +18,9 @@ public class AsteroidBelt implements Steppable {
      */
     private final List<Asteroid> asteroids;
 
+    /**
+     * View
+     */
     private final AsteroidBeltView view;
 
     /**
@@ -32,7 +34,6 @@ public class AsteroidBelt implements Steppable {
         return instance;
     }
 
-
     /**
      * Konstruktor
      */
@@ -40,9 +41,8 @@ public class AsteroidBelt implements Steppable {
         this.asteroids = new ArrayList<>();
 
         this.view = new AsteroidBeltView(this, 0);
-        Controller.getInstance().AddDrawable(this.view);
+        ViewController.getInstance().AddDrawable(this.view);
     }
-
 
     /**
      * Lépteti az aszteroidamezőt, aki választhat, hogy vagy nem fog történni
@@ -54,13 +54,10 @@ public class AsteroidBelt implements Steppable {
         Random random = new Random();
         int rand = random.nextInt(5);
 
-        //kisebb ai
         if(rand == 0){
-            System.out.println("napközel"); // debug
             this.NearSun();
         }
         else if(rand == 1){
-            System.out.println("napvihar"); // debug
             this.SolarFlare();
         }
     }
@@ -124,6 +121,9 @@ public class AsteroidBelt implements Steppable {
         asteroids.add(asteroid);
     }
 
+    /**
+     * Összefüggővé alakítja az aszteroidamezőt
+     */
     public void MakeItConnected(){
         List<List<Asteroid>> components = new ArrayList<>();
 
@@ -172,6 +172,11 @@ public class AsteroidBelt implements Steppable {
         }
     }
 
+    /**
+     * Az összefüggőség előállításához szükséges segédfüggvény (BFS algoritmus)
+     * @param remainingAsteroids: még nem vizsgált komponense az aszteroidamezőnek
+     * @return BFS után se vizsgált komponense az aszteroidamezőnek
+     */
     private List<Asteroid> BFS(List<Asteroid> remainingAsteroids) {
         Map<Asteroid, Boolean> visitedAsteroidMap = new HashMap<>();
         for(Asteroid a: remainingAsteroids){

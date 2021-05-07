@@ -5,16 +5,32 @@ import main.GameState;
 
 import java.awt.*;
 
+/**
+ * A játék végén lejátszott animáció
+ */
 public class EndGameAnimation extends Drawable {
 
-    private GameState endGameState;
+    /**
+     * Kirajzolt szöveg színe
+     */
     private Color fontColor;
+
+    /**
+     * Kirajzolt szöveg
+     */
     private String string;
+
+    /**
+     * Szöveg betűtípusa
+     */
     private Font font;
 
+    /**
+     * Konstruktor
+     */
     public EndGameAnimation(){
         this.zIndex = 101;
-        this.endGameState = Game.getInstance().GetGameState();
+        GameState endGameState = Game.getInstance().GetGameState();
         if(endGameState == GameState.SETTLERSWON) {
             this.fontColor = Color.GREEN;
             this.string = "Nyertek a telepesek!";
@@ -27,14 +43,24 @@ public class EndGameAnimation extends Drawable {
         }
     }
 
+    /**
+     * A képernyő középére kirajzolja a szöveget
+     * @param g: graphics
+     * @param string: kirajzolandó szöveg
+     */
     private void DrawCenteredText(Graphics2D g, String string){
         FontMetrics metrics = g.getFontMetrics(this.font);
-        Position winSize = Controller.getInstance().GetWindowSize();
-        int x = (winSize.x - metrics.stringWidth(this.string)) / 2;
-        int y = winSize.y - (winSize.y - (-(int) metrics.getLineMetrics(this.string, g).getBaselineOffsets()[2])) / 2;
+        Position winSize = ViewController.getInstance().GetWindowSize();
+        int x = (winSize.x - metrics.stringWidth(string)) / 2;
+        int y = winSize.y - (winSize.y - (-(int) metrics.getLineMetrics(string, g).getBaselineOffsets()[2])) / 2;
         g.drawString(string, x, y);
     }
 
+    /**
+     * Kirajzolás
+     * @param g: graphics
+     * @param cameraPos: kameria pozíciója
+     */
     @Override
     public void Draw(Graphics2D g, Position cameraPos) {
         g.setFont(this.font);

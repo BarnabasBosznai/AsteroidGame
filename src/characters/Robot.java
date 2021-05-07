@@ -3,8 +3,7 @@ package characters;
 import interfaces.Item;
 import places.Asteroid;
 import places.Place;
-import view.RobotView;
-import view.Controller;
+import view.ViewController;
 
 /**
  * A robotokat reprezentáló osztály. A robotokat a Controller irányítja. Csak fúrásra és
@@ -15,7 +14,7 @@ public class Robot extends Character implements Item {
 
     public Robot(Asteroid ast){
         this.asteroid = ast;
-        this.viewC = Controller.getInstance().AddRobotView(this);
+        this.view = ViewController.getInstance().AddRobotView(this);
     }
     /**
      * A robot lépésének végrehajtása

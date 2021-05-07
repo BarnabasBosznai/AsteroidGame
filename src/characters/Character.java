@@ -4,7 +4,6 @@ import main.Game;
 import places.Asteroid;
 import interfaces.Steppable;
 import places.Place;
-import view.Controller;
 import view.DrawableCharacter;
 
 import java.util.List;
@@ -19,7 +18,10 @@ public abstract class Character implements Steppable {
      */
     protected Asteroid asteroid;
 
-    protected DrawableCharacter viewC;
+    /**
+     * View
+     */
+    protected DrawableCharacter view;
 
     /**
      * Lereagálja, hogy felrobbant az aszteroida, amin éppen
@@ -54,7 +56,7 @@ public abstract class Character implements Steppable {
         if(choosenDestination.Move(this)){
             currentAsteroid.TakeOff(this);
 
-            this.viewC.CharacterMoved(currentAsteroid, this.asteroid);
+            this.view.CharacterMoved(currentAsteroid, this.asteroid);
 
             return true;
         }
@@ -78,7 +80,10 @@ public abstract class Character implements Steppable {
         return this.asteroid;
     }
 
+    /**
+     * Jelzi, hogy meghalt
+     */
     protected void DiedAlert(){
-        this.viewC.CharacterDied();
+        this.view.CharacterDied();
     }
 }
