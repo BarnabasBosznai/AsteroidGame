@@ -26,7 +26,7 @@ public class AsteroidBeltView extends Drawable {
         this.solarFlareHappening = false;
         this.nearSunHappening = false;
         this.animationCounter = 0;
-        this.animationCounterMax = 35;
+        this.animationCounterMax = Controller.getInstance().GetWindowSize().x;;
 
         this.stars = new ArrayList<>();
 
@@ -41,16 +41,41 @@ public class AsteroidBeltView extends Drawable {
         graphics.setColor(Color.WHITE);
         stars.forEach(star -> graphics.fillOval(star.x - cameraPos.x, star.y - cameraPos.y, 1, 1));
 
-        if(solarFlareHappening || nearSunHappening){
+        int vx=Controller.getInstance().GetWindowSize().x;
+        int vy=Controller.getInstance().GetWindowSize().y;
+
+        if(nearSunHappening){
             graphics.setColor(new Color(1.0f, 0.369f, 0.075f, ((float)animationCounter/(float)animationCounterMax)));
             Position windowSize = Controller.getInstance().GetWindowSize();
             graphics.fillRect(0,0,windowSize.x,windowSize.y);
-            ++animationCounter;
+
+            graphics.setColor(new Color(255, 0, 0, 255));
+            graphics.setFont(new Font("Monospaced", Font.BOLD, vx/10));
+            FontMetrics metrics = graphics.getFontMetrics(new Font("Monospaced", Font.BOLD, vx/10));
+            graphics.drawString("Near Sun!",vx/2- metrics.stringWidth("Near Sun!") / 2,vy/2);
+
+            animationCounter+=vx/100;
             if(animationCounter == animationCounterMax){
                 animationCounter = 0;
-                solarFlareHappening = false;
                 nearSunHappening = false;
             }
+        }
+        if(solarFlareHappening){
+            graphics.setColor(new Color(1.0f, 0.369f, 0.075f));
+            int position= (int)((double)animationCounter*(vx/10)/(double)animationCounterMax)-vx;
+            graphics.fillOval(position,Controller.getInstance().GetWindowSize().y/2-vy,2*vy,2*vy);
+
+            graphics.setColor(new Color(255, 0, 0, 255));
+            graphics.setFont(new Font("Monospaced", Font.BOLD, vx/10));
+            FontMetrics metrics = graphics.getFontMetrics(new Font("Monospaced", Font.BOLD, vx/10));
+            graphics.drawString("Solar Flare!",vx/2- metrics.stringWidth("Solar Flare!") / 2,vy/2);
+
+            animationCounter+=vx/10;
+            if(position >= Controller.getInstance().GetWindowSize().x){
+                animationCounter = 0;
+                solarFlareHappening = false;
+            }
+
         }
     }
 
