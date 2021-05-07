@@ -32,7 +32,6 @@ public class EventFeed extends Drawable {
      * @param eventDescription: esemény leírása
      */
     public void EventHappened(String eventDescription){
-        System.out.println(eventDescription);
         this.eventQueue.add(new EventBox(eventDescription));
     }
 

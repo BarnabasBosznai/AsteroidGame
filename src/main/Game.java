@@ -176,8 +176,6 @@ public class Game {
 
         currentSteppable.Step();
 
-        System.out.println("prioritas: " + currentSteppable.GetSteppablePriority());
-
         //check
         GameState currentGameState = this.CheckGameStatus();
         if(currentGameState != GameState.NOTENDED){
