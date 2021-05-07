@@ -25,6 +25,8 @@ public abstract class DrawableCharacter {
 
     public abstract void Draw(Graphics2D graphics);
 
+    public abstract void Draw(Graphics2D graphics, Position pos);
+
     public Asteroid GetAsteroid(){
         return this.GetCharacter().GetAsteroid();
     }
@@ -63,7 +65,8 @@ public abstract class DrawableCharacter {
             temp.y = temp.y + last.y - cameraPos.y;
 
             animationTime++;
-            g.drawImage(img, temp.x, temp.y, 15,15,null);
+            Draw(g, temp);
+            //g.drawImage(img, temp.x, temp.y, 15,15,null);
             return true;
         }
         animationTime = 1;

@@ -37,11 +37,15 @@ public class Controller {
 
     private boolean running = true;
     private boolean end = false;
-    private boolean win;
 
     private DrawableCharacter lastMovedCharacter;
     private List<DrawableCharacter> queuedCharactersForMoving = new ArrayList<>();
     private List<DrawableCharacter> queuedFinishedCharacters = new ArrayList<>();
+
+
+    private final EventFeed eventFeed;
+    //nem kell, tesztelesbol van
+    private int counter = 0;
 
     private Controller(){
         this.drawables = new ArrayList<>();
@@ -51,6 +55,12 @@ public class Controller {
         this.lastClickedAsteroid = null;
         this.interfacePanel = new InterfacePanel();
         this.drawables.add(interfacePanel);
+
+        this.AddDrawable(new PositionView());
+
+        this.eventFeed = new EventFeed();
+
+        this.AddDrawable(this.eventFeed);
 
         this.lastMovedCharacter = null;
         this.windowSize = new Position(1000,563); // lehetne paraméterként kapni
@@ -80,6 +90,11 @@ public class Controller {
 
     public Position GetWindowSize(){
         return this.windowSize;
+    }
+
+    public void EventHappened(String string){
+        this.eventFeed.EventHappened(string + " " + counter, 200);
+        ++counter;
     }
 
     /**
@@ -187,22 +202,11 @@ public class Controller {
                  for (Drawable drawable : drawables) {
                      drawable.Draw(g, cameraPos);
                  }
-                 g.setColor(Color.GRAY); // Tesztelésre csak talán
-                 g.setFont(new Font("Dialog",Font.PLAIN,14));
-                 g.drawString("X: "+cameraPos.x,0,12);
-                 g.drawString("Y: "+cameraPos.y,0,28);
-             }
+            }
         }
         if(!running && queuedFinishedCharacters.size()==0 && queuedCharactersForMoving.size() == 0) {
-            g.setFont(new Font("Game_ended", Font.ITALIC, 100));
             end = true;
-            if (win) {
-                g.setColor(Color.GREEN);
-                g.drawString("Gratulálok önök nyertek", windowSize.x / 2 - 500, windowSize.y / 2);
-            }else {
-                g.setColor(Color.RED);
-                g.drawString("Vereség", windowSize.x / 2 - 250, windowSize.y / 2);
-            }
+            drawables.forEach(drawable -> drawable.Draw(g, cameraPos));
         }
     }
 
@@ -291,8 +295,10 @@ public class Controller {
         AsteroidView av2 = this.asteroidViewMap.get(newAsteroid);
 
         lastMovedCharacter = dc;
-        queuedCharactersForMoving.add(dc);
-        av1.RemoveDrawableCharacter(dc);
+        synchronized (drawables) {
+            queuedCharactersForMoving.add(dc);
+            av1.RemoveDrawableCharacter(dc);
+        }
         //av2.AddDrawableCharacter(dc);
     }
 
@@ -304,6 +310,8 @@ public class Controller {
         AsteroidView av = this.asteroidViewMap.get(dc.GetAsteroid());
 
         av.RemoveDrawableCharacter(dc);
+
+        this.EventHappened("Character Died!");
     }
 
     public void SettlerDied(SettlerView sv){
@@ -329,13 +337,8 @@ public class Controller {
         this.asteroidViewMap.values().remove(av);
     }
 
-    public void GameEnded(GameState gameState){
+    public void GameEnded(){
         running = false;
-        if(gameState == GameState.SETTLERSLOST){
-            win = false;
-        }
-        else if(gameState == GameState.SETTLERSWON){
-            win = true;
-        }
+        this.AddDrawable(new EndGameAnimation());
     }
 }

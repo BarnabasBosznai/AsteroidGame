@@ -29,7 +29,12 @@ public class UFOView extends DrawableCharacter {
 
     @Override
     public void Draw(Graphics2D graphics) {
-        graphics.drawImage(rotate(angle),this.pos.x-ufoRadius,this.pos.y-ufoRadius,2*ufoRadius,2*ufoRadius,null);
+        this.Draw(graphics, this.pos);
+    }
+
+    @Override
+    public void Draw(Graphics2D graphics, Position position) {
+        graphics.drawImage(rotate(angle),position.x-ufoRadius,position.y-ufoRadius,2*ufoRadius,2*ufoRadius,null);
     }
 
     @Override
