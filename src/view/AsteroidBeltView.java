@@ -74,7 +74,7 @@ public class AsteroidBeltView extends Drawable {
         int vx= ViewController.getInstance().GetWindowSize().x;
         int vy= ViewController.getInstance().GetWindowSize().y;
 
-        if(nearSunHappening){
+        if(solarFlareHappening){
             graphics.setColor(new Color(1.0f, 0.369f, 0.075f, ((float)animationCounter/(float)animationCounterMax)));
             Position windowSize = ViewController.getInstance().GetWindowSize();
             graphics.fillRect(0,0,windowSize.x,windowSize.y);
@@ -82,15 +82,16 @@ public class AsteroidBeltView extends Drawable {
             graphics.setColor(new Color(255, 0, 0, 255));
             graphics.setFont(new Font("Monospaced", Font.BOLD, vx/10));
             FontMetrics metrics = graphics.getFontMetrics(new Font("Monospaced", Font.BOLD, vx/10));
-            graphics.drawString("Near Sun!",vx/2- metrics.stringWidth("Near Sun!") / 2,vy/2);
+            graphics.drawString("Solar Flare!",vx/2- metrics.stringWidth("Solar Flare!") / 2,vy/2);
 
-            animationCounter+=vx/100;
+
+            animationCounter+= (int) (float)vx/100.0f;
             if(animationCounter == animationCounterMax){
                 animationCounter = 0;
-                nearSunHappening = false;
+                solarFlareHappening = false;
             }
         }
-        if(solarFlareHappening){
+        if(nearSunHappening){
             graphics.setColor(new Color(1.0f, 0.369f, 0.075f));
             int position= (int)((double)animationCounter*(vx/10)/(double)animationCounterMax)-vx;
             graphics.fillOval(position, ViewController.getInstance().GetWindowSize().y/2-vy,2*vy,2*vy);
@@ -98,12 +99,12 @@ public class AsteroidBeltView extends Drawable {
             graphics.setColor(new Color(255, 0, 0, 255));
             graphics.setFont(new Font("Monospaced", Font.BOLD, vx/10));
             FontMetrics metrics = graphics.getFontMetrics(new Font("Monospaced", Font.BOLD, vx/10));
-            graphics.drawString("Solar Flare!",vx/2- metrics.stringWidth("Solar Flare!") / 2,vy/2);
+            graphics.drawString("Near Sun!",vx/2- metrics.stringWidth("Near Sun!") / 2,vy/2);
 
-            animationCounter+=vx/10;
+            animationCounter+= (int) (float)vx/10.0f;
             if(position >= ViewController.getInstance().GetWindowSize().x){
                 animationCounter = 0;
-                solarFlareHappening = false;
+                nearSunHappening = false;
             }
 
         }
