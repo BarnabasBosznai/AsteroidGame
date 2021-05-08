@@ -8,6 +8,7 @@ import places.Asteroid;
 import places.TeleportGate;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 
@@ -224,6 +225,11 @@ public class ViewController {
     public void CurrentSettlerWaitingForInput(Settler settler){
         this.currentSettlerWaitingForInput = settler;
         interfacePanel.SetCurrentWaitingSettler(currentSettlerWaitingForInput);
+        try {
+            java.awt.Robot robot = new java.awt.Robot();
+            robot.keyPress(KeyEvent.VK_SPACE);
+        } catch (Exception ignored) {
+        }
     }
 
     /**
