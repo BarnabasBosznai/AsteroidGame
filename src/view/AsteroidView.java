@@ -54,10 +54,12 @@ public class AsteroidView extends Drawable implements Clickable {
     /**
      * Szöveg betűtípusa
      */
-    private static final Font font;
+    private static final Font moveFont;
+    private static final Font infoFont;
 
     static{
-        font = new Font("Dialog", Font.PLAIN, 22);
+        moveFont = new Font("Dialog", Font.PLAIN, 22);
+        infoFont = new Font("Dialog", Font.PLAIN, 12);
         try{
             img= ImageIO.read(new File("Textures/aszteroida.png"));
         }
@@ -149,8 +151,8 @@ public class AsteroidView extends Drawable implements Clickable {
             graphics.fillRect(pos.x-cameraPos.x-70, pos.y-cameraPos.y, 70,65);
             graphics.setColor(Color.WHITE);
             graphics.drawRect(pos.x-cameraPos.x-70, pos.y-cameraPos.y, 70,65);
-
             graphics.setColor(Color.BLACK);
+            graphics.setFont(infoFont);
             graphics.drawString("Layers: "+asteroid.GetThickness(),pos.x-cameraPos.x-64,pos.y-cameraPos.y+18);
 
             graphics.drawString("Material:",pos.x-cameraPos.x-64,pos.y-cameraPos.y+38);
@@ -180,7 +182,7 @@ public class AsteroidView extends Drawable implements Clickable {
                 graphics.setColor(Color.GRAY);
                 graphics.drawRect(pos.x - cameraPos.x - 70, pos.y - cameraPos.y + 65, 70, 30);
                 graphics.setColor(Color.BLACK);
-                graphics.setFont(font);
+                graphics.setFont(moveFont);
                 graphics.drawString("Move", pos.x - cameraPos.x - 63, pos.y - cameraPos.y + 90);
             }
         }
