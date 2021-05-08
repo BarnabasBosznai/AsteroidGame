@@ -280,6 +280,11 @@ public class ViewController {
         if(!running && queuedFinishedCharacters.size()==0 && queuedCharactersForMoving.size() == 0) {
             end = true;
             drawables.forEach(drawable -> drawable.Draw(g, cameraPos));
+            try {
+                Thread.sleep(5000);
+                System.exit(0);
+            } catch (Exception ignored) {
+            }
         }
     }
 
