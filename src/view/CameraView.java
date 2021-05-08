@@ -8,6 +8,15 @@ import java.awt.*;
 public class CameraView extends Drawable{
 
     /**
+     * Szöveg betűtípusa
+     */
+    private static final Font font;
+
+    static {
+        font = new Font("Dialog",Font.PLAIN,14);
+    }
+
+    /**
      * Konstruktor
      */
     public CameraView(){
@@ -22,7 +31,7 @@ public class CameraView extends Drawable{
     @Override
     public void Draw(Graphics2D graphics, Position cameraPos) {
         graphics.setColor(Color.GRAY); // Tesztelésre csak talán
-        graphics.setFont(new Font("Dialog",Font.PLAIN,14));
+        graphics.setFont(font);
         graphics.drawString("X: "+cameraPos.x,0,12);
         graphics.drawString("Y: "+cameraPos.y,0,28);
     }

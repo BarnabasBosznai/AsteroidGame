@@ -48,9 +48,15 @@ public class SettlerView extends DrawableCharacter implements Clickable {
      */
     private static int settlerViewCreationCounter;
 
+    /**
+     * Szöveg betűtípusa
+     */
+    private static final Font font;
+
     static{
         settlerViewCreationCounter = 0;
         settlerColors = new ArrayList<>(Arrays.asList(Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.WHITE));
+        font = new Font("Dialog",Font.PLAIN,12);
     }
 
     /**
@@ -117,7 +123,7 @@ public class SettlerView extends DrawableCharacter implements Clickable {
             graphics.drawImage(IronImg,10,86,30,30,null,null);
             graphics.drawImage(WaterIceImg,10,117,30,30,null,null);
             graphics.drawImage(UraniumImg,10,148,30,30,null,null);
-            graphics.setFont(new Font("Dialog",Font.PLAIN,15));
+            graphics.setFont(font);
             graphics.drawString(coal+"" ,45,55 + 20);
             graphics.drawString(iron+"" ,45,86+ 20);
             graphics.drawString(waterice+"" ,45,117+ 20);

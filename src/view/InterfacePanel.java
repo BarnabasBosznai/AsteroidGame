@@ -51,6 +51,15 @@ public class InterfacePanel extends Drawable {
     private final Map<String, Button> buttonMap;
 
     /**
+     * Szöveg betűtípusa
+     */
+    private static final Font font;
+
+    static {
+        font = new Font("Dialog",Font.PLAIN,29);
+    }
+
+    /**
      * Konstruktor
      */
     public InterfacePanel(){
@@ -251,7 +260,7 @@ public class InterfacePanel extends Drawable {
         graphics.fillRect(240*winSize.x/1000,0*winSize.y/563,520*winSize.x/1000,43*winSize.y/563);
         graphics.setColor(Color.LIGHT_GRAY);
         graphics.fillRect(245*winSize.x/1000,5*winSize.y/563,510*winSize.x/1000,33*winSize.y/563);
-        graphics.setFont(new Font("Dialog",Font.PLAIN,29));
+        graphics.setFont(font);
         graphics.setColor(Color.BLACK);
         graphics.drawImage(CoalImg,245*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
         graphics.drawImage(IronImg,340*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
