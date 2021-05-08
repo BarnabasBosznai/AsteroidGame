@@ -75,7 +75,7 @@ public class AsteroidBeltView extends Drawable {
         int vy= ViewController.getInstance().GetWindowSize().y;
 
         if(solarFlareHappening){
-            graphics.setColor(new Color(1.0f, 0.369f, 0.075f, ((float)animationCounter/(float)animationCounterMax)));
+            graphics.setColor(new Color(1.0f, 0.369f, 0.075f, (float)Math.max((float)animationCounter/(float)animationCounterMax,1.0)));
             Position windowSize = ViewController.getInstance().GetWindowSize();
             graphics.fillRect(0,0,windowSize.x,windowSize.y);
 
@@ -86,7 +86,7 @@ public class AsteroidBeltView extends Drawable {
 
 
             animationCounter+= (int) (float)vx/100.0f;
-            if(animationCounter == animationCounterMax){
+            if(animationCounter >= animationCounterMax){
                 animationCounter = 0;
                 solarFlareHappening = false;
             }
