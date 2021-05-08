@@ -103,17 +103,20 @@ public class Panel extends JPanel {
 
         @Override
         public void mousePressed(MouseEvent e) {
+            if(e.getButton() == MouseEvent.BUTTON1) {
+                lastClickPos.x = e.getX();
+                lastClickPos.y = e.getY();
 
-            lastClickPos.x = e.getX();
-            lastClickPos.y = e.getY();
-
-            nem_interface = ViewController.getInstance().ClickHandler(lastClickPos, cameraPos);
+                nem_interface = ViewController.getInstance().ClickHandler(lastClickPos, cameraPos);
+            }
         }
 
         @Override
         public void mouseReleased(MouseEvent e) {
-            cameraPosSaved.x = cameraPos.x;
-            cameraPosSaved.y = cameraPos.y;
+            if(e.getButton() == MouseEvent.BUTTON1) {
+                cameraPosSaved.x = cameraPos.x;
+                cameraPosSaved.y = cameraPos.y;
+            }
         }
 
         @Override
@@ -143,18 +146,19 @@ public class Panel extends JPanel {
 
         @Override
         public void mouseDragged(MouseEvent e) {
+            if(SwingUtilities.isLeftMouseButton(e)) {
+                if (!nem_interface) {
+                    Position winSize = ViewController.getInstance().GetWindowSize();
+                    cameraPos.x = cameraPosSaved.x - e.getX() + lastClickPos.x;
+                    cameraPos.y = cameraPosSaved.y - e.getY() + lastClickPos.y; // ez valószínűleg negálni kell
+                    if (cameraPos.x < -2500) cameraPos.x = -2500;
+                    if (cameraPos.x > 1500 + 1000 - winSize.x) cameraPos.x = 1500 + 1000 - winSize.x;
+                    if (cameraPos.y < -2500) cameraPos.y = -2500;
+                    if (cameraPos.y > 2060 + 563 - winSize.y) cameraPos.y = 2060 + 563 - winSize.y;
 
-            if (!nem_interface){
-                Position winSize = ViewController.getInstance().GetWindowSize();
-                cameraPos.x = cameraPosSaved.x - e.getX() + lastClickPos.x;
-                cameraPos.y = cameraPosSaved.y - e.getY() + lastClickPos.y; // ez valószínűleg negálni kell
-                if (cameraPos.x<-2500) cameraPos.x=-2500;
-                if (cameraPos.x>1500+1000-winSize.x) cameraPos.x=1500+1000-winSize.x;
-                if (cameraPos.y<-2500) cameraPos.y=-2500;
-                if (cameraPos.y>2060+563-winSize.y) cameraPos.y=2060+563-winSize.y;
-
-                cursorPos.x = e.getX();
-                cursorPos.y = e.getY();
+                    cursorPos.x = e.getX();
+                    cursorPos.y = e.getY();
+                }
             }
         }
 
