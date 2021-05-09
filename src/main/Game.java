@@ -150,12 +150,6 @@ public class Game {
 
         for(int i = 0; i < 5; i++) {
             Settler settler = new Settler(asteroids.get(random.nextInt(asteroids.size())));
-            settler.GetInventory().AddMaterial(new Coal());
-            settler.GetInventory().AddMaterial(new Iron());
-            settler.GetInventory().AddMaterial(new Iron());
-            settler.GetInventory().AddMaterial(new Uranium());
-            settler.GetInventory().AddMaterial(new WaterIce());
-            settler.GetInventory().AddMaterial(new WaterIce());
             this.AddSteppable(settler);
             this.AddSettler(settler);
         }
