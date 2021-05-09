@@ -2,6 +2,7 @@ package view;
 
 import characters.Settler;
 import materials.*;
+import places.TeleportGate;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -28,7 +29,7 @@ public class InterfacePanel extends Drawable {
     /**
      * Nyersanyok képei
      */
-    private Image CoalImg, IronImg, WaterIceImg, UraniumImg;
+    private Image CoalImg, IronImg, WaterIceImg, UraniumImg, TeleportImg;
 
     /**
      * TextBox színe
@@ -206,6 +207,7 @@ public class InterfacePanel extends Drawable {
             IronImg = ImageIO.read(new File("Textures/vas.png"));
             WaterIceImg = ImageIO.read(new File("Textures/vizjeg.png"));
             UraniumImg = ImageIO.read(new File("Textures/uran.png"));
+            TeleportImg = ImageIO.read(new File("Textures/teleport.png"));
         }
         catch (IOException ex){
             ex.printStackTrace();
@@ -266,15 +268,18 @@ public class InterfacePanel extends Drawable {
         graphics.setColor(brown);
         Position winSize = ViewController.getInstance().GetWindowSize();
 
+        int offset = (int) (winSize.x * 0.027);
+
         graphics.fillRect(240*winSize.x/1000,0*winSize.y/563,520*winSize.x/1000,43*winSize.y/563);
         graphics.setColor(Color.LIGHT_GRAY);
         graphics.fillRect(245*winSize.x/1000,5*winSize.y/563,510*winSize.x/1000,33*winSize.y/563);
         graphics.setFont(font);
         graphics.setColor(Color.BLACK);
-        graphics.drawImage(CoalImg,245*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
-        graphics.drawImage(IronImg,340*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
-        graphics.drawImage(WaterIceImg,435*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
-        graphics.drawImage(UraniumImg,530*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
+        graphics.drawImage(CoalImg,offset + 245*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
+        graphics.drawImage(IronImg,offset + 340*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
+        graphics.drawImage(WaterIceImg,offset + 435*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
+        graphics.drawImage(UraniumImg,offset + 530*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
+        graphics.drawImage(TeleportImg,offset + 625*winSize.x/1000,2*winSize.y/563,40*winSize.x/1000,40*winSize.y/563,null,null);
 
         if (waitingSettler!=null) {
 
@@ -282,6 +287,7 @@ public class InterfacePanel extends Drawable {
             int iron = 0;
             int waterice = 0;
             int uranium = 0;
+            int teleport = 0;
             var materials = waitingSettler.GetInventory().GetMaterials();
             for ( var material: materials
                  ) {
@@ -295,16 +301,20 @@ public class InterfacePanel extends Drawable {
                     uranium++;
             }
 
+            teleport = waitingSettler.GetInventory().GetNumberOfItems(TeleportGate.class);
 
-            graphics.drawString(coal+"",295*winSize.x/1000,32*winSize.y/563);
-            graphics.drawString(iron+"",390*winSize.x/1000,32*winSize.y/563);
-            graphics.drawString(waterice+"",485*winSize.x/1000,32*winSize.y/563);
-            graphics.drawString(uranium+"",580*winSize.x/1000,32*winSize.y/563);
+
+            graphics.drawString(coal+"",offset + 295*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString(iron+"",offset + 390*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString(waterice+"",offset + 485*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString(uranium+"",offset + 580*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString(teleport+"",offset + 675*winSize.x/1000,32*winSize.y/563);
         } else {
-            graphics.drawString("0",295*winSize.x/1000,32*winSize.y/563);
-            graphics.drawString("0",390*winSize.x/1000,32*winSize.y/563);
-            graphics.drawString("0",485*winSize.x/1000,32*winSize.y/563);
-            graphics.drawString("0",580*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString("0",offset + 295*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString("0",offset + 390*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString("0",offset + 485*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString("0",offset + 580*winSize.x/1000,32*winSize.y/563);
+            graphics.drawString("0",offset + 675*winSize.x/1000,32*winSize.y/563);
         }
         // Ast_Infobox?
 
