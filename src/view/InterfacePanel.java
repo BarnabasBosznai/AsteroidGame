@@ -85,8 +85,9 @@ public class InterfacePanel extends Drawable {
             if (waitingSettler.Drill()){
                 output = "Sikerült fúrni!";
                 stepped = true;
+                SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
+                ViewController.getInstance().EventHappened(sw.CharacterToString() + " drilled!");
                 ViewController.getInstance().SettlerStepped();
-                ViewController.getInstance().EventHappened("Settler drilled!");
             } else {
                 output = "Nem sikerült fúrni!";
             }
@@ -95,8 +96,9 @@ public class InterfacePanel extends Drawable {
             if (waitingSettler.Mine()){
                 output = "Sikerült bányászni!";
                 stepped = true;
+                SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
+                ViewController.getInstance().EventHappened(sw.CharacterToString() + " mined!");
                 ViewController.getInstance().SettlerStepped();
-                ViewController.getInstance().EventHappened("Settler mined!");
             } else {
                 output = "Nem sikerült bányászni!";
             }
@@ -106,8 +108,9 @@ public class InterfacePanel extends Drawable {
                 if (waitingSettler.CraftRobot()) {
                     output = "Sikerült a Robot craftolása!";
                     stepped = true;
+                    SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
+                    ViewController.getInstance().EventHappened(sw.CharacterToString() + " crafted robot!");
                     ViewController.getInstance().SettlerStepped();
-                    ViewController.getInstance().EventHappened("Robot crafted!");
                 } else {
                     output = "Nem sikerült a Robot Craftolása!";
                 }
@@ -118,8 +121,9 @@ public class InterfacePanel extends Drawable {
                 if (waitingSettler.CraftTeleportGates()) {
                     output = "Sikerült a Teleport craftolása!";
                     stepped = true;
+                    SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
+                    ViewController.getInstance().EventHappened(sw.CharacterToString() + " crafted teleport!");
                     ViewController.getInstance().SettlerStepped();
-                    ViewController.getInstance().EventHappened("Teleport crafted!");
                 } else {
                     output = "Nem sikerült a Teleport Craftolása!";
                 }
@@ -130,8 +134,9 @@ public class InterfacePanel extends Drawable {
                 if (waitingSettler.PlaceMaterial(new Iron())) {
                     output = "Sikerült letenni a Vasat!";
                     stepped=true;
+                    SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
+                    ViewController.getInstance().EventHappened(sw.CharacterToString() + " placed iron!");
                     ViewController.getInstance().SettlerStepped();
-                    ViewController.getInstance().EventHappened("Iron placed!");
                 } else {
                     output = "Nem sikerült letenni a Vasat!";
                 }
@@ -142,8 +147,9 @@ public class InterfacePanel extends Drawable {
                 if (waitingSettler.PlaceMaterial(new Coal())) {
                     output = "Sikerült letenni a Szenet!";
                     stepped=true;
+                    SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
+                    ViewController.getInstance().EventHappened(sw.CharacterToString() + " placed coal!");
                     ViewController.getInstance().SettlerStepped();
-                    ViewController.getInstance().EventHappened("Coal placed!");
                 } else {
                     output = "Nem sikerült letenni a Szenet!";
                 }
@@ -154,8 +160,9 @@ public class InterfacePanel extends Drawable {
                 if (waitingSettler.PlaceMaterial(new WaterIce())) {
                     output = "Sikerült letenni a Vízjeget!";
                     stepped=true;
+                    SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
+                    ViewController.getInstance().EventHappened(sw.CharacterToString() + " placed waterice!");
                     ViewController.getInstance().SettlerStepped();
-                    ViewController.getInstance().EventHappened("Waterice placed!");
                 } else {
                     output = "Nem sikerült letenni a Vízjeget!";
                 }
@@ -166,8 +173,9 @@ public class InterfacePanel extends Drawable {
                 if (waitingSettler.PlaceMaterial(new Uranium())) {
                     output = "Sikerült letenni az Uránt!";
                     stepped=true;
+                    SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
+                    ViewController.getInstance().EventHappened(sw.CharacterToString() + " placed uranium!");
                     ViewController.getInstance().SettlerStepped();
-                    ViewController.getInstance().EventHappened("Uranium placed!");
                 } else {
                     output = "Nem sikerült letenni az Uránt!";
                 }
@@ -178,8 +186,9 @@ public class InterfacePanel extends Drawable {
                 if (waitingSettler.PlaceTeleportGate()) {
                     output = "Sikerült letenni a Teleportkaput!";
                     stepped = true;
+                    SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
+                    ViewController.getInstance().EventHappened(sw.CharacterToString() + " placed teleport!");
                     ViewController.getInstance().SettlerStepped();
-                    ViewController.getInstance().EventHappened("Teleport placed!");
                 } else {
                     output = "Nem sikerült letenni a Teleportkaput!";
                 }

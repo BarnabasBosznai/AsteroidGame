@@ -409,7 +409,7 @@ public class ViewController {
 
         av.RemoveDrawableCharacter(dc);
 
-        this.EventHappened("Character Died!");
+        this.EventHappened(dc.CharacterToString() + " died!");
     }
 
     /**

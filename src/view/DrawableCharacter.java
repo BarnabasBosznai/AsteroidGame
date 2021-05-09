@@ -165,4 +165,10 @@ public abstract class DrawableCharacter {
         graphic.dispose();
         return rotated;
     }
+
+    /**
+     * EventFeed-es kiíratáshoz
+     * @return szöveges azonosító
+     */
+    public abstract String CharacterToString();
 }

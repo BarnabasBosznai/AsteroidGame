@@ -231,8 +231,8 @@ public class AsteroidView extends Drawable implements Clickable {
                     (clickPos.y > pos.y - cameraPos.y + 65) && (clickPos.y < pos.y - cameraPos.y + 65 + 30)) {
 
                 ViewController.getInstance().GetCurrentSettlerWaitingForInput().Move(this.asteroid);
+                ViewController.getInstance().EventHappened(ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput()).CharacterToString() + " moved!");
                 ViewController.getInstance().SettlerStepped();
-                ViewController.getInstance().EventHappened("Settler moved!");
             }
         }
         this.clicked = true;

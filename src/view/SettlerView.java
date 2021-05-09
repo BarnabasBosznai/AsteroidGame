@@ -170,6 +170,22 @@ public class SettlerView extends DrawableCharacter implements Clickable {
     }
 
     /**
+     * EventFeed-es kiíratáshoz
+     * @return szöveges azonosító
+     */
+    @Override
+    public String CharacterToString() {
+        String colorString = "";
+        if (Color.RED.equals(color)) colorString = "red";
+        else if(Color.BLUE.equals(color)) colorString = "blue";
+        else if(Color.WHITE.equals(color)) colorString = "white";
+        else if(Color.YELLOW.equals(color)) colorString = "yellow";
+        else if(Color.GREEN.equals(color)) colorString = "green";
+
+        return colorString + " " + "settler";
+    }
+
+    /**
      * Jelzés, hogy rákattintottak
      * @param pos: kattintás pozíciója
      * @param cameraPos: kamera pozíciója

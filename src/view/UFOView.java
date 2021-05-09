@@ -68,4 +68,13 @@ public class UFOView extends DrawableCharacter {
         return this.ufo;
     }
 
+    /**
+     * EventFeed-es kiíratáshoz
+     * @return szöveges azonosító
+     */
+    @Override
+    public String CharacterToString() {
+        return "ufo";
+    }
+
 }

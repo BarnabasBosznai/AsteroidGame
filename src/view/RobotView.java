@@ -68,5 +68,14 @@ public class RobotView extends DrawableCharacter {
         return this.robot;
     }
 
+    /**
+     * EventFeed-es kiíratáshoz
+     * @return szöveges azonosító
+     */
+    @Override
+    public String CharacterToString() {
+        return "robot";
+    }
+
 
 }
