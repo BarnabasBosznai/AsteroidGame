@@ -83,120 +83,120 @@ public class InterfacePanel extends Drawable {
 
         this.buttonMap.get("Drill").SetCallback(() -> {
             if (waitingSettler.Drill()){
-                output = "Sikerült fúrni!";
+                output = "Successful Drilling!";
                 stepped = true;
                 SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
                 ViewController.getInstance().EventHappened(sw.CharacterToString() + " drilled!");
                 ViewController.getInstance().SettlerStepped();
             } else {
-                output = "Nem sikerült fúrni!";
+                output = "Drilling failed!";
             }
         });
         this.buttonMap.get("Mine").SetCallback(() -> {
             if (waitingSettler.Mine()){
-                output = "Sikerült bányászni!";
+                output = "Successful Mining!";
                 stepped = true;
                 SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
                 ViewController.getInstance().EventHappened(sw.CharacterToString() + " mined!");
                 ViewController.getInstance().SettlerStepped();
             } else {
-                output = "Nem sikerült bányászni!";
+                output = "Mining failed!";
             }
         });
         this.buttonMap.get("Robot").SetCallback(() -> {
             if(buttonMap.get("Craft").GetState()) {
                 if (waitingSettler.CraftRobot()) {
-                    output = "Sikerült a Robot craftolása!";
+                    output = "Robot crafted!";
                     stepped = true;
                     SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
                     ViewController.getInstance().EventHappened(sw.CharacterToString() + " crafted robot!");
                     ViewController.getInstance().SettlerStepped();
                 } else {
-                    output = "Nem sikerült a Robot Craftolása!";
+                    output = "Robot crafting failed!";
                 }
             }
         });
         this.buttonMap.get("CraftTeleport").SetCallback(() -> {
             if(buttonMap.get("Craft").GetState()) {
                 if (waitingSettler.CraftTeleportGates()) {
-                    output = "Sikerült a Teleport craftolása!";
+                    output = "Teleportgates crafted!";
                     stepped = true;
                     SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
                     ViewController.getInstance().EventHappened(sw.CharacterToString() + " crafted teleport!");
                     ViewController.getInstance().SettlerStepped();
                 } else {
-                    output = "Nem sikerült a Teleport Craftolása!";
+                    output = "Teleport crafting failed!";
                 }
             }
         });
         this.buttonMap.get("Iron").SetCallback(() -> {
             if(this.buttonMap.get("Place").GetState()) {
                 if (waitingSettler.PlaceMaterial(new Iron())) {
-                    output = "Sikerült letenni a Vasat!";
+                    output = "Iron placed!";
                     stepped=true;
                     SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
                     ViewController.getInstance().EventHappened(sw.CharacterToString() + " placed iron!");
                     ViewController.getInstance().SettlerStepped();
                 } else {
-                    output = "Nem sikerült letenni a Vasat!";
+                    output = "Iron placement failed!";
                 }
             }
         });
         this.buttonMap.get("Coal").SetCallback(() -> {
             if(this.buttonMap.get("Place").GetState()) {
                 if (waitingSettler.PlaceMaterial(new Coal())) {
-                    output = "Sikerült letenni a Szenet!";
+                    output = "Coal placed!";
                     stepped=true;
                     SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
                     ViewController.getInstance().EventHappened(sw.CharacterToString() + " placed coal!");
                     ViewController.getInstance().SettlerStepped();
                 } else {
-                    output = "Nem sikerült letenni a Szenet!";
+                    output = "Coal placement failed!";
                 }
             }
         });
         this.buttonMap.get("Waterice").SetCallback(() -> {
             if(this.buttonMap.get("Place").GetState()) {
                 if (waitingSettler.PlaceMaterial(new WaterIce())) {
-                    output = "Sikerült letenni a Vízjeget!";
+                    output = "Waterice placed!";
                     stepped=true;
                     SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
                     ViewController.getInstance().EventHappened(sw.CharacterToString() + " placed waterice!");
                     ViewController.getInstance().SettlerStepped();
                 } else {
-                    output = "Nem sikerült letenni a Vízjeget!";
+                    output = "Waterice placement failed!";
                 }
             }
         });
         this.buttonMap.get("Uranium").SetCallback(() -> {
             if(this.buttonMap.get("Place").GetState()) {
                 if (waitingSettler.PlaceMaterial(new Uranium())) {
-                    output = "Sikerült letenni az Uránt!";
+                    output = "Uranium placed!";
                     stepped=true;
                     SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
                     ViewController.getInstance().EventHappened(sw.CharacterToString() + " placed uranium!");
                     ViewController.getInstance().SettlerStepped();
                 } else {
-                    output = "Nem sikerült letenni az Uránt!";
+                    output = "Uranium placement failed!";
                 }
             }
         });
         this.buttonMap.get("PlaceTeleport").SetCallback(() -> {
             if(this.buttonMap.get("Place").GetState()) {
                 if (waitingSettler.PlaceTeleportGate()) {
-                    output = "Sikerült letenni a Teleportkaput!";
+                    output = "Teleportgate placed!";
                     stepped = true;
                     SettlerView sw = ViewController.getInstance().GetSettlerView(ViewController.getInstance().GetCurrentSettlerWaitingForInput());
                     ViewController.getInstance().EventHappened(sw.CharacterToString() + " placed teleport!");
                     ViewController.getInstance().SettlerStepped();
                 } else {
-                    output = "Nem sikerült letenni a Teleportkaput!";
+                    output = "Teleportgate placement failed!";
                 }
             }
         });
         this.buttonMap.get("Output").SetCallback(() -> {
             // :woozy_face:
-            output = "Itt meg mit szeretnél?";
+            output = "What do you want to do here?";
         });
 
 
@@ -337,7 +337,7 @@ public class InterfacePanel extends Drawable {
         waitingSettler=currentWaitingSettler;
         stepped=false;
 
-        output = "Te következel!";
+        output = "Your Turn!";
     }
 
     /**
@@ -347,11 +347,11 @@ public class InterfacePanel extends Drawable {
      */
     public boolean HandleClick(Position clickPos){
         if(waitingSettler == null){
-            output = "Ilyen nincs, nem jön semelyik Settler!";
+            output = "";
             return true;
         }
         if (stepped){
-            output = "Már jöttél, ne siess!";
+            output = "";
             return true;
         }
         boolean clickedOnInterface = false;
