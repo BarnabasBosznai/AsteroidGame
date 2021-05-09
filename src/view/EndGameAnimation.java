@@ -33,12 +33,12 @@ public class EndGameAnimation extends Drawable {
         GameState endGameState = Game.getInstance().GetGameState();
         if(endGameState == GameState.SETTLERSWON) {
             this.fontColor = Color.GREEN;
-            this.string = "Nyertek a telepesek!";
+            this.string = "SETTLERS WON THE GAME!";
             this.font = new Font("Dialog", Font.ITALIC, 80);
         }
         else if(endGameState == GameState.SETTLERSLOST){
             this.fontColor = Color.RED;
-            this.string = "Vesztettek a telepesek :(";
+            this.string = "SETTLERS LOST THE GAME :(";
             this.font = new Font("Dialog", Font.ITALIC, 80);
         }
     }
